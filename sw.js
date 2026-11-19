@@ -1,5 +1,5 @@
-const CACHE_NAME='titan-shell-v410';
-const PLAYER_CACHE='titan-player-libs-v410';
+const CACHE_NAME='titan-shell-v414';
+const PLAYER_CACHE='titan-player-libs-v414';
 const SHELL=['./','./index.html','./modern.html','./legacy.html','./legacy.js','./compat-check.js','./worker-config.js','./manifest.webmanifest','./assets/titan.svg','./assets/icons/titan-192.png','./assets/icons/titan-512.png','./assets/icons/titan-maskable-512.png','./assets/wallpapers/stadium.svg','./assets/wallpapers/cinema.svg','./assets/wallpapers/film.svg','./assets/wallpapers/animation.svg','./assets/wallpapers/aurora.svg'];
 const PLAYER_HOSTS=new Set(['cdn.jsdelivr.net','unpkg.com']);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));

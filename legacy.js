@@ -1,7 +1,8 @@
 /* TITAN Legacy Player. ES5 syntax and XMLHttpRequest for Android 4.x WebKit. */
 (function () {
   var IS_STATIC_PAGES = /(^|\.)github\.io$/i.test(window.location.hostname) || /[?&]titanStatic=1(?:&|$)/.test(window.location.search || '');
-  function workerProxyUrl(source, kind) { var base = String(window.TITAN_WORKER_URL || '').replace(/\/+$/, ''); if (!/^https:\/\//i.test(base)) throw new Error('آدرس Cloudflare Worker در فایل worker-config.js ثبت نشده است.'); if (!/^https?:\/\//i.test(source)) throw new Error('فقط لینک HTTP/HTTPS پشتیبانی می‌شود.'); return base + '/proxy?url=' + encodeURIComponent(source) + '&kind=' + encodeURIComponent(kind || 'media'); }
+  function workerProxyUrl(source, kind) { var base = String(window.TITAN_WORKER_URL || '').replace(/\/+$/, ''); if (!/^https:\/\//i.test(base)) throw new Error('آدرس Cloudflare Worker در فایل worker-config.js ثبت نشده است.'); if (!/^https?:\/\//i.test(source)) throw new Error('فقط لینک HTTP/HTTPS پشتیبانی می‌شود.'); var u; try { u = new URL(source); } catch (e) { throw new Error('آدرس منبع معتبر نیست.'); } var tele = /^(?:[a-z0-9-]+\.)*telewebion\.(ir|net)$/i.test(u.hostname); var tm = tele && u.pathname.match(/^\/([a-z0-9_-]{1,40})\/live\/(\d{3,4}p)\/index\.m3u8?$/i); if (tm) return base + '/' + tm[1] + '/' + tm[2]; return base + '/proxy?url=' + encodeURIComponent(u.href) + '&kind=' + encodeURIComponent(kind || 'media'); }
+  function httpsUpgradeCandidate(source) { try { var u = new URL(String(source || '')); if (u.protocol !== 'http:') return ''; if (!u.port || u.port === '80') u.port = ''; u.protocol = 'https:'; return u.href; } catch (e) { return ''; } }
   var CATEGORIES = [
     { id: 'live', title: 'پخش زنده' },
     { id: 'list1', title: 'لیست پخش 1' },
@@ -324,7 +325,7 @@
       proxyTried = true;
       setMessage(reason || 'در حال اتصال از مسیر HTTPS Cloudflare...', false);
       try { attachVideo(workerProxyUrl(channel.url, 'media'), true, generation); }
-      catch (e) { setMessage(e.message || 'آدرس Cloudflare Worker تنظیم نشده است.', true); }
+      catch (e) { setMessage((/^https:\/\//i.test(channel.url) ? 'پخش مستقیم HTTPS ناموفق شد؛ ممکن است CORS یا کدک ناسازگار باشد. مسیر Worker تنظیم نشده است: ' : 'این لینک HTTP در صفحه HTTPS مسدود است و بدون Worker قابل پخش نیست: ') + (e.message || 'آدرس Worker ثبت نشده است.'), true); }
       return;
     }
     if (proxyTried) {
@@ -368,7 +369,13 @@
     var video = byId('video');
     video.onerror = function () {
       if (generation !== playbackGeneration) return;
-      if (!viaProxy && currentChannel) requestProxy(currentChannel, 'پخش مستقیم انجام نشد؛ مسیر جایگزین در حال آماده‌سازی است...', generation);
+      if (!viaProxy && currentChannel) {
+        if (IS_STATIC_PAGES && /^https?:\/\//i.test(currentChannel.url) && byId('openOriginalSourceLegacy')) {
+          byId('openOriginalSourceLegacy').href = currentChannel.url;
+          byId('openOriginalSourceLegacy').hidden = false;
+        }
+        requestProxy(currentChannel, 'پخش مستقیم یا نسخه HTTPS معادل ناموفق شد؛ اگر Worker تنظیم نشده باشد، منبع فقط در تب جداگانه قابل آزمایش است...', generation);
+      }
       else if (!isTranscoded && currentChannel) requestTranscode(currentChannel, generation, 'پراکسی نیز قابل رمزگشایی نبود؛ تبدیل کدک با FFmpeg امتحان می‌شود...');
       else setMessage('مرورگر نتوانست خروجی سازگار را رمزگشایی کند. این دستگاه ممکن است حتی MP4 قطعه‌ای H.264/AAC را پشتیبانی نکند.', true);
     };
@@ -392,6 +399,7 @@
     proxyTried = false;
     byId('nowPlaying').innerHTML = escapeHtml(channel.name);
     setMessage('در حال اتصال به ' + channel.name + '...', false);
+    if (byId('openOriginalSourceLegacy')) byId('openOriginalSourceLegacy').hidden = true;
     try { video.pause(); } catch (e) { }
     video.removeAttribute('src');
     try { video.load(); } catch (e) { }
@@ -403,8 +411,19 @@
     if (type === 'mpegts') {
       setMessage('پشتیبانی مستقیم MPEG-TS به مدل دستگاه وابسته است؛ در صورت خطا، نسخه MP4/HLS لازم است.', false);
     }
-    if ((IS_STATIC_PAGES && /^https?:\/\//i.test(channel.url)) || (window.location.protocol === 'https:' && /^http:\/\//i.test(channel.url))) {
-      requestProxy(channel, IS_STATIC_PAGES ? 'اتصال امن از Cloudflare Worker در حال آماده‌سازی است...' : 'به‌دلیل HTTP بودن لینک در صفحه HTTPS، مسیر امن پخش در حال آماده‌سازی است...', generation);
+    if (((IS_STATIC_PAGES || window.location.protocol === 'https:') && /^http:\/\//i.test(channel.url))) {
+      var workerBase = String(window.TITAN_WORKER_URL || '').replace(/\/+$/, '');
+      if (IS_STATIC_PAGES && !/^https:\/\//i.test(workerBase)) {
+        var secureUrl = httpsUpgradeCandidate(channel.url);
+        if (secureUrl) {
+          setMessage('لینک فهرست HTTP است؛ نسخه امن HTTPS همان میزبان به‌صورت خودکار امتحان می‌شود...', false);
+          attachVideo(secureUrl, false, generation);
+        } else {
+          requestProxy(channel, 'نسخه HTTPS خودکار ساخته نشد؛ مسیر Worker امتحان می‌شود...', generation);
+        }
+      } else {
+        requestProxy(channel, 'این لینک HTTP است و در صفحه HTTPS مستقیم قابل دریافت نیست؛ مسیر Worker امتحان می‌شود...', generation);
+      }
     } else {
       attachVideo(channel.url, false, generation);
     }

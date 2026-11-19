@@ -1,0 +1,20 @@
+گزارش ادغام Worker ارسالی
+=========================
+
+فایل worker.zip ارسالی بررسی شد. محتوای اصلی آن یک Worker اختصاصی Telewebion manifest rewriter بود؛
+این Worker برای بازنویسی HLS شبکه‌های Telewebion و پراکسی قطعات TS طراحی شده و پراکسی عمومی HTTP نیست.
+
+آن کد در cloudflare-worker/worker.js با پراکسی عمومی قبلی TITAN در یک نقطه ورود واحد ادغام شده است.
+نسخه اصلی کد Telewebion نیز در cloudflare-worker/providers/telewebion/ نگهداری شده است.
+
+در modern.html و legacy.js تشخیص URLهای Telewebion اضافه شده است تا در صورت وجود آدرس
+ncdn.telewebion.ir/<channel>/live/<quality>/index.m3u8، مسیر تخصصی Worker استفاده شود.
+
+بررسی چهار فایل M3U موجود در همین بسته نشان داد در حال حاضر هیچ URL شامل telewebion وجود ندارد؛
+بنابراین این قابلیت فقط وقتی فعال می‌شود که منبع Telewebion به پلی‌لیست اضافه شود.
+
+فایل .wrangler/cache/wrangler-account.json از ZIP ارسالی عمداً منتقل نشده است؛ این فایل شامل
+شناسه و نام حساب Cloudflare است و برای اجرای Worker لازم نیست.
+
+توجه: Worker هنوز در حساب Cloudflare Deploy نشده است. صرف آپلود سورس Worker در GitHub Pages
+باعث اجرای آن نمی‌شود. این عملیات به ورود/مجوز حساب Cloudflare مالک نیاز دارد.

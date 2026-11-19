@@ -1,0 +1,3 @@
+TITAN IPTV PLAYER 4.1.4
+GitHub Pages: HTTPS-first playback with automatic HTTP-to-HTTPS upgrade
+Optional Cloudflare Worker relay (must be deployed separately)

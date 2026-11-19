@@ -1,0 +1,34 @@
+گزارش بررسی TITAN 4.1.2
+========================
+
+منابع مورد بررسی:
+- نسخه کامل TITAN 4.1.1
+- worker.zip ارسالی کاربر
+
+ادغام:
+- Worker عمومی محدودشده TITAN با مسیرهای Telewebion در یک فایل cloudflare-worker/worker.js ادغام شد.
+- مسیرهای عمومی /health، /proxy و /dir حفظ شدند.
+- مسیرهای Telewebion /<channel>/<rendition> و /segment حفظ شدند.
+- CORS و OPTIONS برای مسیرهای Telewebion اضافه شد.
+- modern.html و legacy.js برای شناسایی URLهای HLS متعلق به Telewebion اصلاح شدند.
+- سورس اصلی Telewebion در cloudflare-worker/providers/telewebion حفظ شده است.
+
+تست‌های انجام‌شده:
+- node --check روی Worker واحد: موفق
+- node --check روی legacy.js: موفق
+- استخراج و بررسی نحو اسکریپت inline در modern.html: موفق
+- تست allowlist منبع مجاز: موفق
+- تست رد IP ناشناخته: موفق
+- تست بازنویسی HLS عمومی: موفق
+- تست بازنویسی توکن در URI نسبی HLS: موفق
+- تست تابع بازنویسی Telewebion: موفق
+- تست endpoint سلامت و اعلام هر دو قابلیت: موفق
+- سلامت ساختار ZIP: موفق
+
+محدودیت تست:
+Worker روی حساب Cloudflare کاربر Deploy نشده است؛ بنابراین پخش زنده واقعی از ارائه‌دهنده‌ها از این محیط قابل تأیید نبود.
+همچنین چهار پلی‌لیست فعلی در مجموع 678 URL دارند و هیچ‌کدام در حال حاضر Telewebion نیستند.
+
+امنیت:
+فایل .wrangler/cache/wrangler-account.json از خروجی حذف شده، چون اطلاعات شناسایی حساب Cloudflare را در خود داشت.
+فایل error_log runtime نیز از بسته قابل انتشار حذف شده است.

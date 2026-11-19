@@ -1,1 +1,30 @@
-برای راهنمای کامل و به‌روز نصب رایگان، فایل INSTALL_FREE_FA.txt یا cloudflare-worker/README_FA.txt را مطالعه کنید.
+راهنمای Worker اختیاری TITAN
+============================
+
+سورس Worker در این پوشه قرار دارد:
+  cloudflare-worker/worker.js
+  cloudflare-worker/wrangler.jsonc
+
+Worker دو مسیر را یکجا دارد:
+1) پراکسی HTTP/HTTPS محدودشده برای میزبان‌ها و پورت‌های موجود در چهار پلی‌لیست TITAN.
+2) بازنویسی اختصاصی HLS شبکه‌های Telewebion از فایل worker.zip ارسالی کاربر.
+
+مهم:
+GitHub Pages فقط فایل استاتیک اجرا می‌کند و Worker را اجرا نمی‌کند. برای عبور HTTP از صفحه HTTPS باید سورس Worker یک‌بار در حساب Cloudflare مالک Deploy شود. این ZIP به‌تنهایی URL اجرایی تولید نمی‌کند و هیچ Worker عمومی از پیش میزبانی‌شده‌ای داخل آن نیست.
+
+پس از Deploy، URL واقعی workers.dev را در worker-config.js قرار دهید:
+  window.TITAN_WORKER_URL = 'https://YOUR-WORKER.workers.dev';
+
+سپس آدرس /health باید JSON شامل ok:true بدهد.
+
+بدون Worker:
+- منابع HTTPS ابتدا مستقیماً امتحان می‌شوند.
+- منابع HTTP روی GitHub Pages مسدود هستند.
+- HTTPS با CORS مسدود هم نیازمند پراکسی است.
+
+این Worker مبدل FFmpeg نیست و RTSP/RTMP/UDP/SRT یا تبدیل کدک انجام نمی‌دهد.
+
+امنیت:
+- فقط میزبان‌ها و پورت‌های صریح داخل allowlist پذیرفته می‌شوند.
+- دامنه یا IP جدید را فقط بعد از بررسی و مجوز استفاده به allowlist اضافه کنید.
+- فایل .wrangler/cache مربوط به ورود حساب کاربر در این بسته قرار داده نشده است.
