@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#071722">
+  <meta name="description" content="نسخه سبک و سازگار TITAN برای مرورگرهای قدیمی اندروید">
+  <title>TITAN | نسخه سبک موبایل</title>
+  <style type="text/css">
+    html{background:#071722;color:#f3f6f8}
+    body{margin:0;padding:0;background:#071722;color:#f3f6f8;font-family:Tahoma,Arial,sans-serif;font-size:14px;line-height:1.7}
+    .page{max-width:900px;margin:0 auto;padding:8px 9px 18px}
+    .header{padding:10px 12px;background:#102b3a;border:1px solid #315365;border-radius:8px;margin-bottom:9px}
+    .brand{font-size:23px;font-weight:bold;color:#e8c77c;letter-spacing:1px}
+    .subtitle{font-size:11px;color:#b4c6d0}
+    .playerbox{background:#000;border:1px solid #315365;border-radius:8px;overflow:hidden}
+    .playing{padding:7px 9px;background:#102b3a;color:#fff;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #video{display:block;width:100%;height:210px;background:#000;object-fit:contain}
+    .message{padding:7px 9px;background:#102b3a;color:#d8e5eb;font-size:12px;min-height:25px}
+    .toolbar{margin:9px 0;padding:8px;background:#102b3a;border:1px solid #315365;border-radius:8px}
+    .toolbar button,.categories button{font-family:Tahoma,Arial,sans-serif;font-size:13px;color:#fff;background:#17475b;border:1px solid #397087;border-radius:6px;padding:8px 10px;margin:2px;cursor:pointer}
+    .toolbar button:active,.categories button:active{background:#24718a}
+    .toolbar button.active,.categories button.active{background:#a87928;border-color:#e3c477;color:#fff}
+    #search{display:block;width:100%;height:38px;box-sizing:border-box;margin:7px 0 2px;padding:6px 9px;background:#06141d;border:1px solid #426477;border-radius:6px;color:#fff;font-family:Tahoma,Arial,sans-serif;font-size:14px}
+    .categories{margin:8px 0;padding:7px;background:#102b3a;border:1px solid #315365;border-radius:8px}
+    .section-title{font-size:13px;font-weight:bold;color:#e8c77c;margin:4px 3px 7px}
+    .count{font-size:11px;color:#aebfc8;margin-right:5px}
+    .channel-list{height:300px;overflow-y:scroll;-webkit-overflow-scrolling:touch;background:#091d29;border:1px solid #315365;border-radius:7px;padding:4px}
+    .channel-row{display:block;width:100%;min-height:48px;box-sizing:border-box;margin:3px 0;padding:5px 7px;background:#112f3e;border:1px solid #254d60;border-radius:6px;color:#fff;text-align:right;font-family:Tahoma,Arial,sans-serif;font-size:13px;cursor:pointer}
+    .channel-row.selected{background:#57451f;border-color:#d7b363}
+    .channel-row img{width:34px;height:34px;object-fit:contain;vertical-align:middle;margin-left:8px;background:#fff;border-radius:4px}
+    .channel-row .name{display:inline-block;vertical-align:middle;max-width:75%;font-weight:bold}
+    .channel-row .star{float:left;color:#f3ca65;font-size:18px;padding:2px 5px}
+    .empty{padding:17px 8px;text-align:center;color:#b6c5cd;font-size:12px}
+    .notice{padding:9px;background:#102b3a;border:1px solid #315365;border-radius:8px;color:#b8c8d1;font-size:11px;margin-top:9px}
+    .error{color:#ffb4aa}
+    .smallbtn{font-size:12px!important;padding:6px 9px!important}
+    a{color:#8ce2df}
+    @media screen and (max-width:480px){.page{padding:5px}.brand{font-size:20px}#video{height:190px}.channel-list{height:280px}.toolbar button,.categories button{padding:7px 8px;font-size:12px}}
+  </style>
+  <script type="text/javascript" src="legacy.js"></script>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="brand">TITAN</div>
+      <div class="subtitle">نسخه سبک برای موبایل و مرورگرهای قدیمی اندروید</div>
+    </div>
+
+    <div class="playerbox">
+      <div class="playing" id="nowPlaying">هنوز شبکه‌ای انتخاب نشده است</div>
+      <video id="video" controls="controls" preload="none" playsinline="playsinline">
+        مرورگر شما پخش‌کننده ویدئو را پشتیبانی نمی‌کند.
+      </video>
+      <div class="message" id="playMessage">برای شروع، یک شبکه از فهرست انتخاب کنید.</div>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" id="refreshButton">به‌روزرسانی فهرست‌ها</button>
+      <button type="button" id="previousButton">شبکه قبلی</button>
+      <button type="button" id="nextButton">شبکه بعدی</button>
+      <button type="button" id="favoritesButton">علاقه‌مندی‌ها</button>
+      <button type="button" id="allButton">نمایش همه</button>
+      <input id="search" type="search" placeholder="جستجوی نام شبکه..." autocomplete="off">
+    </div>
+
+    <div class="categories" id="categories">
+      <div class="section-title">فهرست شبکه‌ها</div>
+      <button type="button" data-category="live" class="active">پخش زنده</button>
+      <button type="button" data-category="list1">لیست پخش 1</button>
+      <button type="button" data-category="list2">لیست پخش 2</button>
+      <button type="button" data-category="list3">لیست پخش 3</button>
+      <button type="button" data-category="all">همه</button>
+      <span class="count" id="channelCount">در حال دریافت...</span>
+    </div>
+
+    <div class="channel-list" id="channelList">
+      <div class="empty">در حال دریافت فهرست شبکه‌ها...</div>
+    </div>
+
+    <div class="notice" id="compatNotice">
+      حالت سازگاری فعال است. انیمیشن‌ها و کتابخانه‌های سنگین بارگذاری نمی‌شوند؛ برای کدک یا پروتکل ناسازگار، در صورت فعال بودن FFmpeg روی سرور، تبدیل کم‌حجم H.264/AAC امتحان می‌شود.
+    </div>
+  </div>
+</body>
+</html>

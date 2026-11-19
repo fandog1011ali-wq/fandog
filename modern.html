@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <script type="text/javascript" src="compat-check.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#041923">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TITAN">
+  <meta name="description" content="TITAN IPTV Player — پخش‌کننده و مدیریت فهرست شبکه‌ها">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/titan.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/titan-192.png">
+  <title>TITAN | پخش‌کننده شبکه‌ها</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root{--bg:#031923;--panel:rgba(5,27,40,.91);--panel2:rgba(255,255,255,.055);--line:rgba(175,225,255,.19);--text:#f3f8ff;--muted:#a9bbcc;--accent:#16e0df;--accent2:#168fe8;--glow:rgba(22,224,223,.3);--danger:#ff647d;--shadow:0 16px 42px #0007;--video-filter:none;--card-radius:18px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Vazirmatn,system-ui,sans-serif;background:var(--bg);background-image:radial-gradient(ellipse at 12% 8%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 34%),radial-gradient(ellipse at 92% 78%,color-mix(in srgb,var(--accent2) 18%,transparent),transparent 38%);overflow-x:hidden;transition:background .35s,color .25s}body:before,body:after{content:"";position:fixed;inset:-10%;z-index:-2;pointer-events:none;transition:opacity .4s}body:before{background:repeating-radial-gradient(ellipse at 50% 110%,transparent 0 30px,color-mix(in srgb,var(--accent) 9%,transparent) 32px 34px,transparent 36px 72px);opacity:.55;animation:wave 22s ease-in-out infinite alternate}body:after{background:linear-gradient(115deg,transparent 20%,color-mix(in srgb,var(--accent2) 12%,transparent) 52%,transparent 75%);filter:blur(22px);opacity:.6;animation:aurora 18s ease-in-out infinite alternate}
+    @keyframes wave{to{transform:translate(5vw,-4vh) rotate(5deg) scale(1.1)}}@keyframes aurora{from{background-position:0 20%}to{background-position:100% 80%;filter:hue-rotate(35deg)}}@keyframes pulse{50%{opacity:.35;transform:scale(.8)}}@keyframes shimmer{to{background-position:200% center}}@keyframes bob{50%{transform:translateY(-4px)}}
+    body[data-theme="ocean"]{--bg:#031923;--panel:rgba(4,31,47,.92);--accent:#16e0df;--accent2:#168fe8;--glow:#16e0df55}body[data-theme="forest"]{--bg:#071b13;--panel:rgba(10,39,25,.93);--accent:#9ae66e;--accent2:#d7b75d;--glow:#9ae66e44}body[data-theme="cafe"]{--bg:#1d120e;--panel:rgba(49,31,23,.94);--accent:#e4b68b;--accent2:#98613e;--glow:#e4b68b44}body[data-theme="minimal"]{--bg:#111318;--panel:rgba(29,31,38,.96);--accent:#e8edf5;--accent2:#8994a5;--glow:#ffffff20}body[data-theme="cyber"]{--bg:#050d11;--panel:rgba(4,23,28,.94);--accent:#b5ff00;--accent2:#00e8d0;--glow:#00e8d055}body[data-theme="galaxy"]{--bg:#0a0820;--panel:rgba(24,20,57,.94);--accent:#a9b3ff;--accent2:#e27dff;--glow:#a9b3ff55}body[data-theme="rainbow"]{--bg:#1a0b25;--panel:rgba(43,24,58,.93);--accent:#ff7ad6;--accent2:#5deaff;--glow:#ff7ad644}body[data-theme="romance"]{--bg:#210c20;--panel:rgba(55,19,49,.94);--accent:#ff94ce;--accent2:#c4a5ff;--glow:#ff94ce44}body[data-theme="orange"]{--bg:#211004;--panel:rgba(55,28,8,.94);--accent:#ffad45;--accent2:#ff5d35;--glow:#ffad4544}body[data-theme="redblack"]{--bg:#16070c;--panel:rgba(43,9,18,.94);--accent:#ff405f;--accent2:#a91336;--glow:#ff405f44}body[data-theme="silverred"]{--bg:#111318;--panel:rgba(35,37,45,.95);--accent:#f2f4f8;--accent2:#ed4760;--glow:#ed476044}body[data-theme="graphite"]{--bg:#191c22;--panel:rgba(43,47,56,.95);--accent:#cbd4e0;--accent2:#778394;--glow:#cbd4e033}body[data-theme="aurora"]{--bg:#061b21;--panel:rgba(7,40,49,.93);--accent:#68ffd0;--accent2:#a18bff;--glow:#68ffd044}body[data-theme="sunset"]{--bg:#27110f;--panel:rgba(60,28,25,.94);--accent:#ffc27f;--accent2:#ff6378;--glow:#ffc27f44}body[data-theme="ice"]{--bg:#0d1c2d;--panel:rgba(24,48,69,.94);--accent:#e0f8ff;--accent2:#83c6ff;--glow:#83c6ff44}body[data-theme="vapor"]{--bg:#1a0c30;--panel:rgba(43,22,70,.94);--accent:#ff91ef;--accent2:#62eaff;--glow:#ff91ef44}body[data-theme="desert"]{--bg:#281a0a;--panel:rgba(63,43,20,.94);--accent:#f2d18a;--accent2:#c27c47;--glow:#f2d18a44}body[data-theme="matrix"]{--bg:#020f08;--panel:rgba(5,34,20,.94);--accent:#4bff91;--accent2:#16b96b;--glow:#4bff9144}body[data-theme="arcade"]{--bg:#100d24;--panel:rgba(32,25,62,.94);--accent:#ffe66e;--accent2:#fb51aa;--glow:#fb51aa44}body[data-theme="plum"]{--bg:#1b0d29;--panel:rgba(47,24,67,.94);--accent:#d9adff;--accent2:#8d83ff;--glow:#d9adff44}
+    body[data-wallpaper="stadium"]:before{background:linear-gradient(180deg,#020b1a66,#031a1666),url("assets/wallpapers/stadium.svg") center/cover no-repeat;opacity:.34}body[data-wallpaper="cinema"]:before{background:linear-gradient(180deg,#05040b66,#09050b88),url("assets/wallpapers/cinema.svg") center/cover no-repeat;opacity:.34}body[data-wallpaper="film"]:before{background:linear-gradient(180deg,#070a1766,#05070b88),url("assets/wallpapers/film.svg") center/cover no-repeat;opacity:.30}body[data-wallpaper="animation"]:before{background:linear-gradient(180deg,#0d0a1f66,#0a0c2266),url("assets/wallpapers/animation.svg") center/cover no-repeat;opacity:.34}body[data-wallpaper="aurora"]:before{background:linear-gradient(180deg,#04132366,#04101c77),url("assets/wallpapers/aurora.svg") center/cover no-repeat;filter:blur(2px);opacity:.4}body.motion-off:before,body.motion-off:after{animation:none!important}
+    button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}a{color:inherit}
+    .app{width:min(1240px,100%);margin:auto;padding:12px 13px calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:20px;background:var(--panel);backdrop-filter:blur(20px);box-shadow:var(--shadow)}.brand{display:flex;align-items:center;gap:11px;min-width:0}.brand-mark{width:44px;height:44px;flex:none;filter:drop-shadow(0 0 12px var(--glow))}.brand-name{font-size:clamp(20px,3.2vw,29px);font-weight:900;letter-spacing:1px;line-height:1;background:linear-gradient(100deg,var(--text),var(--accent),var(--accent2));background-size:180% auto;background-clip:text;color:transparent;animation:shimmer 6s linear infinite}.brand-sub{font-size:10px;color:var(--muted);margin-top:4px}.credit-top{font-size:10px;color:var(--muted);margin-top:3px}.credit-top b{color:var(--accent)}.top-actions{display:flex;align-items:center;gap:6px}.icon-btn{width:39px;height:39px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);display:grid;place-items:center;font-size:18px;transition:.2s}.icon-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+    .player-card{overflow:hidden;border:1px solid color-mix(in srgb,var(--accent) 65%,var(--line));border-radius:22px;background:var(--panel);box-shadow:0 0 26px var(--glow),var(--shadow)}.video-wrap{position:relative;aspect-ratio:16/8.8;min-height:240px;max-height:520px;background:radial-gradient(ellipse at 50% 40%,#144c79 0,transparent 48%),linear-gradient(160deg,#06101f,#092b3c 58%,#06120f);overflow:hidden}.video-wrap:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 48px,#ffffff07 49px 51px),linear-gradient(180deg,transparent 65%,#0009)}.video-wrap:after{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background:url("assets/wallpapers/stadium.svg") center/cover no-repeat;opacity:.16;transition:opacity .25s}body[data-wallpaper="cinema"] .video-wrap:after{background-image:url("assets/wallpapers/cinema.svg")}body[data-wallpaper="film"] .video-wrap:after{background-image:url("assets/wallpapers/film.svg")}body[data-wallpaper="animation"] .video-wrap:after{background-image:url("assets/wallpapers/animation.svg")}body[data-wallpaper="aurora"] .video-wrap:after{background-image:url("assets/wallpapers/aurora.svg")} .video-wrap video{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;background:#000;filter:var(--video-filter) brightness(var(--brightness,1));transition:filter .2s}.player-top{position:absolute;z-index:3;top:11px;right:12px;left:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;pointer-events:none}.now-playing{max-width:75%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:7px 11px;border:1px solid #ffffff35;border-radius:11px;background:#07111bdc;backdrop-filter:blur(10px);font-size:12px}.live-mark{display:inline-flex;align-items:center;gap:6px;color:#ff7186;font-size:10px;font-weight:900}.live-mark:before{content:"";width:7px;height:7px;border-radius:50%;background:#ff526f;box-shadow:0 0 8px #ff526f;animation:none}.placeholder{position:absolute;z-index:2;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;padding:22px;color:#eaf5ff;pointer-events:none}.placeholder .orb{width:76px;height:76px;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;background:#061a28a8;box-shadow:0 0 42px var(--glow);font-size:28px;color:var(--accent);animation:bob 3s ease-in-out infinite}.placeholder strong{font-size:17px}.placeholder small{font-size:11px;color:#bacbd8}.player-controls{position:absolute;z-index:4;bottom:0;right:0;left:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;background:linear-gradient(transparent,#02070de8)}.control-btn{min-width:37px;height:36px;border-radius:11px;border:1px solid #ffffff38;background:#06121cbb;display:grid;place-items:center;font-size:16px}.control-btn.primary{border-color:var(--accent);color:var(--accent)}.seek{flex:1;min-width:80px;accent-color:var(--accent)}.time-label{font-size:10px;color:#e0e9f2;white-space:nowrap}.player-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.player-settings{display:none;padding:12px;border-top:1px solid var(--line);background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 8%,var(--panel)),var(--panel))}.player-settings.open{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.quick-setting{min-width:0;display:grid;gap:6px}.quick-setting label{font-size:11px;color:var(--muted)}.quick-setting input,.quick-setting select{width:100%;min-width:0}.quick-setting select,.form-select,.form-input{background:#071522;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px 9px;font-size:12px}.quick-setting input[type=range]{accent-color:var(--accent)}.quick-setting small{font-size:10px;color:var(--muted)}
+    .category-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.category-btn{min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 7px;border:1px solid var(--line);border-radius:15px;background:var(--panel);box-shadow:0 8px 22px #0003;color:var(--muted);font-weight:800;font-size:12px;transition:.18s}.category-btn .cat-icon{font-size:20px;line-height:1}.category-btn.active{color:#06131d;background:linear-gradient(125deg,var(--accent),var(--accent2));border-color:transparent;box-shadow:0 5px 22px var(--glow)}.category-btn:active{transform:scale(.98)}
+    .channels-panel{border:1px solid var(--line);border-radius:20px;background:var(--panel);backdrop-filter:blur(16px);box-shadow:var(--shadow);overflow:hidden}.channels-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-bottom:1px solid var(--line)}.channels-title{min-width:0}.channels-title h2{font-size:15px;margin:0}.channels-title p{font-size:10px;margin:3px 0 0;color:var(--muted)}.channel-tools{display:flex;align-items:center;gap:7px}.search{width:min(245px,35vw);padding:9px 11px;background:#06131c88;border:1px solid var(--line);border-radius:11px;color:var(--text);font-size:12px}.channel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:11px}.channel-card{min-width:0;min-height:77px;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:var(--card-radius);background:linear-gradient(140deg,var(--panel2),#0002);transition:transform .16s,border-color .16s,background .16s;cursor:pointer}.channel-card:hover,.channel-card.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--panel2));transform:translateY(-1px)}.channel-logo{width:43px;height:43px;flex:none;border-radius:12px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 22%,transparent),color-mix(in srgb,var(--accent2) 20%,transparent));border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);font-weight:900;font-size:16px;color:var(--accent)}.channel-logo img{display:block;width:100%;height:100%;object-fit:contain;padding:3px}.channel-copy{min-width:0;flex:1}.channel-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.channel-group{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.play-mini{width:29px;height:29px;flex:none;border-radius:50%;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);display:grid;place-items:center;color:var(--accent);font-size:12px;background:#001b2b55}.empty{padding:25px 12px;text-align:center;color:var(--muted);line-height:2;font-size:12px}.empty b{color:var(--accent)}.refresh-row{display:flex;justify-content:center;padding:7px 12px 14px}.refresh-btn{width:min(560px,100%);min-height:48px;border:1px solid var(--accent);border-radius:999px;background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 16%,var(--panel)),color-mix(in srgb,var(--accent2) 16%,var(--panel)));box-shadow:0 0 20px var(--glow);font-weight:900;font-size:13px;color:var(--text);display:flex;align-items:center;justify-content:center;gap:10px}.refresh-btn:disabled{opacity:.6;cursor:wait}.refresh-btn .spin{display:inline-block;font-size:20px}.refresh-btn.loading .spin{animation:spin .9s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .site-credit{text-align:center;padding:7px 10px 5px;font-size:12px;color:var(--muted)}.site-credit b{color:var(--accent)}.bottom-nav{position:fixed;z-index:20;bottom:calc(8px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(760px,calc(100% - 20px));display:grid;grid-template-columns:repeat(5,1fr);padding:6px;border:1px solid var(--line);border-radius:20px;background:#07131eeF;backdrop-filter:blur(20px);box-shadow:0 12px 40px #0009}.nav-btn{border:0;background:transparent;border-radius:14px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--muted);font-size:10px}.nav-btn .nav-icon{font-size:18px}.nav-btn.active{background:linear-gradient(130deg,color-mix(in srgb,var(--accent) 24%,transparent),color-mix(in srgb,var(--accent2) 20%,transparent));color:var(--accent)}
+    .modal-backdrop{position:fixed;z-index:50;inset:0;display:none;align-items:flex-end;justify-content:center;padding:12px;background:#0009;backdrop-filter:blur(6px)}.modal-backdrop.open{display:flex}.settings-modal{width:min(720px,100%);max-height:min(88vh,850px);overflow:auto;border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:0 20px 70px #000b;padding:15px}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.modal-head h2{font-size:17px;margin:0}.close-btn{border:1px solid var(--line);background:var(--panel2);border-radius:10px;width:36px;height:36px;font-size:17px}.settings-tabs{display:flex;gap:6px;overflow:auto;padding-bottom:7px}.settings-tab{white-space:nowrap;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--muted);padding:8px 11px;font-size:11px}.settings-tab.active{color:var(--accent);border-color:var(--accent)}.settings-content{display:none;padding:9px 2px}.settings-content.active{display:block}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.setting-card{min-width:0;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);display:grid;gap:7px}.setting-card label,.setting-card .setting-label{font-size:11px;color:var(--muted)}.setting-card small{font-size:10px;color:var(--muted);line-height:1.8}.setting-card .form-select,.setting-card .form-input{width:100%;min-width:0}.switch-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px}.switch-line input{accent-color:var(--accent);width:18px;height:18px}.theme-preview{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.theme-dot{width:23px;height:23px;border-radius:50%;border:2px solid transparent;cursor:pointer}.theme-dot.active{outline:2px solid var(--text);outline-offset:2px}.help-note{font-size:11px;color:var(--muted);line-height:1.9;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;margin-top:12px}.toast{position:fixed;z-index:70;bottom:calc(82px + env(safe-area-inset-bottom));left:50%;transform:translate(-50%,12px);opacity:0;pointer-events:none;max-width:min(92vw,520px);padding:10px 15px;border:1px solid var(--accent);border-radius:12px;background:var(--panel);box-shadow:var(--shadow);font-size:12px;line-height:1.8;text-align:center;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}
+    body.hide-groups .channel-group{display:none}body.soft-effects .player-card,body.soft-effects .channels-panel,body.soft-effects .topbar{box-shadow:none}body.compact .channel-card{min-height:61px;padding:7px;gap:7px}body.compact .channel-logo{width:34px;height:34px;border-radius:9px}body.compact .channel-name{font-size:11px}body.compact .channel-group{font-size:9px}body.columns-2 .channel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.columns-3 .channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}body.columns-4 .channel-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    @media(min-width:900px){.app{padding-top:18px}.video-wrap{aspect-ratio:16/8.2}.channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:650px){.app{padding:7px 7px calc(85px + env(safe-area-inset-bottom));gap:9px}.topbar{padding:8px 10px;border-radius:15px}.brand-mark{width:37px;height:37px}.brand{gap:8px}.brand-name{font-size:21px}.brand-sub{font-size:9px}.credit-top{font-size:9px}.icon-btn{width:34px;height:34px;font-size:16px}.top-actions{gap:4px}.video-wrap{aspect-ratio:16/10;min-height:220px;max-height:390px}.player-card{border-radius:17px}.placeholder .orb{width:60px;height:60px;font-size:23px}.placeholder strong{font-size:14px}.placeholder small{font-size:10px}.player-controls{gap:5px;padding:7px}.control-btn{width:34px;min-width:34px;height:33px;font-size:14px}.time-label{font-size:9px}.player-settings.open{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.category-bar{display:flex;overflow-x:auto;padding:1px 1px 5px;scroll-snap-type:x mandatory}.category-btn{flex:0 0 31%;min-height:58px;flex-direction:column;gap:4px;border-radius:13px;font-size:10px;scroll-snap-align:start}.category-btn .cat-icon{font-size:18px}.channels-head{padding:10px}.channels-title h2{font-size:13px}.channels-title p{font-size:9px}.channel-tools{flex:1;justify-content:flex-end}.search{width:min(48vw,190px);font-size:11px;padding:8px}.channel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px}.channel-card{position:relative;min-height:100px;padding:8px 5px 24px;gap:5px;border-radius:13px;flex-direction:column;justify-content:center;text-align:center}.channel-logo{width:35px;height:35px;border-radius:9px;font-size:13px}.channel-copy{width:100%;flex:0 1 auto;text-align:center}.channel-name{font-size:10px}.channel-group{font-size:8px}.play-mini{position:absolute;bottom:5px;left:6px;width:19px;height:19px;font-size:9px}.refresh-btn{min-height:44px;font-size:12px}.site-credit{font-size:11px}.bottom-nav{width:calc(100% - 14px);bottom:calc(5px + env(safe-area-inset-bottom));border-radius:17px}.nav-btn{min-height:49px;font-size:9px}.nav-btn .nav-icon{font-size:17px}.modal-backdrop{padding:7px}.settings-modal{border-radius:18px;padding:12px;max-height:90vh}.settings-grid{gap:8px}.setting-card{padding:9px}.setting-card label,.setting-card .setting-label{font-size:10px}}
+    @media(max-width:380px){.brand-mark{width:32px;height:32px}.brand-name{font-size:18px}.credit-top{font-size:8px}.top-actions .icon-btn{width:31px;height:31px}.channel-card{gap:5px;padding:6px}.channel-logo{width:31px;height:31px}.play-mini{width:22px;height:22px}.channel-name{font-size:10px}.channel-group{font-size:8px}}
+    /* Local, lightweight illustrated wallpapers; theme colors remain user-selectable. */
+    body:before{inset:0;background-position:center;background-repeat:no-repeat;background-size:cover,cover;opacity:.22;}
+    body[data-wallpaper="stadium"]:before{background-image:linear-gradient(180deg,#03111c55,#03111cbb),url("assets/wallpapers/stadium.svg");}
+    body[data-wallpaper="cinema"]:before{background-image:linear-gradient(180deg,#09040b55,#09040bbb),url("assets/wallpapers/cinema.svg");}
+    body[data-wallpaper="film"]:before{background-image:linear-gradient(180deg,#06101a55,#06101abb),url("assets/wallpapers/film.svg");}
+    body[data-wallpaper="animation"]:before{background-image:linear-gradient(180deg,#11102755,#111027bb),url("assets/wallpapers/animation.svg");}
+    body[data-wallpaper="aurora"]:before{background-image:linear-gradient(180deg,#03131c55,#03131cbb),url("assets/wallpapers/aurora.svg");}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+  
+    /* TITAN 3.0 responsive visual refinements */
+    .app{max-width:1500px}
+    .topbar{background:linear-gradient(110deg,rgba(3,18,31,.97),rgba(5,34,51,.88));border-color:color-mix(in srgb,var(--accent) 35%,var(--line));}
+    .brand-mark{width:52px;height:52px}
+    .brand-name{font-size:clamp(25px,3.6vw,36px)}
+    .brand-sub{font-size:11px}
+    .credit-top{font-size:10px}
+    .player-card{border-width:2px}
+    .video-wrap{aspect-ratio:16/8.15;min-height:290px;max-height:610px}
+    .video-wrap:after{opacity:.30}
+    .video-wrap video{background:transparent}
+    .player-settings.open{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .channels-panel{background:linear-gradient(145deg,rgba(5,26,41,.90),rgba(2,12,22,.96));border-color:color-mix(in srgb,var(--accent) 22%,var(--line))}
+    .channel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px}
+    .channel-card{min-width:0;min-height:144px;padding:10px 9px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;border-radius:18px;background:linear-gradient(145deg,rgba(28,47,68,.92),rgba(6,15,26,.96));border:1px solid rgba(153,204,235,.4);box-shadow:inset 0 1px 0 #ffffff10,0 8px 24px #0004}
+    .channel-card:hover,.channel-card.active{border-color:var(--accent);box-shadow:0 0 20px var(--glow),inset 0 1px 0 #ffffff12;transform:translateY(-2px)}
+    .channel-logo{width:100%;height:88px;max-width:100%;border:0;border-radius:10px;background:transparent;box-shadow:none;font-size:24px;color:var(--text)}
+    .channel-logo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;padding:0;border:0;filter:drop-shadow(0 4px 8px #0005)}
+    .channel-copy{width:100%;flex:0 0 auto;min-width:0;text-align:center}
+    .channel-name{display:block;width:100%;font-size:clamp(10px,1.1vw,14px);font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.1px}
+    .channel-group,.play-mini{display:none!important}
+    .refresh-btn{min-height:54px;font-size:15px;letter-spacing:.1px}
+    .category-btn{background:linear-gradient(145deg,rgba(26,44,64,.92),rgba(4,14,24,.96))}
+    .category-btn.active{box-shadow:0 0 22px var(--glow)}
+    .site-credit{font-size:13px;letter-spacing:.1px}
+    .install-btn:not([hidden]){display:grid;border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px var(--glow)}
+    .player-controls{gap:7px}
+    .icon-btn,.control-btn{touch-action:manipulation}
+    @media(min-width:900px){.video-wrap{aspect-ratio:16/7.7;min-height:390px}.channel-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.channel-card{min-height:158px}.channel-logo{height:100px}}
+    @media(min-width:1250px){.channel-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.channel-card{min-height:165px}}
+    @media(max-width:899px){.channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.video-wrap{aspect-ratio:16/9;min-height:250px}.player-settings.open{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:650px){body.columns-6 .channel-grid,body.columns-8 .channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.app{padding:6px 7px calc(90px + env(safe-area-inset-bottom));gap:9px}.topbar{padding:8px 9px;gap:5px}.brand-mark{width:36px;height:36px}.brand-name{font-size:20px}.brand-sub{font-size:8px}.credit-top{font-size:8px}.top-actions{gap:3px}.top-actions .icon-btn{width:31px;height:31px;font-size:14px}.video-wrap{aspect-ratio:16/9;min-height:205px;max-height:390px}.player-card{border-radius:16px}.player-top{top:7px;right:7px;left:7px}.now-playing{font-size:10px;padding:5px 8px}.player-controls{padding:6px;gap:4px}.control-btn{min-width:31px;width:31px;height:30px;font-size:12px}.seek{min-width:52px}.time-label{font-size:8px}.player-tools{gap:3px}.player-settings.open{grid-template-columns:repeat(2,minmax(0,1fr));padding:9px}.category-bar{gap:6px}.category-btn{flex:0 0 30%;min-height:58px}.channels-head{padding:9px 10px}.channels-title h2{font-size:12px}.channels-title p{font-size:9px}.channel-tools{gap:4px}.search{width:min(47vw,165px);padding:7px 8px;font-size:10px}.channel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px}.channel-card{min-height:105px;padding:7px 4px 8px;gap:5px;border-radius:12px}.channel-logo{height:58px;width:100%;border-radius:8px}.channel-name{font-size:clamp(9px,2.9vw,11px)}.refresh-btn{min-height:45px;font-size:11px}.site-credit{font-size:10px}.bottom-nav{width:calc(100% - 14px);bottom:calc(5px + env(safe-area-inset-bottom))}.nav-btn{min-height:48px;font-size:9px}.modal-backdrop{padding:6px}.settings-modal{max-height:91vh;padding:10px}.settings-grid{gap:7px}.setting-card{padding:8px}.settings-tabs{gap:5px}.settings-tab{font-size:10px;padding:7px 8px}}
+    @media(max-width:360px){.brand-mark{width:31px;height:31px}.brand-name{font-size:17px}.credit-top{font-size:7px}.top-actions .icon-btn{width:29px;height:29px}.channel-card{min-height:96px}.channel-logo{height:51px}.channel-name{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){body:before,body:after,.brand-name{animation:none!important}}
+
+    /* TITAN 3.2.1: keep every channel logo fully visible on every screen. */
+    .channel-card{overflow:visible}
+    .channel-logo{
+      width:100%!important;
+      height:88px!important;
+      min-height:0;
+      flex:0 0 auto;
+      display:flex!important;
+      align-items:center;
+      justify-content:center;
+      overflow:visible!important;
+      padding:6px 9px!important;
+      box-sizing:border-box;
+      border:0!important;
+      border-radius:10px;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    .channel-logo img{
+      display:block;
+      width:auto!important;
+      height:auto!important;
+      max-width:100%!important;
+      max-height:100%!important;
+      object-fit:contain!important;
+      object-position:center center!important;
+      padding:0!important;
+      margin:auto;
+      border:0!important;
+      flex:none;
+      filter:drop-shadow(0 3px 7px #0006);
+    }
+    @media(max-width:650px){
+      .channel-logo{height:62px!important;padding:5px 8px!important}
+      .channel-logo img{max-width:100%!important;max-height:100%!important}
+    }
+    @media(max-width:360px){
+      .channel-logo{height:56px!important;padding:4px 7px!important}
+    }
+    body.compact .channel-card{min-height:96px!important}
+    body.compact .channel-logo{height:48px!important;padding:3px 6px!important}
+    @media(max-width:650px){
+      body.compact .channel-card{min-height:82px!important}
+      body.compact .channel-logo{height:44px!important}
+    }
+    @media(max-width:360px){body.compact .channel-logo{height:40px!important}}
+
+
+    /* TITAN 3.2.3 mobile performance: static lightweight backdrop, no GPU-heavy blur or infinite motion. */
+    @media (max-width: 768px), (pointer: coarse){
+      html{scroll-behavior:auto}
+      body{background-attachment:scroll;transition:none}
+      body:before{inset:0!important;animation:none!important;filter:none!important;transform:none!important;will-change:auto!important;background-position:center center!important;background-size:cover!important;}
+      body:after{display:none!important;animation:none!important;filter:none!important}
+      .topbar,.channels-panel,.bottom-nav,.modal-backdrop,.now-playing,.settings-modal{
+        -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+      }
+      .topbar,.channels-panel,.bottom-nav,.settings-modal{box-shadow:0 5px 16px #0005}
+      .brand-name,.placeholder .orb,.live-mark:before{animation:none!important}
+      .video-wrap:after{transition:none!important;filter:none!important;animation:none!important}
+      .channel-card,.category-btn,.icon-btn,.control-btn,.nav-btn,.refresh-btn{transition:none!important}
+      .channel-card:hover,.channel-card.active{transform:none!important;box-shadow:inset 0 1px 0 #ffffff10,0 4px 12px #0004}
+      .channel-logo img{filter:none!important}
+      .refresh-btn.loading .spin{animation:none!important}
+    }
+    @media (max-width: 768px) and (prefers-reduced-motion:no-preference){
+      /* Keep only interaction feedback; decorative loops stay static on phones. */
+      *,*:before,*:after{scroll-behavior:auto}
+      body:before,body:after,.brand-name,.placeholder .orb,.live-mark:before{animation:none!important}
+    }
+
+    /* TITAN player layout: keep the player visible and scroll only the channel list. */
+    .player-card{position:sticky;top:max(6px,env(safe-area-inset-top));z-index:25;isolation:isolate}
+    .channels-panel{min-height:0}
+    .channel-grid{max-height:min(48vh,560px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--accent) transparent;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+    .channel-grid::-webkit-scrollbar{width:7px}
+    .channel-grid::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--accent) 65%,transparent);border-radius:20px}
+    .category-bar{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .channel-card .channel-logo img{max-width:100%;max-height:100%;object-fit:contain}
+    @media(max-width:650px){
+      .player-card{top:max(4px,env(safe-area-inset-top))}
+      .channel-grid{max-height:42vh;min-height:190px}
+      .category-bar{gap:6px}
+    }
+
+    /* TITAN 3.4 — professional player layout, uncropped stage and square channel tiles. */
+    body[data-theme="gold"]{--bg:#090909;--panel:rgba(20,17,10,.97);--panel2:rgba(255,195,48,.075);--line:rgba(255,190,38,.27);--text:#fff7e5;--muted:#c6b58c;--accent:#ffc21c;--accent2:#e58a00;--glow:rgba(255,184,0,.34)}
+    body[data-theme="redgold"]{--bg:#090608;--panel:rgba(24,9,12,.97);--panel2:rgba(255,72,45,.075);--line:rgba(255,164,38,.30);--text:#fff4e9;--muted:#c8aa9a;--accent:#ff3b35;--accent2:#ffc21c;--glow:rgba(255,57,37,.32)}
+    body[data-theme="gold"],body[data-theme="redgold"]{background-image:radial-gradient(ellipse at 12% 8%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 38%)}
+    body.professional-ui:before,body.professional-ui:after{animation:none!important;opacity:.12}
+    .app{max-width:1600px;gap:14px}
+    .topbar,.channels-panel,.player-card,.settings-modal{backdrop-filter:none;-webkit-backdrop-filter:none}
+    .topbar{background:var(--panel);border-color:var(--line);box-shadow:0 10px 26px #0007}
+    .brand-name{animation:none;background:none;color:var(--text);letter-spacing:1.4px}
+    .brand-name:after{content:"";display:inline-block;width:7px;height:7px;margin-inline-start:7px;border-radius:2px;background:var(--accent);vertical-align:middle}
+    .player-card{overflow:hidden;border-width:1px;border-color:var(--line);border-radius:16px;box-shadow:0 12px 34px #0008}
+    .video-wrap{position:relative;aspect-ratio:16/9;min-height:260px;max-height:72vh;height:auto;background:#000;overflow:hidden}
+    .video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;transform-origin:center center}
+    .video-wrap:before{display:none}.video-wrap:after{opacity:.045!important}
+    .video-wrap.portrait{aspect-ratio:9/16;width:min(100%,520px);max-height:72vh;min-height:340px;margin-inline:auto}
+    .video-wrap.mirror video{transform:scaleX(-1)}
+    .player-top{top:10px;right:10px;left:10px}
+    .now-playing{background:#080b10e8;border-color:#ffffff22}
+    .placeholder{background:radial-gradient(ellipse at center,#111a22aa,transparent 66%)}
+    .placeholder .orb{width:60px;height:60px;border-radius:14px;border-color:var(--line);background:#10151b;box-shadow:none;animation:none}
+    .placeholder strong{font-weight:700;letter-spacing:.2px}
+    .player-controls{position:relative;inset:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:10px 12px;background:#0a0e13;border-top:1px solid var(--line)}
+    .control-btn{min-width:39px;height:38px;border-radius:9px;background:#141a20;border-color:var(--line);font-size:15px}
+    .control-btn:hover,.control-btn:focus-visible{border-color:var(--accent);color:var(--accent)}
+    .control-btn.primary{background:color-mix(in srgb,var(--accent) 13%,#111);border-color:var(--accent)}
+    .player-tools{gap:5px}
+    .player-settings.open{grid-template-columns:repeat(4,minmax(0,1fr));background:#0c1117;border-top-color:var(--line)}
+    .quick-setting select,.form-select,.form-input{background:#111820;border-color:var(--line)}
+    .channels-panel{background:var(--panel);border-color:var(--line)}
+    .channel-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding:12px}
+    .channel-card{aspect-ratio:1/1;min-height:0!important;padding:9px!important;gap:7px;border-radius:13px;background:#111820;border:1px solid var(--line);box-shadow:none;justify-content:center}
+    .channel-card:hover,.channel-card.active{transform:none;border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),0 7px 18px #0005}
+    .channel-logo{width:min(72%,96px)!important;height:auto!important;aspect-ratio:1/1;min-height:0!important;padding:5px!important;border:1px solid var(--line)!important;border-radius:11px!important;background:#080d12!important;overflow:hidden!important}
+    .channel-logo img{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;filter:none!important}
+    .channel-copy{width:100%;min-width:0;flex:0 0 auto;text-align:center}
+    .channel-name{font-size:clamp(9px,1vw,13px);font-weight:700;line-height:1.5;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+    .channel-group,.play-mini{display:none!important}
+    .category-btn{background:#111820;border-color:var(--line);border-radius:11px;box-shadow:none}
+    .category-btn .cat-icon{font-size:16px;filter:none}
+    .category-btn.active{color:#090909;background:linear-gradient(120deg,var(--accent),var(--accent2));box-shadow:none}
+    .refresh-btn{min-height:46px;border-radius:11px;box-shadow:none;font-size:13px}
+    .bottom-nav{background:#0b1016;border-color:var(--line);backdrop-filter:none;box-shadow:0 8px 26px #0009}
+    .nav-btn.active{background:color-mix(in srgb,var(--accent) 13%,transparent);color:var(--accent)}
+    .site-credit{font-size:11px}
+    .player-controls .seek{min-width:70px;accent-color:var(--accent)}
+    .video-wrap:fullscreen{width:100vw;height:100vh;max-height:none;aspect-ratio:auto;background:#000}
+    .player-card:fullscreen{width:100vw;height:100vh;max-width:none;border:0;border-radius:0;background:#000;display:flex;flex-direction:column;justify-content:center}
+    .player-card:fullscreen .video-wrap{flex:1;min-height:0;max-height:none;aspect-ratio:auto}
+    .player-card:fullscreen .player-controls{flex:none}
+    @media(min-width:1100px){.channel-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+    @media(min-width:1450px){body.columns-8 .channel-grid{grid-template-columns:repeat(8,minmax(0,1fr))}}
+    @media(min-width:900px){body.columns-8 .channel-grid{grid-template-columns:repeat(8,minmax(0,1fr))}.video-wrap{aspect-ratio:16/9;min-height:350px;max-height:72vh}}
+    body.columns-2 .channel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    body.columns-3 .channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    body.columns-4 .channel-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    body.columns-6 .channel-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+    body.columns-8 .channel-grid{grid-template-columns:repeat(8,minmax(0,1fr))}
+    body.compact .channel-card{min-height:0!important;padding:7px!important}
+    @media(max-width:899px){body.columns-6 .channel-grid,body.columns-8 .channel-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.channel-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.player-settings.open{grid-template-columns:repeat(2,minmax(0,1fr))}.video-wrap{min-height:245px}}
+    @media(max-width:650px){body.columns-6 .channel-grid,body.columns-8 .channel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.app{padding:6px 7px calc(90px + env(safe-area-inset-bottom));gap:9px}.video-wrap{aspect-ratio:16/9;min-height:205px;max-height:58vh}.video-wrap.portrait{width:min(100%,380px);aspect-ratio:9/16;min-height:300px;max-height:65vh}.player-controls{padding:7px;gap:4px}.control-btn{min-width:32px;width:32px;height:32px;font-size:12px}.player-tools{gap:3px}.player-settings.open{grid-template-columns:repeat(2,minmax(0,1fr));padding:9px}.channel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px}.channel-card{padding:6px!important;gap:5px;border-radius:10px}.channel-logo{width:72%!important;border-radius:8px!important}.channel-name{font-size:clamp(8px,2.6vw,10px)}.category-btn{border-radius:10px}.placeholder .orb{width:48px;height:48px}.channels-head{padding:9px 10px}}
+    @media(max-width:360px){.channel-grid{gap:5px;padding:6px}.channel-card{padding:4px!important}.channel-logo{width:78%!important}.channel-name{font-size:8px}.video-wrap{min-height:190px}.player-tools{flex-wrap:nowrap}}
+    @media(prefers-reduced-motion:reduce){.player-card,.channel-card,.control-btn{transition:none!important}}
+
+    .quality-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;background:#0c1117;border-top:1px solid var(--line)}
+    .quality-caption{display:grid;gap:2px;min-width:0}.quality-caption b{font-size:12px;color:var(--text)}.quality-caption small{font-size:10px;color:var(--muted);line-height:1.5}
+    .quality-bar select{width:min(220px,40%);min-width:120px;background:#111820;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12px}
+    .quality-bar select:disabled{opacity:.7}
+    .quick-volume{display:flex;align-items:center;gap:8px;min-width:135px;width:min(190px,26%);padding-inline:8px}.quick-volume label{display:flex;align-items:center;gap:4px;white-space:nowrap;font-size:11px;color:var(--text)}.quick-volume input{width:100%;min-width:55px;accent-color:var(--accent);touch-action:pan-x}
+    @media(max-width:650px){.quality-bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);row-gap:7px;column-gap:9px}.quality-caption{grid-column:1/-1}.quality-bar select{width:100%;min-width:0}.quick-volume{width:100%;min-width:0;padding:0 4px}.quick-volume input{min-width:0}}
+    @media(max-width:650px){.quality-bar{padding:8px;gap:8px}.quality-caption b{font-size:11px}.quality-caption small{font-size:9px}.quality-bar select{width:100%;min-width:0;padding:7px 8px;font-size:11px}.quick-volume label{font-size:10px}.quick-volume input{min-width:0;width:100%}}
+
+    /* TITAN 4.0: responsive player/channel workspace; all earlier layouts remain available. */
+    .workspace{display:grid;grid-template-columns:1fr;grid-template-areas:"player" "channels";gap:12px;min-width:0;align-items:start;direction:ltr}
+    .player-column{grid-area:player;min-width:0;direction:rtl}
+    .channel-column{grid-area:channels;min-width:0;direction:rtl;display:flex;flex-direction:column;gap:10px}
+    body[data-channel-position="left"] .workspace{grid-template-columns:minmax(240px,var(--channel-column-width,340px)) minmax(0,1fr);grid-template-areas:"channels player";min-height:calc(100vh - 118px)}
+    body[data-channel-position="right"] .workspace{grid-template-columns:minmax(0,1fr) minmax(240px,var(--channel-column-width,340px));grid-template-areas:"player channels";min-height:calc(100vh - 118px)}
+    body[data-channel-position="left"] .channel-column,body[data-channel-position="right"] .channel-column{position:sticky;top:max(8px,env(safe-area-inset-top));height:calc(100vh - 126px);min-height:360px;overflow:hidden}
+    body[data-channel-position="left"] .channels-panel,body[data-channel-position="right"] .channels-panel{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+    body[data-channel-position="left"] .channel-grid,body[data-channel-position="right"] .channel-grid{flex:1;min-height:0;max-height:none;overflow-y:auto}
+    body[data-channel-position="left"] .category-bar,body[data-channel-position="right"] .category-bar{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    body[data-channel-position="left"] .category-btn,body[data-channel-position="right"] .category-btn{font-size:11px;padding:9px 5px}
+    body[data-channel-position="left"] .channel-grid,body[data-channel-position="right"] .channel-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}
+    body.no-independent-scroll[data-channel-position="left"] .channel-column,body.no-independent-scroll[data-channel-position="right"] .channel-column{position:static;height:auto;overflow:visible}
+    body.no-independent-scroll[data-channel-position="left"] .channel-grid,body.no-independent-scroll[data-channel-position="right"] .channel-grid{max-height:55vh;overflow:auto}
+    .media-info-row{padding:7px 12px;background:#080d12;border-top:1px solid var(--line);color:var(--muted);font:11px/1.8 Tahoma,Vazirmatn,sans-serif;overflow-wrap:anywhere;direction:rtl}
+    .retry-playback-btn{display:none;pointer-events:auto;margin-top:10px;padding:8px 15px;border:1px solid var(--accent);border-radius:10px;background:#111820;color:var(--text);font-weight:800}
+    .retry-playback-btn:not([hidden]){display:inline-block}
+    .compat-results{max-height:260px;overflow:auto;white-space:pre-wrap;direction:ltr;text-align:left;background:#070d12;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text);font:11px/1.8 ui-monospace,Consolas,monospace}
+    body[data-logo-fit="cover"] .channel-logo img{object-fit:cover!important}
+    body[data-logo-fit="fill"] .channel-logo img{object-fit:fill!important}
+    .channel-logo img{transform:scale(var(--logo-scale,1));transform-origin:center;}
+    body[data-logo-box="small"] .channel-logo{width:min(48%,72px)!important}
+    body[data-logo-box="large"] .channel-logo{width:min(88%,118px)!important}
+    body[data-logo-box="fill"] .channel-logo{width:100%!important;max-width:none!important;height:100%!important;aspect-ratio:auto!important;border-radius:8px!important}
+    body[data-logo-box="fill"] .channel-card{justify-content:stretch}
+    body.theater-mode .workspace{grid-template-columns:1fr;grid-template-areas:"player" "channels"}
+    body.theater-mode .video-wrap{max-height:82vh}
+    body:fullscreen{background:#05070a}
+    html:fullscreen body .app{max-width:none;width:100%;min-height:100vh;padding-top:8px}
+    .player-card:fullscreen, .player-card:-webkit-full-screen{width:100vw;height:100vh;max-width:none;border:0;border-radius:0;background:#000;display:flex;flex-direction:column;justify-content:center}
+    .player-card:fullscreen .video-wrap,.player-card:-webkit-full-screen .video-wrap{flex:1;min-height:0;max-height:none;aspect-ratio:auto}
+    @media(max-width:900px){body[data-channel-position="left"] .workspace,body[data-channel-position="right"] .workspace{grid-template-columns:1fr;grid-template-areas:"player" "channels";min-height:0}body[data-channel-position="left"] .channel-column,body[data-channel-position="right"] .channel-column{position:static;height:auto;min-height:0;overflow:visible}body[data-channel-position="left"] .channels-panel,body[data-channel-position="right"] .channels-panel{min-height:0}body[data-channel-position="left"] .channel-grid,body[data-channel-position="right"] .channel-grid{max-height:42vh;min-height:180px;overflow-y:auto}body[data-channel-position="left"] .category-bar,body[data-channel-position="right"] .category-bar{grid-template-columns:repeat(5,minmax(0,1fr))}}
+    @media(max-width:650px){.media-info-row{font-size:9px;padding:6px 8px}.player-tools{flex-wrap:wrap}.player-tools .control-btn{min-width:30px}.settings-tabs{overflow-x:auto;white-space:nowrap}.settings-tab{flex:0 0 auto}}
+    @media(prefers-reduced-motion:reduce){.workspace *{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body class="professional-ui" data-theme="ocean" data-wallpaper="stadium">
+  <main class="app" id="home">
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="assets/titan.svg" alt="TITAN">
+        <div><div class="brand-name">TITAN</div><div class="brand-sub">پخش‌کننده شبکه‌ها و ویدئو</div><div class="credit-top">سازنده و برنامه نویس : <b>امیر محمدی</b></div></div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="searchFocusBtn" aria-label="جستجو" title="جستجو">⌕</button>
+        <button class="icon-btn" id="refreshTopBtn" aria-label="بروزرسانی فهرست‌ها" title="بروزرسانی فهرست‌ها">⟳</button>
+        <button class="icon-btn install-btn" id="installBtn" aria-label="نصب برنامه" title="نصب TITAN" hidden>⬇</button>
+        <button class="icon-btn" id="openSettingsBtn" aria-label="تنظیمات" title="تنظیمات">⚙</button>
+      </div>
+    </header>
+
+    <div class="workspace" id="workspace">
+      <div class="player-column" id="playerColumn">
+    <section class="player-card" aria-label="پخش‌کننده">
+      <div class="video-wrap" id="videoWrap">
+        <video id="video" playsinline webkit-playsinline preload="none" controlslist="nodownload noplaybackrate" disablepictureinpicture="false"></video>
+        <div class="player-top"><div class="now-playing" id="nowPlaying">هنوز شبکه‌ای انتخاب نشده است</div><span class="live-mark" id="liveMark">آماده پخش</span></div>
+        <div class="placeholder" id="placeholder"><div class="orb" aria-hidden="true">▶</div><strong>به TITAN خوش آمدید</strong><small>یک شبکه را از فهرست پایین انتخاب کنید</small><button type="button" class="retry-playback-btn" id="retryPlaybackBtn">تلاش مجدد برای پخش</button></div>
+      </div>
+      <div class="player-controls" aria-label="کنترل‌های پخش">
+        <button class="control-btn" id="prevBtn" title="شبکه قبلی" aria-label="شبکه قبلی">⏮</button>
+        <button class="control-btn primary" id="playPauseBtn" title="پخش / مکث" aria-label="پخش یا مکث">▶</button>
+        <button class="control-btn" id="nextBtn" title="شبکه بعدی" aria-label="شبکه بعدی">⏭</button>
+        <button class="control-btn" id="muteBtn" title="صدا" aria-label="قطع یا وصل صدا">◖</button>
+        <span class="time-label" id="timeLabel">۰۰:۰۰</span>
+        <input class="seek" id="seekRange" type="range" min="0" max="100" value="0" aria-label="موقعیت پخش">
+        <div class="player-tools">
+          <button class="control-btn" id="orientationBtn" title="تغییر قاب افقی / عمودی" aria-label="تغییر قاب افقی یا عمودی">↕</button>
+          <button class="control-btn" id="flipBtn" title="آینه‌ای کردن تصویر" aria-label="آینه‌ای کردن تصویر">⇋</button>
+          <button class="control-btn" id="rotateBtn" title="چرخش ۹۰ درجه تصویر" aria-label="چرخش تصویر">⤾</button>
+          <button class="control-btn" id="pipBtn" title="تصویر در تصویر" aria-label="تصویر در تصویر">▣</button>
+          <button class="control-btn" id="theaterBtn" title="حالت سینمایی" aria-label="حالت سینمایی">▣</button>
+          <button class="control-btn" id="fullBtn" title="تمام‌صفحه پلیر داخل مرورگر" aria-label="تمام صفحه پلیر">⛶</button>
+          <button class="control-btn" id="appFullBtn" title="تمام‌صفحه برنامه" aria-label="تمام صفحه برنامه">⛶+</button>
+          <button class="control-btn" id="playerSettingsBtn" title="تنظیمات داخل پلیر" aria-label="تنظیمات پلیر">⚙</button>
+          <button class="control-btn" id="favCurrentBtn" title="افزودن به علاقه‌مندی‌ها" aria-label="علاقه‌مندی">☆</button>
+        </div>
+      </div>
+
+      <div class="quality-bar" aria-label="کیفیت و صدای پخش">
+        <div class="quality-caption"><b>کیفیت پخش</b><small id="qualityNote">کیفیت خودکار؛ انتخاب دستی با توجه به منبع فعال می‌شود.</small></div>
+        <select id="qualitySelect" class="form-select" aria-label="انتخاب کیفیت"><option value="auto">خودکار</option><option value="480">۴۸۰p</option><option value="720">۷۲۰p</option><option value="1080">۱۰۸۰p</option><option value="1440">۱۴۴۰p</option></select>
+        <div class="quick-volume"><label for="volumeRange" aria-label="میزان صدا">🔊 <b id="volumeValue">۸۰٪</b></label><input id="volumeRange" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="کم و زیاد کردن صدا"></div>
+      </div>
+      <div class="player-settings" id="playerSettings">
+        <div class="quick-setting"><label for="modeSelect">حالت تصویر</label><select id="modeSelect" class="form-select"><option value="standard">استاندارد</option><option value="classic">کلاسیک</option><option value="dynamic">پویا</option><option value="sport">ورزش</option><option value="cinema">سینما / فیلم</option></select></div>
+        <div class="quick-setting"><label for="fitSelectQuick">اندازه تصویر</label><select id="fitSelectQuick" class="form-select"><option value="contain">نمایش کامل بدون برش</option><option value="cover">پر کردن قاب</option></select></div>
+        <div class="quick-setting"><label for="brightnessRange">تنظیم نور تصویر <b id="brightnessValue">۱۰۰٪</b></label><input id="brightnessRange" type="range" min="0.5" max="1.5" step="0.05" value="1"></div>
+        <div class="quick-setting"><label for="playbackRateSelect">سرعت پخش</label><select id="playbackRateSelect" class="form-select"><option value="0.5">۰٫۵×</option><option value="0.75">۰٫۷۵×</option><option value="1" selected>۱× عادی</option><option value="1.25">۱٫۲۵×</option><option value="1.5">۱٫۵×</option><option value="1.75">۱٫۷۵×</option><option value="2">۲×</option></select></div>
+        <div class="quick-setting"><label for="audioTrackSelect">ترک صوتی / زبان</label><select id="audioTrackSelect" class="form-select"><option value="-1">خودکار / پیش‌فرض</option></select></div>
+        <div class="quick-setting"><label for="subtitleSelect">زیرنویس</label><select id="subtitleSelect" class="form-select"><option value="-1">خاموش</option></select></div>
+      </div>
+      <div class="media-info-row" id="mediaInfoBar" aria-live="polite">اطلاعات رسانه پس از تشخیص نمایش داده می‌شود.</div>
+    </section>
+
+      </div>
+      <aside class="channel-column" id="channelColumn">
+    <nav class="category-bar" id="categoryBar" aria-label="فهرست‌های پخش">
+      <button class="category-btn active" data-category="live"><span class="cat-icon" aria-hidden="true">◉</span><span>پخش زنده</span></button>
+      <button class="category-btn" data-category="list1"><span class="cat-icon" aria-hidden="true">▤</span><span>لیست پخش 1</span></button>
+      <button class="category-btn" data-category="list2"><span class="cat-icon" aria-hidden="true">⌁</span><span>لیست پخش 2</span></button>
+      <button class="category-btn" data-category="list3"><span class="cat-icon" aria-hidden="true">▶</span><span>لیست پخش 3</span></button>
+      <button class="category-btn" data-category="all"><span class="cat-icon" aria-hidden="true">▦</span><span>همه</span></button>
+    </nav>
+
+    <section class="channels-panel" id="channelsSection">
+      <div class="channels-head">
+        <div class="channels-title"><h2 id="categoryTitle">شبکه‌های استانی</h2><p id="channelCount">در حال دریافت فهرست...</p></div>
+        <div class="channel-tools"><input id="searchInput" class="search" type="search" placeholder="جستجوی شبکه..." aria-label="جستجوی شبکه"><button class="icon-btn" id="clearSearchBtn" title="پاک کردن جستجو">×</button></div>
+      </div>
+      <div class="channel-grid" id="channelGrid" aria-label="فهرست شبکه‌ها"><div class="empty">در حال خواندن فهرست شبکه‌ها...</div></div>
+      <div class="refresh-row"><button class="refresh-btn" id="refreshBtn"><span class="spin">⟳</span><span>بروزرسانی فهرست شبکه‌ها و لوگوها</span></button></div>
+    </section>
+      </aside>
+    </div>
+
+    <div class="site-credit">سازنده و برنامه نویس : <b>امیر محمدی</b></div>
+  </main>
+
+  <nav class="bottom-nav" aria-label="ناوبری پایین">
+    <button class="nav-btn active" data-nav="home"><span class="nav-icon">⌂</span>خانه</button>
+    <button class="nav-btn" data-nav="channels"><span class="nav-icon">▣</span>شبکه‌ها</button>
+    <button class="nav-btn" data-nav="favorites"><span class="nav-icon">★</span>علاقه‌مندی‌ها</button>
+    <button class="nav-btn" data-nav="history"><span class="nav-icon">◷</span>تاریخچه</button>
+    <button class="nav-btn" data-nav="settings"><span class="nav-icon">☷</span>تنظیمات</button>
+  </nav>
+
+  <div class="modal-backdrop" id="settingsBackdrop" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <section class="settings-modal">
+      <div class="modal-head"><h2 id="settingsTitle">تنظیمات TITAN</h2><button class="close-btn" id="closeSettingsBtn" aria-label="بستن">×</button></div>
+      <div class="settings-tabs">
+        <button class="settings-tab active" data-tab="appearance">ظاهر و تم</button>
+        <button class="settings-tab" data-tab="player">پخش‌کننده</button>
+        <button class="settings-tab" data-tab="lists">نمایش فهرست</button>
+        <button class="settings-tab" data-tab="compat">سازگاری و تشخیص</button>
+        <button class="settings-tab" data-tab="about">درباره برنامه</button>
+      </div>
+      <div class="settings-content active" data-content="appearance">
+        <div class="settings-grid">
+          <div class="setting-card"><label for="themeSelect">انتخاب تم رنگی</label><select id="themeSelect" class="form-select">
+            <option value="ocean">اقیانوسی</option><option value="forest">جنگلی</option><option value="cafe">کافه‌ای</option><option value="minimal">مینیمال</option><option value="cyber">سایبر</option><option value="galaxy">کهکشانی</option><option value="rainbow">رنگین‌کمانی</option><option value="romance">صورتی</option><option value="orange">نارنجی</option><option value="redblack">قرمز و مشکی</option><option value="silverred">نقره‌ای و قرمز</option><option value="graphite">گرافیتی</option><option value="aurora">شفق قطبی</option><option value="sunset">غروب</option><option value="ice">یخی</option><option value="vapor">ویپور</option><option value="desert">کویر</option><option value="matrix">ماتریکس</option><option value="arcade">آرکید</option><option value="plum">بنفش</option><option value="gold">دارک طلایی پررنگ</option><option value="redgold">دارک قرمز و طلایی تند</option>
+          </select><small>تم انتخابی در همین مرورگر ذخیره می‌شود. دو تم تیره طلایی و قرمزـطلایی نیز اضافه شده‌اند.</small></div>
+          <div class="setting-card"><label for="wallpaperSelect">تصویر زمینه مرتبط</label><select id="wallpaperSelect" class="form-select"><option value="stadium">ورزشی و استادیومی</option><option value="cinema">سینمایی</option><option value="film">حلقه فیلم</option><option value="aurora">شفق و نورهای پویا</option></select><small>پس‌زمینه‌ها با تم انتخابی هماهنگ می‌شوند.</small></div>
+          <div class="setting-card"><div class="switch-line"><span>فعال بودن انیمیشن‌ها</span><input type="checkbox" id="motionToggle" checked></div><small>برای مصرف کمتر باتری می‌توانید انیمیشن‌ها را خاموش کنید.</small></div>
+          <div class="setting-card"><div class="switch-line"><span>کاهش جلوه‌های بصری</span><input type="checkbox" id="effectsToggle"></div><small>جلوه‌های درخشان و سایه‌ها را سبک‌تر می‌کند.</small></div>
+        </div>
+      </div>
+      <div class="settings-content" data-content="player">
+        <div class="settings-grid">
+          <div class="setting-card"><label for="defaultMode">حالت نمایش پیش‌فرض</label><select class="form-select" id="defaultMode"><option value="standard">استاندارد</option><option value="classic">کلاسیک</option><option value="dynamic">پویا</option><option value="sport">ورزش</option><option value="cinema">سینما / فیلم</option></select></div>
+          <div class="setting-card"><label for="fitSelect">نحوه نمایش ویدئو</label><select class="form-select" id="fitSelect"><option value="contain">نمایش کامل تصویر بدون برش</option><option value="cover">پر کردن کادر (ممکن است لبه‌ها برش بخورند)</option></select></div>
+          <div class="setting-card"><div class="switch-line"><span>پخش خودکار شبکه انتخاب‌شده</span><input type="checkbox" id="autoplayToggle" checked></div><small>در برخی مرورگرها شروع صدا بدون لمس کاربر مجاز نیست.</small></div>
+          <div class="setting-card"><div class="switch-line"><span>بازگردانی صدا هنگام ورود</span><input type="checkbox" id="restoreVolumeToggle" checked></div><small>سطح صدا در این دستگاه ذخیره می‌شود.</small></div>
+          <div class="setting-card"><label for="defaultVolume">صدای پیش‌فرض</label><input class="form-input" type="range" min="0" max="1" step="0.05" id="defaultVolume"></div>
+          <div class="setting-card"><label for="brightnessDefault">روشنایی پیش‌فرض</label><input class="form-input" type="range" min="0.5" max="1.5" step="0.05" id="brightnessDefault"></div>
+          <div class="setting-card"><div class="switch-line"><span>تبدیل خودکار کدک ناسازگار با FFmpeg</span><input type="checkbox" id="autoTranscodeToggle" checked></div><small>در خطای رمزگشایی، منبع مجاز از مسیر FFmpeg به MP4 سازگار H.264/AAC تبدیل می‌شود؛ نیازمند FFmpeg و اجازه اجرای پردازش در سرور است.</small></div>
+          <div class="setting-card"><div class="switch-line"><span>اتصال مجدد خودکار هنگام خطای شبکه</span><input type="checkbox" id="autoReconnectToggle" checked></div><small>خطاهای موقت شبکه حداکثر دو بار با فاصله افزایشی دوباره امتحان می‌شوند.</small></div>
+          <div class="setting-card"><label for="bufferProfileSelect">پروفایل بافر</label><select id="bufferProfileSelect" class="form-select"><option value="auto">هوشمند (پیشنهادی)</option><option value="low">اینترنت ضعیف / دستگاه ضعیف</option><option value="balanced">متعادل</option><option value="high">کیفیت و بافر بیشتر</option></select></div>
+          <div class="setting-card"><label for="transcodeQualitySelect">کیفیت تبدیل خودکار FFmpeg</label><select id="transcodeQualitySelect" class="form-select"><option value="auto">خودکار ۷۲۰p</option><option value="480">کم‌حجم ۴۸۰p</option><option value="720">استاندارد ۷۲۰p</option><option value="1080">با کیفیت ۱۰۸۰p</option></select></div>
+        </div>
+      </div>
+      <div class="settings-content" data-content="lists">
+        <div class="settings-grid">
+          <div class="setting-card"><label for="columnsSelect">تعداد ستون کانال‌ها</label><select class="form-select" id="columnsSelect"><option value="auto">خودکار و واکنش‌گرا</option><option value="2">دو ستون</option><option value="3">سه ستون</option><option value="4">چهار ستون</option><option value="6">شش کانال در هر سطر</option><option value="8">هشت کانال در هر سطر</option></select></div>
+          <div class="setting-card"><label for="densitySelect">اندازه کارت شبکه‌ها</label><select class="form-select" id="densitySelect"><option value="normal">استاندارد</option><option value="compact">فشرده</option></select></div>
+          <div class="setting-card"><label for="channelPositionSelect">جایگاه کانال‌ها نسبت به پلیر</label><select class="form-select" id="channelPositionSelect"><option value="bottom">پایین پلیر</option><option value="left">سمت چپ پلیر</option><option value="right">سمت راست پلیر</option></select></div>
+          <div class="setting-card"><label for="channelWidthRange">عرض پنل کانال‌ها <b id="channelWidthValue">۳۴۰px</b></label><input class="form-input" type="range" id="channelWidthRange" min="240" max="520" step="10" value="340"></div>
+          <div class="setting-card"><label for="logoFitSelect">حالت نمایش لوگو</label><select class="form-select" id="logoFitSelect"><option value="contain">نمایش کامل، بدون برش</option><option value="cover">پوشش کامل کادر</option><option value="fill">کشیده شدن در تمام کادر</option></select></div>
+          <div class="setting-card"><label for="logoScaleRange">اندازه لوگو <b id="logoScaleValue">۱۰۰٪</b></label><input class="form-input" type="range" id="logoScaleRange" min="45" max="150" step="5" value="100"></div>
+          <div class="setting-card"><label for="logoBoxSelect">اندازه قاب لوگو</label><select id="logoBoxSelect" class="form-select"><option value="small">کوچک</option><option value="normal">متوسط</option><option value="large">بزرگ</option><option value="fill">تمام کارت</option></select></div>
+          <div class="setting-card"><div class="switch-line"><span>اسکرول مستقل فهرست کانال‌ها</span><input type="checkbox" id="independentScrollToggle" checked></div><small>در چیدمان کناری فقط فهرست کانال‌ها اسکرول می‌شود و پلیر در دید باقی می‌ماند.</small></div>
+          <div class="setting-card"><div class="switch-line"><span>نمایش فقط علاقه‌مندی‌ها</span><input type="checkbox" id="favoritesOnlyToggle"></div></div>
+        </div>
+        <div class="help-note">چیدمان ۶ و ۸ کاناله روی نمایشگرهای بزرگ فعال است؛ در موبایل برای خوانایی، تعداد ستون‌ها به عرض صفحه وابسته می‌ماند. برای اضافه یا حذف شبکه، فایل‌های M3U مربوط به هر فهرست را در پوشه <b>playlists</b> ویرایش کنید. لوگو را با ویژگی <b>tvg-logo</b> در خط شبکه وارد کنید یا نگاشت نام/لوگو را در <b>logos.json</b> ثبت کنید؛ سپس «بروزرسانی» را بزنید. پخش وب از HLS (.m3u8)، MPEG-DASH (.mpd)، MPEG-TS (.ts)، FLV و فایل‌های مستقیم رایج پشتیبانی می‌کند؛ پشتیبانی نهایی هر فایل به کدک مرورگر وابسته است. RTSP/RTMP/UDP و کدک‌های ناسازگار با مرورگر به مبدل/سرور پخش مجاز نیاز دارند. پخش HLS و TS به اجازه CORS از سمت میزبان استریم نیاز دارد.</div>
+      </div>
+      <div class="settings-content" data-content="compat">
+        <div class="settings-grid">
+          <div class="setting-card"><b>آزمایش قابلیت‌های مرورگر</b><p>پشتیبانی از MP4/H.264، WebM/VP9، AV1، HEVC، HLS، DASH، MSE و Fullscreen در همین دستگاه بررسی می‌شود.</p><button type="button" class="refresh-btn" id="runCompatTestBtn">اجرای آزمایش سازگاری</button><pre id="compatResults" class="compat-results">برای شروع، دکمه آزمایش را بزنید.</pre></div>
+          <div class="setting-card"><b>وضعیت موتور سرور</b><p id="serverEngineStatus">در حال بررسی FFmpeg، FFprobe و cURL...</p><button type="button" class="refresh-btn" id="refreshServerStatusBtn">بررسی دوباره سرور</button></div>
+          <div class="setting-card"><b>اطلاعات رسانه انتخاب‌شده</b><pre id="mediaDetails" class="compat-results">هنوز رسانه‌ای انتخاب نشده است.</pre></div>
+        </div>
+        <div class="help-note">پشتیبانی نهایی به مرورگر، سیستم‌عامل، سخت‌افزار رمزگشایی، کدک واقعی، CORS، مجوز استریم و قابلیت‌های FFmpeg سرور بستگی دارد. این آزمایش تضمین پخش همه منابع نیست؛ فقط قابلیت‌های قابل تشخیص دستگاه را گزارش می‌کند.</div>
+      </div>
+      <div class="settings-content" data-content="about">
+        <div class="setting-card"><b>TITAN IPTV Player</b><span>نسخه ۴٫۰٫۰ — موتور چندگانه، تشخیص کدک و چیدمان منعطف با شروع سریع و تشخیص هم‌زمان قالب برای مرورگرهای دسکتاپ، موبایل و تلگرام</span><span>سازنده و برنامه نویس : <b style="color:var(--accent)">امیر محمدی</b></span><small>برای نصب در Chrome موبایل یا Windows، سایت باید با HTTPS باز شود؛ در Chrome گزینه «نصب برنامه» یا منوی ⋮ ← Install app را انتخاب کنید. این برنامه فقط لینک‌هایی را پخش می‌کند که مدیر سایت مجاز به استفاده از آن‌هاست. پخش هر منبع به فرمت، کدک و اجازه CORS سرور بستگی دارد.</small></div>
+      </div>
+    </section>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (() => {
+    'use strict';
+    // چهار فهرست نمایشی؛ فایل‌های M3U قدیمی بدون حذف و با حفظ محتوا استفاده می‌شوند.
+    const CATEGORIES = [
+      {id:'live', name:'پخش زنده', files:['live']},
+      {id:'list1', name:'لیست پخش 1', files:['list1']},
+      {id:'list2', name:'لیست پخش 2', files:['list2']},
+      {id:'list3', name:'لیست پخش 3', files:['list3']}
+    ];
+    const ALL_CATEGORY = {id:'all', name:'همه'};
+    const $ = id => document.getElementById(id);
+    function storedValue(key){let value=localStorage.getItem(key);if(value===null&&key.startsWith('titan_')){const legacy=localStorage.getItem(key.replace(/^titan_/,'fandog_'));if(legacy!==null){value=legacy;localStorage.setItem(key,legacy)}}return value}
+    function readStoredArray(key){try{const value=JSON.parse(storedValue(key)||'[]');return Array.isArray(value)?value:[]}catch(_){return []}}
+    const state = {lists:{}, logos:{}, category:'live', view:'category', current:null, hls:null, dash:null, shaka:null, mpegts:null, playbackGeneration:0, activeMediaError:null, favorites:new Set(readStoredArray('titan_favorites')), history:readStoredArray('titan_history'), mode:'standard', refreshing:false, allChannels:[], qualityLevels:[],hostHealth:null, hlsRetryCount:0, playbackStarted:false, mediaReady:false, mediaInfo:null, transcodeAttempted:false, reconnectAttempts:0, rotation:0, transcodeActive:false};
+    const video = $('video');
+    let toastTimer = 0;
+    function toast(message){const node=$('toast');node.textContent=message;node.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('show'),2900)}
+    function faNum(value){return String(value).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
+    function normalize(value){return String(value||'').trim().toLocaleLowerCase('fa').replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u0640\u200c]/g,' ').replace(/\s+/g,' ')}
+    function logoKey(value){return normalize(value).normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,'')}
+    function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+    function safeLogoUrl(url){const s=String(url||'').trim();if(!s)return '';if(/^https?:\/\//i.test(s))return s;if(/^assets\/logos\/[a-z0-9_./-]+\.(?:svg|png|jpe?g|gif|webp|avif|bmp|ico|tiff?|heic|heif|apng)$/i.test(s)){if(/\.(?:svg|tiff?|heic|heif|avif|bmp|ico|apng)$/i.test(s))return 'image.php?file='+encodeURIComponent(s.replace(/^assets\/logos\//,''));return s}return ''}
+    function parseAttributes(text){const out={};const re=/([\w-]+)="([^"]*)"/g;let m;while((m=re.exec(text))!==null)out[m[1].toLowerCase()]=m[2];return out}
+    function splitExtinf(line){let quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"')quoted=!quoted;else if(line[i]===','&&!quoted)return [line.slice(0,i),line.slice(i+1).trim()]}return [line,'']}
+    function parseM3U(raw, category){
+      const lines=String(raw||'').replace(/^\uFEFF/,'').split(/\r?\n/);const result=[];let meta=null;const seen=new Map();
+      for(const sourceLine of lines){const line=sourceLine.trim();if(!line)continue;
+        if(line.startsWith('#EXTINF')){const [head,title]=splitExtinf(line);const attrs=parseAttributes(head);const name=(attrs['tvg-name']||title.split('|')[0]||'شبکه بدون نام').trim();meta={name,title,group:attrs['group-title']||CATEGORIES.find(c=>c.id===category)?.name||'عمومی',logo:attrs['tvg-logo']||'',poster:attrs['poster']||attrs['cover']||attrs['thumbnail']||attrs['tvg-image']||'',id:attrs['tvg-id']||'',attrs};continue}
+        if(line.startsWith('#'))continue;
+        if(meta){const url=line.replace(/&amp;/gi,'&').replace(/^['"]|['"]$/g,'').trim();if(/^(?:https?:|rtsp:|rtmp:|rtmps:|udp:|srt:|rtp:)\/\//i.test(url)){const base=normalize(meta.id||meta.name);const n=(seen.get(base)||0)+1;seen.set(base,n);const suffix=n>1?`#${n}`:'';result.push({...meta,url,category,key:`${category}::${base}${suffix}`})}meta=null}
+      }
+      return result;
+    }
+    async function fetchText(url){const response=await fetch(url,{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);return response.text()}
+    function base64UrlUtf8(value){const bytes=new TextEncoder().encode(value);let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+    function streamFingerprint(value){let hash=2166136261;for(let i=0;i<value.length;i++){hash^=value.charCodeAt(i);hash=Math.imul(hash,16777619)}return (hash>>>0).toString(36)}
+    function cachedStreamType(channel){try{const all=JSON.parse(localStorage.getItem('titan_stream_type_cache')||'{}');const key=streamFingerprint(`${channel.key||''}|${channel.url||''}`);const item=all[key];if(item&&item.expires>Date.now()&&['hls','dash','mpegts','flv','native'].includes(item.type))return item.type}catch(_){}return ''}
+    function rememberStreamType(channel,type){if(!['hls','dash','mpegts','flv','native'].includes(type))return;try{const all=JSON.parse(localStorage.getItem('titan_stream_type_cache')||'{}');const key=streamFingerprint(`${channel.key||''}|${channel.url||''}`);all[key]={type,expires:Date.now()+7*24*60*60*1000};const entries=Object.entries(all).filter(([,v])=>v&&v.expires>Date.now()).slice(-120);localStorage.setItem('titan_stream_type_cache',JSON.stringify(Object.fromEntries(entries)))}catch(_){}}
+    async function getPlaybackUrl(originalUrl,format=''){
+      // Ticket issuance is local and does not need a separate health request.
+      // The actual proxy endpoint reports a clear cURL error if the host lacks it.
+      const endpoint=`api.php?streamTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&format=${encodeURIComponent(format)}&v=${Date.now()}`;
+      const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});
+      let data={};try{data=await response.json()}catch(_){}
+      if(!response.ok||!data.ok||!data.url)throw new Error(data.error||`خطای پراکسی هاست (HTTP ${response.status})`);
+      return data.url;
+    }
+    async function getTranscodeUrl(originalUrl,quality='auto'){
+      const endpoint=`api.php?transcodeTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
+      const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
+      if(!response.ok||!data.ok||!data.url)throw new Error(data.error||`صدور بلیت تبدیل ناموفق بود (HTTP ${response.status})`);
+      return data.url+`&q=${encodeURIComponent(quality)}`;
+    }
+    async function getMediaInfo(originalUrl){
+      const endpoint=`api.php?mediaInfoTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
+      const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
+      if(!response.ok||!data.ok||!data.url)throw new Error(data.error||'FFprobe در دسترس نیست.');
+      const result=await fetch(data.url,{cache:'no-store',credentials:'same-origin'});let info={};try{info=await result.json()}catch(_){}
+      if(!result.ok||!info.ok)throw new Error(info.error||`تشخیص کدک ناموفق بود (HTTP ${result.status})`);
+      return info;
+    }
+    async function probeStreamType(originalUrl){
+      const endpoint=`api.php?probeTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
+      const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),4500);
+      try{
+        const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin',signal:controller.signal});
+        let data={};try{data=await response.json()}catch(_){}
+        if(!response.ok||!data.ok)throw new Error(data.error||`تشخیص قالب ناموفق بود (HTTP ${response.status})`);
+        return data;
+      }catch(error){if(error?.name==='AbortError')throw new Error('مهلت تشخیص تکمیلی تمام شد؛ پخش مستقیم مستقل از این بررسی ادامه دارد.');throw error}
+      finally{clearTimeout(timer)}
+    }
+    const libraryLoads={};
+    function loadPlayerLibrary(globalName,urls){
+      if(window[globalName])return Promise.resolve(window[globalName]);
+      if(libraryLoads[globalName])return libraryLoads[globalName];
+      libraryLoads[globalName]=new Promise((resolve,reject)=>{
+        let index=0;
+        const tryNext=()=>{
+          if(window[globalName]){resolve(window[globalName]);return;}
+          if(index>=urls.length){reject(new Error(`بارگذاری کتابخانه ${globalName} ناموفق بود`));return;}
+          const url=urls[index++];const script=document.createElement('script');let settled=false;
+          const timer=setTimeout(()=>{if(settled)return;settled=true;script.remove();tryNext()},2600);
+          script.src=url;script.async=true;script.fetchPriority='high';script.referrerPolicy='no-referrer';
+          script.onload=()=>{if(settled)return;settled=true;clearTimeout(timer);if(window[globalName])resolve(window[globalName]);else tryNext()};
+          script.onerror=()=>{if(settled)return;settled=true;clearTimeout(timer);script.remove();tryNext()};
+          document.head.append(script);
+        };
+        tryNext();
+      }).catch(error=>{delete libraryLoads[globalName];throw error;});
+      return libraryLoads[globalName];
+    }
+    const ensureHls=()=>loadPlayerLibrary('Hls',['assets/vendor/hls.min.js','https://cdn.jsdelivr.net/npm/hls.js@1.7.4/dist/hls.min.js','https://unpkg.com/hls.js@1.7.4/dist/hls.min.js']);
+    const ensureDash=()=>loadPlayerLibrary('dashjs',['assets/vendor/dash.all.min.js','https://cdn.jsdelivr.net/npm/dashjs@5.2.1/dist/dash.all.min.js','https://unpkg.com/dashjs@5.2.1/dist/dash.all.min.js']);
+    const ensureMpegts=()=>loadPlayerLibrary('mpegts',['assets/vendor/mpegts.min.js','https://cdn.jsdelivr.net/npm/mpegts.js@1.8.2/dist/mpegts.min.js','https://unpkg.com/mpegts.js@1.8.2/dist/mpegts.min.js']);
+    const ensureShaka=()=>loadPlayerLibrary('shaka',['assets/vendor/shaka-player.compiled.js','https://cdn.jsdelivr.net/npm/shaka-player@5.3.5/dist/shaka-player.compiled.js','https://unpkg.com/shaka-player@5.3.5/dist/shaka-player.compiled.js']);
+    function warmPlaybackEngines(channels=[]){
+      // Warm only engines that are actually present in the loaded playlists.
+      // Native MP4/WebM-only playlists do not download HLS/DASH/TS libraries.
+      const needed=new Set((channels||[]).map(c=>c.detectedType||cachedStreamType(c)||detectStreamType(c.url)));
+      const jobs=[];
+      if(needed.has('hls'))jobs.push(ensureHls());
+      if(needed.has('dash'))jobs.push(ensureDash(),ensureShaka());
+      if(needed.has('mpegts')||needed.has('flv'))jobs.push(ensureMpegts());
+      return Promise.allSettled(jobs);
+    }
+    function isMixedContentSource(url){
+      try{return location.protocol==='https:'&&new URL(url,location.href).protocol==='http:'}catch(_){return false}
+    }
+    async function getProxyOrThrow(url,format){
+      try{return await getPlaybackUrl(url,format)}
+      catch(error){
+        const hint=String(error?.message||'');
+        if(/فهرست|ثبت نشده|مجاز/.test(hint))throw new Error('این آدرس در هیچ‌یک از چهار فهرست M3U نصب‌شده ثبت نشده است؛ پراکسی امن فقط برای URLهای فهرست‌های خود برنامه بلیت صادر می‌کند. لینک را در فایل M3U مربوطه ثبت و فهرست را بروزرسانی کنید.');
+        throw error;
+      }
+    }
+    function detectStreamType(url){
+      const clean=String(url||'').toLowerCase();
+      if(/youtube\.com\/(?:channel\/|@|watch\?|live\/)|youtu\.be\//.test(clean))return 'webpage';
+      if(/^(?:rtsp|rtmp|rtmps|udp|srt|rtp):\/\//i.test(clean))return 'transcode-required';
+      if(/\.mpd(?:$|[?#])/.test(clean))return 'dash';
+      if(/\.m3u8?(?:$|[?#])|[?&](?:m3u8|type=m3u8)(?:[=&]|$)|\/hls(?:\/|$)|\/playlist\.?(?:$|[?#])/.test(clean))return 'hls';
+      if(/\.(?:ts|m2ts|mts)(?:$|[?#])/.test(clean))return 'mpegts';
+      if(/\.flv(?:$|[?#])/.test(clean))return 'flv';
+      // Try browser-native playback for a broad range of direct media URLs.
+      // Actual codec support is determined by the browser at decode time.
+      if(/[?&](?:format|type|output)=(?:mpegts|mpeg-ts|ts|m2ts)(?:&|$)/.test(clean))return 'mpegts';
+      if(/[?&](?:format|type|output)=flv(?:&|$)/.test(clean))return 'flv';
+      if(/[?&](?:format|type|output)=dash(?:&|$)/.test(clean))return 'dash';
+      if(/[?&](?:format|type|output)=hls(?:&|$)/.test(clean))return 'hls';
+      if(/\.(?:mp4|m4v|f4v|mov|mkv|avi|wmv|mpeg|mpg|mpe|3gp|3g2|vob|webm|ogv|ogg|mxf|mp3|m4a|aac|wav|oga|opus|m4s|tsv)(?:$|[?#])/.test(clean))return 'native';
+      return 'unknown';
+    }
+    function warmStreamOrigins(channels){
+      const counts=new Map();
+      for(const channel of channels||[]){try{const parsed=new URL(channel.url);if(!/^https?:$/.test(parsed.protocol))continue;const origin=parsed.origin;if(origin!==location.origin)counts.set(origin,(counts.get(origin)||0)+1)}catch(_){}}
+      const origins=[...counts.entries()].sort((a,b)=>b[1]-a[1]).map(([origin])=>origin);
+      for(const origin of origins.slice(0,12)){
+        if(!document.querySelector(`link[rel="dns-prefetch"][href="${origin}"]`)){const link=document.createElement('link');link.rel='dns-prefetch';link.href=origin;document.head.append(link)}
+      }
+      for(const origin of origins.slice(0,3)){
+        if(!document.querySelector(`link[rel="preconnect"][href="${origin}"]`)){const link=document.createElement('link');link.rel='preconnect';link.href=origin;link.crossOrigin='anonymous';document.head.append(link)}
+      }
+    }
+    async function refreshAll(showMessage=true){
+      if(state.refreshing)return;
+      state.refreshing=true;
+      [$('refreshBtn'),$('refreshTopBtn')].forEach(btn=>{btn.disabled=true;btn.classList.add('loading')});
+      $('channelCount').textContent='در حال بروزرسانی همه فهرست‌ها...';
+      try{
+        const results=await Promise.all(CATEGORIES.map(async c=>{
+          const channels=[];const errors=[];
+          for(const file of c.files){
+            try{
+              const raw=await fetchText(`api.php?list=${encodeURIComponent(file)}&v=${Date.now()}`);
+              const parsed=parseM3U(raw,c.id);
+              for(const channel of parsed){
+                if(c.files.length>1)channel.key += `::${file}`;
+                channel.sourceList=file;channel.category=c.id;
+                channels.push(channel);
+              }
+            }catch(error){errors.push(error)}
+          }
+          return {id:c.id,channels:channels.length?channels:(state.lists[c.id]||[]),error:errors.length?errors[0]:null};
+        }));
+        let rawLogos={};
+        try{rawLogos=JSON.parse(await fetchText(`api.php?logos=1&v=${Date.now()}`))||{}}catch(_){rawLogos={}}
+        const normalizedLogos={};
+        if(rawLogos && typeof rawLogos==='object' && !Array.isArray(rawLogos)){
+          for(const [key,value] of Object.entries(rawLogos)){
+            if(typeof value==='string') normalizedLogos[normalize(key)]=value;
+          }
+        }
+        state.lists=Object.fromEntries(results.map(item=>[item.id,item.channels]));
+        state.logos=normalizedLogos;
+        state.allChannels=CATEGORIES.flatMap(c=>state.lists[c.id]||[]);
+        warmStreamOrigins(state.allChannels);
+        warmPlaybackEngines(state.allChannels);
+        renderChannels();
+        const failed=results.filter(item=>item.error);
+        if(showMessage){
+          const count=state.allChannels.length;
+          toast(failed.length
+            ? `بروزرسانی انجام شد؛ ${faNum(count)} شبکه دریافت شد و ${faNum(failed.length)} فهرست خطا داشت.`
+            : `فهرست‌ها و لوگوها بروزرسانی شدند؛ ${faNum(count)} شبکه دریافت شد.`);
+        }
+        if(state.current){
+          const refreshed=state.allChannels.find(c=>c.key===state.current.key)||state.allChannels.find(c=>normalize(c.name)===normalize(state.current.name));
+          if(refreshed){
+            const changed=refreshed.url!==state.current.url;
+            state.current=refreshed;
+            if(changed)loadChannel(refreshed,false);
+            else renderChannels();
+          }else{
+            destroyHls();state.current=null;
+            $('placeholder').classList.remove('hidden');$('nowPlaying').textContent='شبکه انتخاب‌شده در فهرست جدید وجود ندارد';$('liveMark').textContent='آماده پخش';
+            $('favCurrentBtn').textContent='☆';renderChannels();
+          }
+        }
+      }catch(error){
+        $('channelCount').textContent='دریافت فهرست‌ها ناموفق بود';
+        toast(`خطا در دریافت فهرست‌ها: ${error.message}. تنظیمات هاست و فایل‌ها را بررسی کنید.`);
+      }finally{
+        state.refreshing=false;
+        [$('refreshBtn'),$('refreshTopBtn')].forEach(btn=>{btn.disabled=false;btn.classList.remove('loading')});
+      }
+    }
+    function getLogo(channel){
+      const explicitM3ULogo=safeLogoUrl(channel.attrs?.['tvg-logo']||channel.logo||'');
+      if(explicitM3ULogo)return explicitM3ULogo;
+      const candidates=[channel.id,channel.attrs?.['tvg-id'],channel.name,channel.attrs?.['tvg-name'],channel.title];
+      for(const candidate of candidates){
+        const key=normalize(candidate);if(key&&state.logos[key])return safeLogoUrl(state.logos[key]);
+        const compact=logoKey(candidate);if(compact){const found=Object.entries(state.logos).find(([name])=>logoKey(name)===compact);if(found)return safeLogoUrl(found[1])}
+      }
+      return safeLogoUrl(channel.attrs?.['tvg-image']||channel.poster||channel.attrs?.poster||channel.attrs?.cover||channel.attrs?.thumbnail||'');
+    }
+    async function getLogoProxyUrl(original){
+      const endpoint=`api.php?logoTicket=${encodeURIComponent(base64UrlUtf8(original))}&v=${Date.now()}`;
+      const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
+      if(!response.ok||!data.ok||!data.url)throw new Error(data.error||'تبدیل تصویر در دسترس نیست');return data.url;
+    }
+    function setLogoFallback(img,name){const holder=img.parentElement;if(!holder)return;img.remove();holder.textContent=(String(name||'TV').trim().slice(0,2)||'TV').toUpperCase();}
+    function renderChannels(){
+      const query=normalize($('searchInput').value);
+      const activeCat=state.category;
+      let list=[];
+      let heading='';
+      if(state.view==='favorites'){
+        list=state.allChannels.filter(c=>state.favorites.has(c.key));
+        heading='شبکه‌های مورد علاقه';
+      }else if(state.view==='history'){
+        const byKey=new Map(state.allChannels.map(c=>[c.key,c]));
+        list=state.history.map(key=>byKey.get(key)).filter(Boolean);
+        heading='تاریخچه پخش';
+      }else if(activeCat==='all'){
+        list=state.allChannels.slice();heading=ALL_CATEGORY.name;
+      }else{
+        list=(state.lists[activeCat]||[]).slice();
+        heading=CATEGORIES.find(c=>c.id===activeCat)?.name||'شبکه‌ها';
+      }
+      if(query)list=list.filter(c=>normalize(c.name).includes(query));
+      $('categoryTitle').textContent=heading;
+      $('channelCount').textContent=`${faNum(list.length)} شبکه`;
+      $('categoryBar').querySelectorAll('[data-category]').forEach(btn=>btn.classList.toggle('active',state.view==='category'&&btn.dataset.category===activeCat));
+      $('channelGrid').replaceChildren();
+      if(!list.length){
+        const empty=document.createElement('div');empty.className='empty';empty.style.gridColumn='1/-1';
+        if(query)empty.textContent='شبکه‌ای با این عبارت پیدا نشد.';
+        else if(state.view==='favorites')empty.innerHTML='هنوز شبکه‌ای به علاقه‌مندی‌ها اضافه نکرده‌اید.<br><b>با زدن ستاره داخل پلیر، شبکه را ذخیره کنید.</b>';
+        else if(state.view==='history')empty.textContent='هنوز شبکه‌ای پخش نشده است.';
+        else empty.innerHTML='هنوز شبکه‌ای در این فهرست ثبت نشده است.<br><b>فایل‌های M3U مربوط به این فهرست را در پوشه playlists تکمیل کنید</b> و سپس بروزرسانی را بزنید.';
+        $('channelGrid').append(empty);return;
+      }
+      const fragment=document.createDocumentFragment();const pendingLogoLoads=[];
+      for(const c of list){
+        const card=document.createElement('button');card.type='button';card.className='channel-card'+(state.current?.key===c.key?' active':'');card.dataset.key=c.key;
+        const logo=getLogo(c);
+        const logoHtml=logo?`<img loading="lazy" decoding="async" data-logo-src="${escapeHtml(logo)}" alt="${escapeHtml(c.name)}" referrerpolicy="no-referrer">`:escapeHtml((c.name||'TV').trim().slice(0,2).toUpperCase());
+        card.setAttribute('aria-label',`پخش ${c.name}`);
+        card.innerHTML=`<span class="channel-logo">${logoHtml}</span><span class="channel-copy"><span class="channel-name">${escapeHtml(c.name)}</span></span>`;
+        const logoImg=card.querySelector('.channel-logo img');
+        if(logoImg){
+          logoImg.addEventListener('error',async()=>{
+            if(logoImg.dataset.proxyTried!=='1'&&/^https?:\/\//i.test(logo)){
+              logoImg.dataset.proxyTried='1';
+              try{const proxy=await getLogoProxyUrl(logo);if(logoImg.isConnected){logoImg.src=proxy;return}}catch(error){console.warn('TITAN logo proxy failed',error)}
+            }
+            if(logoImg.isConnected)setLogoFallback(logoImg,c.name);
+          });
+          // Set src only after the error handler is attached; cached/fast failures can otherwise leave a broken icon.
+          pendingLogoLoads.push({img:logoImg,src:logo});
+        }
+        card.addEventListener('click',()=>loadChannel(c,true));fragment.append(card);
+      }
+      $('channelGrid').append(fragment);
+      for(const item of pendingLogoLoads){if(item.img.isConnected)item.img.src=item.src;}
+    }
+    function setCategory(id){if(id!=='all'&&!CATEGORIES.some(c=>c.id===id))return;state.category=id;state.view='category';$('favoritesOnlyToggle').checked=false;renderChannels()}
+    // Completely dispose the previous player before a new channel is attached.
+    // The generation token also prevents late network responses from reviving an old channel.
+    function destroyHls(){
+      state.playbackGeneration++;
+      if(state.hls){try{state.hls.stopLoad?.();state.hls.detachMedia?.();state.hls.destroy()}catch(_){}state.hls=null}
+      if(state.dash){try{state.dash.pause?.();state.dash.reset()}catch(_){}state.dash=null}
+      if(state.shaka){const oldShaka=state.shaka;state.shaka=null;try{const pending=oldShaka.destroy?.();if(pending&&typeof pending.catch==='function')pending.catch(()=>{})}catch(_){}}
+      if(state.mpegts){
+        try{state.mpegts.pause?.()}catch(_){}
+        try{state.mpegts.unload?.()}catch(_){}
+        try{state.mpegts.detachMediaElement?.()}catch(_){}
+        try{state.mpegts.destroy?.()}catch(_){}
+        state.mpegts=null;
+      }
+      state.qualityLevels=[];state.playbackStarted=false;state.mediaReady=false;
+      try{video.pause()}catch(_){}
+      video.onloadedmetadata=null;video.oncanplay=null;video.onerror=null;video.onplaying=null;video.onwaiting=null;
+      try{if(video.srcObject)video.srcObject=null}catch(_){}
+      video.removeAttribute('src');
+      video.querySelectorAll('source').forEach(source=>source.remove());
+      try{video.currentTime=0}catch(_){}
+      try{video.load()}catch(_){}
+    }
+    function playbackProfile(){
+      const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection||{};
+      const ua=navigator.userAgent||'';
+      const mobile=matchMedia('(max-width: 760px), (pointer: coarse)').matches||/Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+      const selected=settings().bufferProfile||'auto';const detected=mobile||connection.saveData===true||['slow-2g','2g'].includes(connection.effectiveType)||Number(navigator.hardwareConcurrency||8)<=4;const constrained=selected==='low'?true:selected==='high'?false:detected;
+      return {mobile,constrained,effectiveType:connection.effectiveType||'unknown',selected};
+    }
+    function hlsBufferConfig(){
+      const profile=playbackProfile();
+      const lowMemory=profile.constrained;
+      return {
+        enableWorker:true,
+        lowLatencyMode:true,
+        startLevel:-1,
+        startFragPrefetch:true,
+        backBufferLength:lowMemory?8:20,
+        maxBufferLength:lowMemory?14:24,
+        maxMaxBufferLength:lowMemory?22:42,
+        maxBufferSize:lowMemory?18*1000*1000:42*1000*1000,
+        maxBufferHole:0.5,
+        liveSyncDurationCount:profile.mobile?3:2,
+        liveMaxLatencyDurationCount:profile.mobile?7:5,
+        manifestLoadingTimeOut:7000,
+        manifestLoadingMaxRetry:1,
+        manifestLoadingRetryDelay:350,
+        manifestLoadingMaxRetryTimeout:2200,
+        fragLoadingTimeOut:profile.mobile?10000:12000,
+        fragLoadingMaxRetry:profile.mobile?1:2,
+        fragLoadingRetryDelay:500,
+        fragLoadingMaxRetryTimeout:7000
+      };
+    }
+    function beginPlayback(generation=state.playbackGeneration){
+      if(generation!==state.playbackGeneration)return;
+      $('placeholder').classList.add('hidden');
+      const autoplay=settings().autoplay!==false;
+      $('liveMark').textContent=autoplay?'آماده پخش':'آماده پخش؛ برای شروع دکمه پخش را لمس کنید';
+      $('playPauseBtn').textContent=autoplay?'Ⅱ':'▶';
+      if(autoplay&&video.paused){
+        const attempt=video.play();
+        if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{
+          if(generation===state.playbackGeneration)$('liveMark').textContent='برای شروع، دکمه پخش را لمس کنید';
+          $('playPauseBtn').textContent='▶';
+        });
+      }
+    }
+    const QUALITY_TARGETS=[480,720,1080,1440];
+    function availableQualityHeights(){
+      if(state.hls?.levels?.length)return state.hls.levels.map((level,index)=>({height:Number(level.height||0),index,qualityIndex:index})).filter(x=>x.height>0);
+      if(state.dash){try{return (state.dash.getBitrateInfoListFor('video')||[]).map((level,index)=>({height:Number(level.height||0),index,qualityIndex:Number.isFinite(level.qualityIndex)?level.qualityIndex:index})).filter(x=>x.height>0)}catch(_){}}
+      if(state.shaka){try{return (state.shaka.getVariantTracks()||[]).filter(track=>track.type==='variant'||track.videoId!=null||track.height).map((track,index)=>({height:Number(track.height||0),index,qualityIndex:track.id,track})).filter(x=>x.height>0)}catch(_){}}
+      return [];
+    }
+    function updateQuality(){
+      const select=$('qualitySelect');
+      const levels=availableQualityHeights();state.qualityLevels=levels;
+      for(const target of QUALITY_TARGETS){
+        const option=select.querySelector(`option[value="${target}"]`);if(!option)continue;
+        const supported=levels.some(level=>Math.round(level.height)===target);
+        option.disabled=!supported;
+      }
+      if(levels.length){
+        const heights=[...new Set(levels.map(x=>x.height))].sort((a,b)=>a-b);
+        $('qualityNote').textContent=`کیفیت‌های قابل انتخاب: ${heights.map(h=>faNum(h)+'p').join('، ')}؛ کیفیت دستی فقط روی سطح‌های موجود اعمال می‌شود.`;
+        select.disabled=false;
+      }else{
+        $('qualityNote').textContent='این منبع کیفیت دستی را گزارش نمی‌کند؛ حالت خودکار یا کیفیت اصلی فایل استفاده می‌شود.';
+        select.value='auto';
+        for(const target of QUALITY_TARGETS)select.querySelector(`option[value="${target}"]`).disabled=true;
+      }
+    }
+    function applyQualityTarget(value){
+      if(value==='auto'){
+        if(state.hls)state.hls.currentLevel=-1;
+        if(state.dash){try{state.dash.setAutoSwitchQualityFor('video',true)}catch(_){}}
+        if(state.shaka){try{state.shaka.configure({abr:{enabled:true}})}catch(_){}}
+        return;
+      }
+      const target=Number(value),levels=availableQualityHeights();
+      if(!levels.length){$('qualitySelect').value='auto';toast('این منبع امکان انتخاب کیفیت دستی را ارائه نمی‌کند.');return;}
+      const exact=levels.find(level=>Math.round(level.height)===target);
+      if(!exact){$('qualitySelect').value='auto';toast(`کیفیت ${faNum(target)}p در این منبع موجود نیست.`);return;}
+      const chosen=exact;
+      if(state.hls){state.hls.currentLevel=chosen.index;}
+      else if(state.dash){try{state.dash.setAutoSwitchQualityFor('video',false);state.dash.setQualityFor('video',chosen.qualityIndex)}catch(_){}}
+      else if(state.shaka){try{state.shaka.configure({abr:{enabled:false}});const track=chosen.track||state.shaka.getVariantTracks().find(t=>t.id===chosen.qualityIndex);if(track)state.shaka.selectVariantTrack(track,true)}catch(_){}}
+      $('qualityNote').textContent=`کیفیت انتخابی: ${faNum(chosen.height)}p`;
+    }
+    function showMediaFailure(message){const detail=String(message||'خطای نامشخص').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i).join(' — ').slice(0,520);console.error('TITAN playback failed:',detail);$('liveMark').textContent='خطای پخش';$('placeholder').classList.remove('hidden');$('placeholder').querySelector('strong').textContent='پخش این منبع ممکن نشد';$('placeholder').querySelector('small').textContent=detail;$('placeholder').querySelector('small').title=detail;$('retryPlaybackBtn').hidden=false;toast(detail)}
+    function mediaFail(message){
+      const detail=String(message||'خطای نامشخص');
+      const codecProblem=/(codec|decode|رمزگشایی|کدک|ناسازگار|unsupported|media_format|format_not_supported|قالب.*پشتیبانی|MSE.*پشتیبانی)/i.test(detail);
+      if(state.current&&codecProblem&&!state.transcodeAttempted&&settings().autoTranscode!==false){
+        state.transcodeAttempted=true;$('liveMark').textContent='تبدیل کدک';$('placeholder').classList.remove('hidden');$('placeholder').querySelector('strong').textContent='در حال سازگار کردن کدک';$('placeholder').querySelector('small').textContent='در صورت فعال بودن FFmpeg، خروجی H.264/AAC ساخته می‌شود…';
+        startTranscodedPlayback(state.current.url,state.playbackGeneration).catch(error=>showMediaFailure(`${detail} | تبدیل خودکار نیز انجام نشد: ${error.message}`));return;
+      }
+      const networkProblem=/(network|timeout|اتصال|شبکه|زمان پاسخ|قطع شد)/i.test(detail)&&!/(401|403|404|429)/.test(detail);
+      if(state.current&&networkProblem&&settings().autoReconnect!==false&&state.reconnectAttempts<2&&!state.transcodeActive){
+        const attempt=++state.reconnectAttempts;const wait=attempt===1?1200:3000;$('liveMark').textContent=`اتصال مجدد ${attempt}/2`;$('placeholder').classList.remove('hidden');$('placeholder').querySelector('strong').textContent='تلاش مجدد برای اتصال';$('placeholder').querySelector('small').textContent=`خطای موقت شبکه؛ تلاش ${attempt} از ۲ پس از ${wait/1000} ثانیه…`;
+        const channel=state.current;setTimeout(()=>{if(state.current?.key===channel.key)loadChannel(channel,false,true)},wait);return;
+      }
+      showMediaFailure(detail);
+    }
+    async function startTranscodedPlayback(originalUrl,generation){
+      if(generation!==state.playbackGeneration) return;
+      const channel=state.current;state.transcodeActive=true;
+      try{
+        destroyHls();generation=state.playbackGeneration;state.current=channel;state.transcodeActive=true;
+        const quality=settings().transcodeQuality||'auto';const url=await getTranscodeUrl(originalUrl,quality);
+        if(generation!==state.playbackGeneration)return;
+        video.onerror=()=>{if(generation===state.playbackGeneration)showMediaFailure('خروجی FFmpeg دریافت شد اما مرورگر نتوانست MP4 سازگار را رمزگشایی کند. وجود libx264 و AAC در ساخت FFmpeg و دسترسی منبع بررسی شود.')};
+        video.onloadedmetadata=()=>{if(generation===state.playbackGeneration){updateQuality();refreshTrackMenus();beginPlayback(generation)}};
+        video.oncanplay=()=>{if(generation===state.playbackGeneration){state.mediaReady=true;refreshTrackMenus();beginPlayback(generation)}};
+        video.src=url;video.load();$('liveMark').textContent='تبدیل زنده H.264/AAC';$('placeholder').querySelector('small').textContent='خروجی استاندارد MP4 از FFmpeg در حال دریافت است…';
+        if(settings().autoplay!==false)video.play().catch(()=>{});
+      } finally {state.transcodeActive=false;}
+    }
+    function explainMediaError(){
+      const code=video.error?.code;
+      if(code===1)return 'پخش توسط کاربر متوقف شد.';
+      if(code===2)return 'اتصال به سرور پخش قطع شد؛ وضعیت سرور یا اینترنت هاست را بررسی کنید.';
+      if(code===3)return state.hostHealth?.ffmpeg?.available?'مرورگر نتوانست این کدک را رمزگشایی کند؛ تبدیل خودکار این منبع هنوز برای این مسیر فعال نشده است.':'مرورگر نتوانست ویدئو را رمزگشایی کند؛ کدک منبع با دستگاه سازگار نیست. برای تبدیل خودکار این کدک باید FFmpeg روی هاست یا موتور VPS نصب و فعال باشد.';
+      if(code===4)return 'نوع فایل یا قالب پخش برای این مرورگر شناخته‌شده نیست.';
+      return 'مرورگر خطای نامشخصی در دریافت یا رمزگشایی رسانه گزارش کرد.';
+    }
+    function hlsErrorMessage(data){
+      const code=Number(data?.response?.code||data?.networkDetails?.status||0);
+      const detail=String(data?.details||'');
+      const responseText=String(data?.response?.text||'');
+      if(code===503 && /cURL|curl/i.test(responseText))return 'افزونه PHP cURL روی هاست فعال نیست. از پشتیبانی هاست بخواهید cURL را برای PHP فعال کند.';
+      if(code===403 && /میزبان منبع عمومی|نامعتبر/i.test(responseText))return 'هاست به‌دلیل نامعتبر بودن یا خصوصی بودن نشانی میزبان، اتصال را مسدود کرد.';
+      if(code===401||code===403)return `سرور منبع دسترسی را نپذیرفت (HTTP ${code}). این مشکل از مجوز یا محدودیت ارائه‌دهنده است، نه CORS مرورگر.`;
+      if(code===404)return 'سرور منبع فایل فهرست یا قطعه ویدئو را پیدا نکرد (HTTP 404). لینک احتمالاً قدیمی یا اشتباه است.';
+      if(code===429)return 'سرور منبع درخواست‌های پخش را محدود کرده است (HTTP 429).';
+      if(code>=500)return `پراکسی هاست یا سرور منبع خطا داد (HTTP ${code})${responseText?`: ${responseText.slice(0,180)}`:''}.`;
+      if(data?.type===Hls.ErrorTypes.NETWORK_ERROR)return `ارتباط پراکسی هاست با سرور پخش ناموفق شد${code?` (HTTP ${code})`:''}. جزئیات: ${detail||'خطای شبکه'}`;
+      if(data?.type===Hls.ErrorTypes.MEDIA_ERROR)return 'دریافت رسانه انجام شد اما مرورگر نتوانست آن را رمزگشایی کند؛ کدک یا ساختار فایل را بررسی کنید.';
+      return `خطای HLS${code?` (HTTP ${code})`:''}: ${detail||'ساختار یا قطعه پخش نامعتبر است.'}`;
+    }
+    function prepareMediaOrigin(url){
+      try{
+        const origin=new URL(url,location.href).origin;
+        if(origin===location.origin)return;
+        if(!document.querySelector(`link[rel="preconnect"][href="${origin}"]`)){
+          const link=document.createElement('link');link.rel='preconnect';link.href=origin;link.crossOrigin='anonymous';document.head.append(link);
+        }
+        if(!document.querySelector(`link[rel="dns-prefetch"][href="${origin}"]`)){
+          const dns=document.createElement('link');dns.rel='dns-prefetch';dns.href=origin;document.head.append(dns);
+        }
+      }catch(_){}
+    }
+    function applyPlayerOrientation(){
+      const portrait=storedValue('titan_orientation')==='portrait';
+      const mirror=storedValue('titan_mirror')==='on';
+      $('videoWrap').classList.toggle('portrait',portrait);
+      $('videoWrap').classList.toggle('mirror',mirror);
+      video.style.transform=`rotate(${Number(state.rotation||settings().rotation||0)}deg) ${mirror?'scaleX(-1)':''}`;
+      $('orientationBtn').textContent=portrait?'↔':'↕';
+      $('orientationBtn').title=portrait?'قاب عمودی؛ تغییر به افقی':'قاب افقی؛ تغییر به عمودی';
+      $('flipBtn').classList.toggle('primary',mirror);
+      $('flipBtn').setAttribute('aria-pressed',mirror?'true':'false');
+    }
+
+    function attachNative(url,generation,onInitialError=null,fallbackDelay=4200){
+      let hasPlayed=false;let fallbackTimer=0;
+      const clearFallback=()=>{if(fallbackTimer){clearTimeout(fallbackTimer);fallbackTimer=0}};
+      video.onloadedmetadata=()=>{if(generation!==state.playbackGeneration)return;beginPlayback(generation)};
+      video.oncanplay=()=>{if(generation!==state.playbackGeneration)return;state.mediaReady=true;clearFallback();beginPlayback(generation)};
+      video.onplaying=()=>{if(generation!==state.playbackGeneration)return;hasPlayed=true;state.playbackStarted=true;state.mediaReady=true;clearFallback()};
+      video.onerror=()=>{
+        clearFallback();if(generation!==state.playbackGeneration)return;
+        if(!hasPlayed&&typeof onInitialError==='function'){const fallback=onInitialError;onInitialError=null;Promise.resolve(fallback()).catch(error=>{if(generation===state.playbackGeneration)mediaFail(error.message||'مسیر جایگزین پخش ناموفق بود.')});return;}
+        const reason=explainMediaError();if(video.error?.code===3||video.error?.code===4)mediaFail(reason+' کدک یا ظرف رسانه ممکن است با این مرورگر سازگار نباشد.');else mediaFail(reason);
+      };
+      video.preload='auto';video.src=url;video.load();
+      if(typeof onInitialError==='function')fallbackTimer=setTimeout(()=>{
+        if(generation===state.playbackGeneration&&!hasPlayed&&!state.mediaReady&&video.readyState<2&&typeof onInitialError==='function'){
+          const fallback=onInitialError;onInitialError=null;Promise.resolve(fallback()).catch(error=>{if(generation===state.playbackGeneration)mediaFail(error.message||'مسیر جایگزین پخش ناموفق بود.')});
+        }
+      },fallbackDelay);
+    }
+    async function startHlsThroughProxy(originalUrl,generation,preferProxy=false){
+      if(generation!==state.playbackGeneration)return;
+      $('liveMark').textContent='در حال راه‌اندازی HLS';
+      $('placeholder').querySelector('small').textContent=preferProxy?'منبع HTTP روی صفحه HTTPS است؛ مسیر امن هم‌مبدأ آغاز می‌شود…':'موتور HLS آماده می‌شود…';
+      let HlsLib;
+      try{HlsLib=await ensureHls()}catch(error){
+        // Safari/iOS may still have a native HLS path even when the JS engine CDN is unavailable.
+        if(video.canPlayType('application/vnd.apple.mpegurl')||video.canPlayType('application/x-mpegURL')){
+          try{const source=preferProxy?await getProxyOrThrow(originalUrl,'hls'):originalUrl;attachNative(source,generation,preferProxy?null:async()=>attachNative(await getProxyOrThrow(originalUrl,'hls'),generation),preferProxy?0:1800);return}catch(proxyError){if(generation===state.playbackGeneration)mediaFail(`کتابخانه HLS بارگذاری نشد و مسیر امن نیز آماده نشد: ${proxyError.message}`);return}
+        }
+        try{
+          if(preferProxy){const proxyUrl=await getProxyOrThrow(originalUrl,'hls');await startShakaPlayback(proxyUrl,generation,'HLS از پراکسی')}
+          else await startShakaWithFallback(originalUrl,generation,'hls');
+        }catch(shakaError){if(generation===state.playbackGeneration)mediaFail(`کتابخانه HLS در دسترس نیست. HLS.js: ${error.message}؛ مسیر جایگزین: ${shakaError.message}`)}return;
+      }
+      if(generation!==state.playbackGeneration)return;
+      if(!HlsLib||!HlsLib.isSupported()){
+        try{
+          if(preferProxy){const proxyUrl=await getProxyOrThrow(originalUrl,'hls');await startShakaPlayback(proxyUrl,generation,'HLS از پراکسی')}
+          else await startShakaWithFallback(originalUrl,generation,'hls');
+        }catch(error){if(generation===state.playbackGeneration)mediaFail(`این مرورگر HLS/MSE را پشتیبانی نمی‌کند یا مسیر منبع در دسترس نیست: ${error.message}`)}return;
+      }
+      let proxyAttempted=false,mediaRecoveryUsed=false,shakaFallbackAttempted=false,manifestSeen=false,watchdog=0;
+      const startShakaFallback=async(sourceUrl,label)=>{
+        if(shakaFallbackAttempted||generation!==state.playbackGeneration)return;
+        shakaFallbackAttempted=true;
+        try{state.hls?.destroy?.()}catch(_){}if(state.hls)state.hls=null;
+        await startShakaPlayback(sourceUrl,generation,label);
+      };
+      const startProxy=async(reason)=>{
+        if(proxyAttempted||generation!==state.playbackGeneration)return;
+        proxyAttempted=true;clearTimeout(watchdog);
+        $('liveMark').textContent='تغییر مسیر امن پخش';$('placeholder').querySelector('small').textContent=reason||'دریافت مستقیم مجاز نبود؛ پراکسی هم‌مبدأ فعال می‌شود…';
+        try{const proxyUrl=await getProxyOrThrow(originalUrl,'hls');if(generation!==state.playbackGeneration)return;startEngine(proxyUrl,true)}
+        catch(error){if(generation!==state.playbackGeneration)return;if(preferProxy){mediaFail(`پراکسی HLS آماده نشد: ${error.message}`);return}try{await startShakaFallback(originalUrl,'HLS جایگزین')}catch(shakaError){if(generation===state.playbackGeneration)mediaFail(`HLS مستقیم و پراکسی ناموفق شدند. پراکسی: ${error.message}؛ موتور جایگزین: ${shakaError.message}`)}}
+      };
+      const startEngine=(sourceUrl,isProxy)=>{
+        if(generation!==state.playbackGeneration)return;
+        clearTimeout(watchdog);
+        try{state.hls?.destroy?.()}catch(_){}state.hls=null;
+        try{video.pause()}catch(_){}video.onerror=null;video.removeAttribute('src');video.load();
+        const hls=new HlsLib(hlsBufferConfig());state.hls=hls;
+        hls.on(HlsLib.Events.MEDIA_ATTACHED,()=>{if(generation===state.playbackGeneration)hls.loadSource(sourceUrl)});
+        hls.on(HlsLib.Events.MANIFEST_PARSED,()=>{if(generation!==state.playbackGeneration)return;manifestSeen=true;clearTimeout(watchdog);updateQuality();beginPlayback(generation)});
+        hls.on(HlsLib.Events.ERROR,async(_,data)=>{
+          if(generation!==state.playbackGeneration||!data?.fatal)return;
+          const networkLike=data.type===HlsLib.ErrorTypes.NETWORK_ERROR||/LOAD_ERROR|LOAD_TIMEOUT|FRAG_LOAD_ERROR|MANIFEST_LOAD_ERROR/i.test(String(data.details||''));
+          if(!isProxy&&!proxyAttempted&&(networkLike||!manifestSeen)){startProxy('سرور مستقیم یا CORS پاسخ معتبر نداد؛ پراکسی هم‌مبدأ در حال امتحان است…');return;}
+          if(!mediaRecoveryUsed&&data.type===HlsLib.ErrorTypes.MEDIA_ERROR){mediaRecoveryUsed=true;try{hls.recoverMediaError();return}catch(_){} }
+          if(!shakaFallbackAttempted){try{await startShakaFallback(sourceUrl,isProxy?'HLS پراکسی با موتور جایگزین':'HLS با موتور جایگزین');return}catch(shakaError){if(generation===state.playbackGeneration)mediaFail(`${hlsErrorMessage(data)}؛ موتور جایگزین: ${shakaError.message}`);return}}
+          mediaFail(hlsErrorMessage(data));
+        });
+        hls.attachMedia(video);
+        if(!isProxy){watchdog=setTimeout(()=>{if(generation===state.playbackGeneration&&!manifestSeen&&!proxyAttempted)startProxy('فهرست HLS در زمان مناسب دریافت نشد؛ مسیر هم‌مبدأ امتحان می‌شود…')},2200)}
+      };
+      if(preferProxy){await startProxy('به‌دلیل Mixed Content، پخش مستقیم HTTP مسدود می‌شود؛ پراکسی هم‌مبدأ آغاز شد…');return;}
+      startEngine(originalUrl,false);
+    }
+
+    function shakaErrorText(error){
+      const code=Number(error?.code||error?.detail?.code||0);
+      const data=Array.isArray(error?.data)?error.data.map(x=>String(x??'')).join(' '):String(error?.data||'');
+      const msg=String(error?.message||error?.detail?.message||data||'');
+      if(/cors|cross.origin|access.control.allow.origin/i.test(msg+' '+data))return 'مرورگر به منبع DASH/HLS اجازه دسترسی بین‌دامنه‌ای ندارد (CORS). تنظیم CORS باید روی سرور ارائه‌دهنده اصلاح شود.';
+      if(/403|401/.test(msg+' '+data))return 'سرور منبع دسترسی را رد کرده است (401/403)؛ توکن، مجوز یا محدودیت منطقه‌ای را بررسی کنید.';
+      if(/404/.test(msg+' '+data))return 'فهرست یا قطعه ویدئو روی سرور منبع پیدا نشد (404).';
+      return `Shaka Player نتوانست رسانه را بارگذاری کند${code?` (کد ${code})`:''}${msg?`: ${msg.slice(0,220)}`:'.'}`;
+    }
+    async function startShakaPlayback(sourceUrl,generation,label='رسانه تطبیقی'){
+      if(generation!==state.playbackGeneration)return false;
+      const shakaLib=await ensureShaka();
+      shakaLib.polyfill?.installAll?.();
+      if(!shakaLib.Player?.isBrowserSupported?.())throw new Error('مرورگر قابلیت‌های MSE لازم برای پلیر Shaka را ندارد.');
+      let player=null;let loaded=false;
+      try{
+        player=new shakaLib.Player(video);state.shaka=player;
+        player.configure({abr:{enabled:true},streaming:{bufferingGoal:10,rebufferingGoal:2,bufferBehind:24,retryParameters:{maxAttempts:2,baseDelay:400,backoffFactor:1.5}}});
+        player.addEventListener('error',event=>{
+          if(generation!==state.playbackGeneration)return;
+          const msg=shakaErrorText(event?.detail||event);
+          console.warn('TITAN Shaka error',event?.detail||event);
+          if(loaded)mediaFail(msg);
+        });
+        $('liveMark').textContent=`در حال راه‌اندازی ${label}`;
+        await player.load(sourceUrl);
+        if(generation!==state.playbackGeneration){try{await player.destroy()}catch(_){}return false;}
+        loaded=true;state.mediaReady=true;updateQuality();beginPlayback(generation);return true;
+      }catch(error){
+        if(player){if(state.shaka===player)state.shaka=null;try{await player.destroy()}catch(_){}}
+        throw new Error(shakaErrorText(error)||error.message||'خطای Shaka');
+      }
+    }
+    async function startShakaWithFallback(originalUrl,generation,type){
+      try{return await startShakaPlayback(originalUrl,generation,type.toUpperCase())}
+      catch(directError){
+        if(generation!==state.playbackGeneration)throw directError;
+        if(type!=='hls')throw directError;
+        $('liveMark').textContent='تغییر مسیر پخش';$('placeholder').querySelector('small').textContent='اتصال مستقیم مجاز نبود؛ مسیر پراکسی HLS بررسی می‌شود…';
+        const proxyUrl=await getPlaybackUrl(originalUrl,'hls');
+        try{return await startShakaPlayback(proxyUrl,generation,'HLS از پراکسی')}
+        catch(proxyError){throw new Error(`مسیر مستقیم: ${directError.message}؛ مسیر پراکسی: ${proxyError.message}`)}
+      }
+    }
+
+    function mpegtsErrorText(lib,kind,detail,info){
+      const kindText=String(kind||'').toLowerCase();const detailText=String(detail||'');
+      const code=info?.status??info?.statusCode??info?.code??info?.errno??'';
+      const msg=String(info?.msg||info?.message||info?.error||'');
+      const combined=`${detailText} ${msg}`.toLowerCase();
+      if(Number(code)===503||/php.{0,20}curl|curl.{0,20}(missing|not enabled|فعال نیست)/i.test(detailText+' '+msg))return 'پراکسی PHP روی هاست پاسخ ۵۰۳ داده است؛ افزونه PHP cURL فعال نیست یا در دسترس PHP-FPM نیست. از پشتیبانی هاست بخواهید cURL را برای همان نسخه PHP وب فعال کند.';
+      if(Number(code)===401||Number(code)===403)return `سرور منبع دسترسی MPEG-TS را رد کرده است (HTTP ${code})؛ لینک، توکن، IP مجاز و مجوز پخش بررسی شود.`;
+      if(Number(code)===404)return 'منبع MPEG-TS یا مسیر آن در سرور پیدا نشد (HTTP 404).';
+      if(Number(code)===429)return 'سرور منبع به درخواست‌های پخش محدودیت گذاشته است (HTTP 429).';
+      if(combined.includes('network_status_code_invalid'))return `سرور استریم پاسخ HTTP نامعتبر داد${code!==''?` (${code})`:''}. دسترسی، توکن و لینک را بررسی کنید.`;
+      if(combined.includes('network_timeout'))return 'زمان پاسخ سرور استریم تمام شد؛ سرور کند است یا ارتباط شبکه قطع شده است.';
+      if(combined.includes('media_codec_unsupported')||combined.includes('media_format_unsupported')||combined.includes('codec'))return 'کدک صوتی/تصویری این MPEG-TS با پلیر مرورگر سازگار نیست؛ این منبع باید با FFmpeg روی VPS به H.264/AAC در HLS تبدیل شود.';
+      if(combined.includes('media_format_error'))return 'ساختار بسته MPEG-TS ناقص یا نامعتبر است؛ منبع را با یک پلیر مرجع یا FFprobe بررسی کنید.';
+      if(Number(code)===-1||kindText.includes('exception'))return `کتابخانه MPEG-TS یک استثنای داخلی گزارش کرد (کد ${code!==''?code:'-1'}). پاسخ HTTP، نوع واقعی رسانه، هدرهای سرور و دسترسی cURL را بررسی کنید${msg?`: ${msg}`:'.'}`;
+      if(kindText.includes('network'))return `خطای شبکه در دریافت MPEG-TS${code!==''?` (کد ${code})`:''}${msg?`: ${msg}`:'.'} `;
+      if(kindText.includes('media'))return `خطای رمزگشایی MPEG-TS${msg?`: ${msg}`:''}؛ کدک یا سلامت جریان را بررسی کنید.`;
+      return `خطای داخلی MPEG-TS؛ ${detailText||kind||'بدون جزئیات'}${code!==''?` (کد ${code})`:''}${msg?` — ${msg}`:''}`;
+    }
+    async function startMpegTsPlayback(originalUrl,type,generation,preferProxy=false){
+      if(generation!==state.playbackGeneration)return;
+      let mpegLib;
+      try{mpegLib=await ensureMpegts()}catch(error){mediaFail(`کتابخانه MPEG-TS/FLV بارگذاری نشد: ${error.message}. اتصال CDN را بررسی کنید.`);return}
+      if(generation!==state.playbackGeneration)return;
+      if(!mpegLib?.isSupported?.()){
+        if(video.canPlayType(type==='flv'?'video/x-flv':'video/mp2t')){if(preferProxy){try{attachNative(await getProxyOrThrow(originalUrl,type),generation)}catch(error){mediaFail(`مسیر امن ${type.toUpperCase()} آماده نشد: ${error.message}`)}}else attachNative(originalUrl,generation,async()=>attachNative(await getProxyOrThrow(originalUrl,type),generation),2200);return}
+        mediaFail('این مرورگر موتور MSE لازم برای MPEG-TS/FLV را ندارد. در iOS قدیمی‌تر از 17.1 یا WebView محدود، پخش TS تضمین‌شدنی نیست؛ نسخه HLS یا MP4 سازگار لازم است.');return;
+      }
+      const profile=playbackProfile();let latestError='';
+      const startEngine=(sourceUrl,isProxy)=>new Promise((resolve,reject)=>{
+        let settled=false;let timeout=0;let player=null;
+        const cleanup=(detach=true)=>{
+          if(timeout)clearTimeout(timeout);
+          if(player&&detach){try{player.pause?.();player.unload?.();player.detachMediaElement?.();player.destroy?.()}catch(_){}}
+          if(detach&&state.mpegts===player)state.mpegts=null;
+          video.oncanplay=null;video.onerror=null;
+        };
+        try{
+          player=mpegLib.createPlayer({type:type==='flv'?'flv':'mpegts',isLive:true,url:sourceUrl},{
+            enableWorker:true,enableStashBuffer:false,lazyLoad:false,deferLoadAfterSourceOpen:false,
+            liveBufferLatencyChasing:true,liveBufferLatencyMaxLatency:3,liveBufferLatencyMinRemain:0.5,
+            autoCleanupSourceBuffer:true,autoCleanupMaxBackwardDuration:30,autoCleanupMinBackwardDuration:10
+          });
+          try{video.pause();video.removeAttribute('src');video.load()}catch(_){}
+          state.mpegts=player;player.attachMediaElement(video);
+          player.on(mpegLib.Events.ERROR,(kind,detail,info)=>{
+            latestError=mpegtsErrorText(mpegLib,kind,detail,info);
+            console.warn('TITAN MPEGTS error',{kind,detail,info,isProxy});
+            if(settled){if(generation===state.playbackGeneration)mediaFail(latestError);return;}
+            settled=true;cleanup();reject(new Error(latestError));
+          });
+          player.on(mpegLib.Events.MEDIA_INFO,info=>{state.mediaInfo=info||null});
+          video.oncanplay=()=>{
+            if(settled||generation!==state.playbackGeneration)return;
+            settled=true;state.mediaReady=true;cleanup(false);beginPlayback(generation);resolve(true);
+          };
+          video.onerror=()=>{
+            if(settled||generation!==state.playbackGeneration)return;
+            settled=true;latestError=explainMediaError();cleanup();reject(new Error(latestError));
+          };
+          timeout=setTimeout(()=>{if(!settled){settled=true;cleanup();reject(new Error('تا ۳ ثانیه نخست داده قابل پخش دریافت نشد.'))}},3000);
+          player.load();
+          if(settings().autoplay!==false){
+            player.play().catch(error=>{
+              if(generation!==state.playbackGeneration)return;
+              if(error?.name==='NotAllowedError'){$('liveMark').textContent='آماده پخش؛ دکمه پخش را لمس کنید';$('playPauseBtn').textContent='▶';}
+              else if(!settled){settled=true;cleanup();reject(error)}
+            });
+          }
+        }catch(error){cleanup();reject(error)}
+      });
+      if(preferProxy){
+        try{const proxyUrl=await getProxyOrThrow(originalUrl,type);if(generation===state.playbackGeneration)await startEngine(proxyUrl,true)}
+        catch(proxyError){if(generation===state.playbackGeneration)mediaFail(`پراکسی ${type.toUpperCase()} آماده نشد: ${proxyError.message}`)}
+        return;
+      }
+      try{await startEngine(originalUrl,false)}
+      catch(directError){
+        if(generation!==state.playbackGeneration)return;
+        $('liveMark').textContent='تلاش برای مسیر جایگزین';$('placeholder').querySelector('small').textContent='اتصال مستقیم ناموفق بود؛ مسیر هم‌مبدأ بررسی می‌شود…';
+        try{const proxyUrl=await getProxyOrThrow(originalUrl,type);if(generation!==state.playbackGeneration)return;await startEngine(proxyUrl,true)}
+        catch(proxyError){if(generation!==state.playbackGeneration)return;mediaFail(`پخش ${type.toUpperCase()} ناموفق شد. مستقیم: ${directError.message}؛ پراکسی: ${proxyError.message||latestError||'نامشخص'}`)}
+      }
+    }
+    async function loadChannel(channel,addHistory=true,isRetry=false){
+      destroyHls();
+      if(!isRetry){state.transcodeAttempted=false;state.reconnectAttempts=0;}
+      const generation=state.playbackGeneration;
+      state.current=channel;state.hlsRetryCount=0;renderChannels();const poster=safeLogoUrl(channel.poster||channel.logo||'');if(poster)video.setAttribute('poster',poster);else video.removeAttribute('poster');$('nowPlaying').textContent=channel.name;$('liveMark').textContent='در حال اتصال';$('favCurrentBtn').textContent=state.favorites.has(channel.key)?'★':'☆';video.preload='auto';
+      updateQuality();$('placeholder').classList.remove('hidden');$('placeholder').querySelector('strong').textContent=channel.name;$('placeholder').querySelector('small').textContent='در حال شروع پخش مستقیم…';
+      if(addHistory){state.history=[channel.key,...state.history.filter(k=>k!==channel.key)].slice(0,30);localStorage.setItem('titan_history',JSON.stringify(state.history))}
+      $('retryPlaybackBtn').hidden=true;$('mediaInfoBar').textContent='در حال تشخیص نوع استریم و کدک…';$('mediaDetails').textContent='در حال دریافت اطلاعات رسانه…';
+      const originalUrl=String(channel.url||'').trim();
+      let type=channel.detectedType||cachedStreamType(channel)||detectStreamType(originalUrl);
+      prepareMediaOrigin(originalUrl);
+      if(/^https?:\/\//i.test(originalUrl)){getMediaInfo(originalUrl).then(info=>{if(generation!==state.playbackGeneration)return;state.mediaInfo=info;renderMediaInfo(info)}).catch(error=>{if(generation===state.playbackGeneration){$('mediaInfoBar').textContent=`اطلاعات دقیق کدک در دسترس نیست: ${error.message}`;$('mediaDetails').textContent=error.message}})}
+      if(type==='transcode-required'||/^(?:rtsp|rtmp|rtmps|udp|srt|rtp):\/\//i.test(originalUrl)){state.transcodeAttempted=true;try{await startTranscodedPlayback(originalUrl,generation)}catch(error){showMediaFailure(`این پروتکل در مرورگر مستقیم پخش نمی‌شود و تبدیل FFmpeg ناموفق بود: ${error.message}`)}return}
+      if(!/^https?:\/\//i.test(originalUrl)){mediaFail('آدرس پخش معتبر نیست؛ باید لینک HTTP/HTTPS یا یک پروتکل قابل تبدیل و ثبت‌شده در فهرست باشد.');return}
+      if(type==='webpage'){mediaFail('این مورد آدرس صفحه است، نه لینک مستقیم رسانه. برای پخش باید لینک مستقیم مجاز HLS یا فایل ویدئویی وارد شود.');return}
+      if(type==='unknown'){
+        $('placeholder').querySelector('small').textContent='پخش مستقیم آغاز شد؛ نوع واقعی منبع هم‌زمان بررسی می‌شود…';
+        let detectedResult=null,switched=false,probeSettled=false;
+        const switchToDetected=probe=>{
+          if(!probe||generation!==state.playbackGeneration||state.mediaReady||state.playbackStarted||video.readyState>=2||switched)return;
+          const detected=probe.type||'unknown';if(!['hls','dash','mpegts','flv','native'].includes(detected))return;
+          rememberStreamType(channel,detected);channel.detectedType=detected;channel.detectedMime=probe.contentType||'';
+          if(detected==='native'){
+            if(isMixedContentSource(originalUrl)||video.error){switched=true;getProxyOrThrow(originalUrl,'native').then(proxyUrl=>{if(generation===state.playbackGeneration)attachNative(proxyUrl,generation)}).catch(error=>{if(generation===state.playbackGeneration)mediaFail(`پخش فایل از مسیر امن ناموفق شد: ${error.message}`)});}
+            return;
+          }
+          switched=true;loadChannel(channel,false);
+        };
+        const probePromise=probeStreamType(originalUrl).then(probe=>{probeSettled=true;detectedResult=probe;switchToDetected(probe);return probe}).catch(error=>{probeSettled=true;console.info('TITAN background probe skipped:',error.message);return null});
+        const directFallback=async()=>{
+          if(generation!==state.playbackGeneration)return;
+          const probe=detectedResult||await Promise.race([probePromise,new Promise(resolve=>setTimeout(()=>resolve(null),900))]);
+          if(generation!==state.playbackGeneration||switched)return;
+          if(probe&&['hls','dash','mpegts','flv'].includes(probe.type)){
+            rememberStreamType(channel,probe.type);channel.detectedType=probe.type;channel.detectedMime=probe.contentType||'';switched=true;loadChannel(channel,false);return;
+          }
+          if(probe?.type==='native'){
+            rememberStreamType(channel,'native');
+            try{const proxyUrl=await getProxyOrThrow(originalUrl,'native');if(generation===state.playbackGeneration)attachNative(proxyUrl,generation)}
+            catch(error){if(generation===state.playbackGeneration)mediaFail(`منبع فایل مستقیم است اما پخش بومی شکست خورد. پراکسی فایل: ${error.message}؛ احتمال ناسازگاری کدک نیز وجود دارد.`)}
+            return;
+          }
+          mediaFail(probeSettled?'نوع یا پاسخ رسانه از سرور قابل تشخیص نیست؛ لینک ممکن است منقضی باشد یا صفحه HTML به‌جای استریم برگرداند.':'سرور در مهلت بررسی پاسخ معتبر نداد؛ فرض MPEG-TS انجام نشد تا موتور اشتباه اجرا نشود.');
+        };
+        if(isMixedContentSource(originalUrl)){
+          directFallback();
+        }else{
+          attachNative(originalUrl,generation,directFallback,2600);
+        }
+        return;
+      }
+      if(type==='hls'){
+        const nativeHls=Boolean(video.canPlayType('application/vnd.apple.mpegurl')||video.canPlayType('application/x-mpegURL'));
+        const mixed=isMixedContentSource(originalUrl);
+        if(nativeHls){
+          if(mixed){try{attachNative(await getProxyOrThrow(originalUrl,'hls'),generation)}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش HLS از مسیر امن ناموفق شد: ${error.message}`)}}
+          else attachNative(originalUrl,generation,async()=>attachNative(await getProxyOrThrow(originalUrl,'hls'),generation),2200);
+        }else await startHlsThroughProxy(originalUrl,generation,mixed);
+        return;
+      }
+      if(type==='dash'){
+        const mixed=isMixedContentSource(originalUrl);
+        let dashLib=null;try{dashLib=await ensureDash()}catch(error){console.warn('TITAN dash.js unavailable',error)}if(generation!==state.playbackGeneration)return;
+        let proxyTried=mixed;
+        const startDashEngine=async(sourceUrl,isProxy)=>{
+          if(generation!==state.playbackGeneration)return;
+          if(!dashLib?.MediaPlayer){try{await startShakaPlayback(sourceUrl,generation,'DASH');return}catch(error){throw error}}
+          const profile=playbackProfile();const dash=dashLib.MediaPlayer().create();state.dash=dash;let fallbackStarted=false;
+          dash.updateSettings?.({streaming:{buffer:{bufferTimeDefault:profile.constrained?5:8,bufferTimeAtTopQuality:profile.constrained?8:14,bufferTimeAtTopQualityLongForm:profile.constrained?10:18,stableBufferTime:profile.constrained?3:6,bufferToKeep:profile.constrained?4:10},scheduling:{scheduleWhilePaused:false}}});
+          dash.on(dashLib.MediaPlayer.events.STREAM_INITIALIZED,()=>{if(generation!==state.playbackGeneration)return;updateQuality();beginPlayback(generation)});
+          dash.on(dashLib.MediaPlayer.events.ERROR,async(event)=>{
+            if(generation!==state.playbackGeneration||fallbackStarted)return;
+            fallbackStarted=true;const code=event?.error?.code||event?.event?.response?.status||0;const details=code?`خطای DASH (کد ${code}).`:'خطای DASH/CORS.';
+            try{dash.reset?.()}catch(_){}if(state.dash===dash)state.dash=null;
+            if(!isProxy&&!proxyTried){
+              proxyTried=true;
+              try{const proxyUrl=await getProxyOrThrow(originalUrl,'dash');if(generation===state.playbackGeneration){await startDashEngine(proxyUrl,true);return}}
+              catch(proxyError){if(generation===state.playbackGeneration){try{await startShakaPlayback(originalUrl,generation,'DASH جایگزین')}catch(shakaError){mediaFail(`${details} پراکسی: ${proxyError.message}؛ Shaka: ${shakaError.message}`)}}return}
+            }
+            try{await startShakaPlayback(sourceUrl,generation,'DASH جایگزین')}
+            catch(error){if(generation===state.playbackGeneration)mediaFail(`${details} ساختار MPD، قطعات، CORS یا DRM را بررسی کنید. جایگزین: ${error.message}`)}
+          });
+          dash.initialize(video,sourceUrl,settings().autoplay!==false);
+        };
+        try{
+          if(mixed){const proxyUrl=await getProxyOrThrow(originalUrl,'dash');if(generation===state.playbackGeneration)await startDashEngine(proxyUrl,true)}
+          else await startDashEngine(originalUrl,false);
+        }catch(error){if(generation===state.playbackGeneration)mediaFail(`راه‌اندازی DASH ناموفق شد: ${error.message}`)}
+        return;
+      }
+      if((type==='mpegts'||type==='flv')){await startMpegTsPlayback(originalUrl,type,generation,isMixedContentSource(originalUrl));return;}
+      // Direct files are native-first; HTTP on an HTTPS app is sent to the same-origin proxy immediately.
+      if(type==='native'){
+        if(isMixedContentSource(originalUrl)){
+          try{attachNative(await getProxyOrThrow(originalUrl,'native'),generation)}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش مستقیم HTTP در صفحه HTTPS مسدود است و مسیر پراکسی آماده نشد: ${error.message}`)}
+        }else attachNative(originalUrl,generation,async()=>attachNative(await getProxyOrThrow(originalUrl,'native'),generation),2400);
+        return;
+      }
+      mediaFail('نوع منبع قابل‌شناسایی نیست؛ پخش مستقیم امتحان شد اما سرور نوع رسانه معتبری ارائه نکرد.');
+    }
+    function settings(){try{return JSON.parse(storedValue('titan_settings')||'{}')}catch(_){return {}}}
+    function saveSetting(key,value){const all=settings();all[key]=value;localStorage.setItem('titan_settings',JSON.stringify(all))}
+    const modeFilters={standard:'none',classic:'saturate(.82) contrast(1.08) sepia(.12)',sport:'saturate(1.28) contrast(1.12)',cinema:'saturate(.82) contrast(1.12) sepia(.08)',film:'saturate(.74) contrast(1.08) sepia(.14)',dynamic:'saturate(1.32) contrast(1.12)'};
+    function setMode(mode,persist=true){if(!Object.prototype.hasOwnProperty.call(modeFilters,mode))mode='standard';state.mode=mode;$('modeSelect').value=mode;$('defaultMode').value=mode;document.documentElement.style.setProperty('--video-filter',modeFilters[mode]||'none');if(persist)saveSetting('mode',mode)}
+    function setTheme(theme){
+      const palette={ocean:'#031923',forest:'#071b13',cafe:'#1d120e',minimal:'#111318',cyber:'#050d11',galaxy:'#0a0820',rainbow:'#1a0b25',romance:'#210c20',orange:'#211004',redblack:'#16070c',silverred:'#111318',graphite:'#191c22',aurora:'#061b21',sunset:'#27110f',ice:'#0d1c2d',vapor:'#1a0c30',desert:'#281a0a',matrix:'#020f08',arcade:'#100d24',plum:'#1b0d29',gold:'#090909',redgold:'#090608'};
+      const color=palette[theme]||palette.ocean;document.body.dataset.theme=theme;$('themeSelect').value=theme;localStorage.setItem('titan_theme',theme);
+      const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.setAttribute('content',color);
+      if(window.Telegram?.WebApp){try{Telegram.WebApp.setHeaderColor?.(color);Telegram.WebApp.setBackgroundColor?.(color)}catch(_){}}
+    }
+    function setWallpaper(wallpaper){document.body.dataset.wallpaper=wallpaper;$('wallpaperSelect').value=wallpaper;localStorage.setItem('titan_wallpaper',wallpaper)}
+    function setVolume(value){video.volume=Math.max(0,Math.min(1,Number(value)));$('volumeRange').value=video.volume;$('volumeValue').textContent=faNum(Math.round(video.volume*100))+'٪';$('muteBtn').textContent=video.muted?'🔇':'🔊';saveSetting('volume',video.volume)}
+    function setBrightness(value){const n=Number(value);video.style.setProperty('--brightness',n);$('brightnessRange').value=n;$('brightnessValue').textContent=faNum(Math.round(n*100))+'٪';saveSetting('brightness',n)}
+    function saveFavorites(){localStorage.setItem('titan_favorites',JSON.stringify([...state.favorites]))}
+    function toggleFavorite(){if(!state.current){toast('ابتدا یک شبکه انتخاب کنید.');return}const key=state.current.key;if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key);saveFavorites();$('favCurrentBtn').textContent=state.favorites.has(key)?'★':'☆';renderChannels();toast(state.favorites.has(key)?'به علاقه‌مندی‌ها اضافه شد.':'از علاقه‌مندی‌ها حذف شد.')}
+    function stepChannel(direction){const list=state.category==='all'?state.allChannels:(state.lists[state.category]||[]);if(!list.length)return;let index=state.current?list.findIndex(c=>c.key===state.current.key):-1;index=(index+direction+list.length)%list.length;loadChannel(list[index],true)}
+    function formatTime(seconds){if(!Number.isFinite(seconds))return '۰۰:۰۰';const min=Math.floor(seconds/60),sec=Math.floor(seconds%60);return faNum(`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`)}
+    async function checkPlaybackProxy(){try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const health=await response.json();state.hostHealth=health;if(!health.curl)toast('برای پراکسی پخش، افزونه PHP cURL باید روی هاست فعال باشد.');else if(!health.ffmpeg?.available)console.info('TITAN: FFmpeg روی هاست شناسایی نشد؛ پخش مستقیم فعال است اما تبدیل خودکار کدک‌های ناسازگار نیازمند FFmpeg/VPS است.');}catch(_){console.warn('وضعیت سرویس پخش هاست بررسی نشد.')}}
+    function renderMediaInfo(info){
+      const fmt=info.format||{};const streams=Array.isArray(info.streams)?info.streams:[];const v=streams.find(x=>x.codec_type==='video')||{};const a=streams.find(x=>x.codec_type==='audio')||{};
+      const bits=Number(v.bit_rate||fmt.bit_rate||0);const mb=bits?`${(bits/1000000).toFixed(2)} Mbps`:'';const fps=String(v.avg_frame_rate||v.r_frame_rate||'').replace('/0','');
+      const parts=[v.codec_name?`تصویر: ${v.codec_name}${v.profile?' '+v.profile:''}`:'تصویر: ندارد',v.width&&v.height?`${v.width}×${v.height}`:'',fps?`${fps} FPS`:'',a.codec_name?`صدا: ${a.codec_name}`:'صدا: ندارد',a.sample_rate?`${Math.round(Number(a.sample_rate)/1000)} kHz`:'',mb].filter(Boolean);
+      const text=parts.join(' | ')||'اطلاعات فنی موجود نیست';$('mediaInfoBar').textContent=text;$('mediaDetails').textContent=JSON.stringify({format:fmt.format_name||'',duration:fmt.duration||'',video:v,audio:a},null,2);
+    }
+    function setSelectOptions(select,items,selectedValue){
+      if(!select)return;const previous=selectedValue!==undefined?String(selectedValue):select.value;select.replaceChildren();items.forEach((item,index)=>{const option=document.createElement('option');option.value=String(item.value??index);option.textContent=String(item.label||`گزینه ${index+1}`);select.append(option)});if([...select.options].some(o=>o.value===previous))select.value=previous;
+    }
+    function refreshTrackMenus(){
+      const audioItems=[{value:'-1',label:'خودکار / پیش‌فرض'}];let audios=[];const subtitles=[{value:'-1',label:'خاموش'}];
+      if(state.hls){audios=(state.hls.audioTracks||[]).map((t,i)=>({value:i,label:t.name||t.lang||`صدای ${i+1}`}));(state.hls.subtitleTracks||[]).forEach((t,i)=>subtitles.push({value:i,label:t.name||t.lang||`زیرنویس ${i+1}`}));}
+      else if(state.shaka){try{audios=state.shaka.getAudioLanguagesAndRoles?.().map((t,i)=>({value:i,label:[t.language,t.role].filter(Boolean).join(' / ')||`صدای ${i+1}`}))||[]}catch(_){}try{state.shaka.getTextTracks?.().forEach((t,i)=>subtitles.push({value:i,label:t.language||t.label||`زیرنویس ${i+1}`}))}catch(_){}}
+      else if(state.dash){try{const tracks=state.dash.getTracksFor?.('audio')||[];audios=tracks.map((t,i)=>({value:i,label:t.lang||t.labels?.[0]?.text||`صدای ${i+1}`}));const texts=state.dash.getTracksFor?.('text')||[];texts.forEach((t,i)=>subtitles.push({value:i,label:t.lang||t.labels?.[0]?.text||`زیرنویس ${i+1}`}))}catch(_){}}
+      try{const native=video.audioTracks;if(native&&native.length){audios=native.length?Array.from(native).map((t,i)=>({value:`native:${i}`,label:t.label||t.language||`صدای ${i+1}`})):audios}}catch(_){}
+      try{Array.from(video.textTracks||[]).forEach((t,i)=>{if(t.kind!=='metadata')subtitles.push({value:`native:${i}`,label:t.label||t.language||`زیرنویس ${i+1}`})})}catch(_){}
+      if(audios.length)audioItems.push(...audios);else audioItems.push({value:'-2',label:'ترک جداگانه گزارش نشد'});
+      setSelectOptions($('audioTrackSelect'),audioItems,'-1');setSelectOptions($('subtitleSelect'),subtitles,'-1');
+    }
+    function setAudioTrack(value){
+      const v=String(value);if(v==='-1'||v==='-2')return;
+      if(v.startsWith('native:')){const i=Number(v.split(':')[1]);try{const tracks=video.audioTracks;if(tracks)Array.from(tracks).forEach((t,n)=>t.enabled=n===i)}catch(_){}return}
+      const index=Number(v);if(!Number.isInteger(index))return;
+      try{if(state.hls)state.hls.audioTrack=index;else if(state.shaka){const list=state.shaka.getAudioLanguagesAndRoles?.()||[];const item=list[index];if(item)state.shaka.selectAudioLanguage?.(item.language,item.role)}else if(state.dash){const tracks=state.dash.getTracksFor?.('audio')||[];if(tracks[index])state.dash.setCurrentTrack?.(tracks[index])}}catch(error){toast(`تغییر ترک صوتی در این موتور پشتیبانی نشد: ${error.message}`)}
+    }
+    function setSubtitleTrack(value){
+      const v=String(value);try{
+        if(v==='-1'){if(state.hls){state.hls.subtitleDisplay=false;state.hls.subtitleTrack=-1}if(state.shaka)state.shaka.setTextTrackVisibility?.(false);if(state.dash)state.dash.enableText?.(false);Array.from(video.textTracks||[]).forEach(t=>t.mode='disabled');return}
+        if(v.startsWith('native:')){const i=Number(v.split(':')[1]);Array.from(video.textTracks||[]).forEach((t,n)=>t.mode=n===i?'showing':'disabled');return}
+        const i=Number(v);if(state.hls){state.hls.subtitleTrack=i;state.hls.subtitleDisplay=true}else if(state.shaka){const t=(state.shaka.getTextTracks?.()||[])[i];if(t){state.shaka.selectTextTrack?.(t);state.shaka.setTextTrackVisibility?.(true)}}else if(state.dash){state.dash.setTextTrack?.(i);state.dash.enableText?.(true)}
+      }catch(error){toast(`تغییر زیرنویس در این موتور پشتیبانی نشد: ${error.message}`)}
+    }
+    async function runCompatibilityTest(){
+      const items=[['MP4 / H.264',video.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"')],['HEVC / H.265',video.canPlayType('video/mp4; codecs="hvc1.1.6.L93.B0"')],['VP9',video.canPlayType('video/webm; codecs="vp09.00.10.08"')],['AV1',video.canPlayType('video/mp4; codecs="av01.0.04M.08"')],['WebM / VP8',video.canPlayType('video/webm; codecs="vp8, vorbis"')],['Native HLS',video.canPlayType('application/vnd.apple.mpegurl')||video.canPlayType('application/x-mpegURL')],['MediaSource (MSE)',!!window.MediaSource],['HLS.js/MSE',!!(window.MediaSource&&window.MediaSource.isTypeSupported)],['DASH',!!(window.MediaSource&&window.MediaSource.isTypeSupported)],['Fullscreen',!!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen||video.webkitEnterFullscreen)],['Picture-in-Picture',!!document.pictureInPictureEnabled]];
+      let output=items.map(([name,value])=>`${name}: ${value===true?'موجود':value||'پشتیبانی گزارش نشد'}`).join('\n');
+      if(navigator.mediaCapabilities?.decodingInfo){try{const result=await navigator.mediaCapabilities.decodingInfo({type:'file',video:{contentType:'video/mp4; codecs="avc1.42E01E"',width:1280,height:720,bitrate:2500000,framerate:30},audio:{contentType:'audio/mp4; codecs="mp4a.40.2"',channels:'2',bitrate:128000,samplerate:48000}});output+=`\n\nMediaCapabilities H.264/AAC: supported=${result.supported}, smooth=${result.smooth}, powerEfficient=${result.powerEfficient}`}catch(error){output+=`\nMediaCapabilities: ${error.message}`}}
+      $('compatResults').textContent=output;return output;
+    }
+    async function refreshServerStatus(){
+      try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const h=await response.json();state.hostHealth=h;$('serverEngineStatus').textContent=`PHP ${h.php||'?'} | cURL: ${h.curl?'فعال':'غیرفعال'} | FFmpeg: ${h.ffmpeg?.available?'فعال':'پیدا نشد'} | FFprobe: ${h.ffprobe?.available?'فعال':'پیدا نشد'} | اجرای تبدیل: ${h.transcode?.available?'مجاز':'محدود/غیرفعال'} | پردازش تصویر: ${(h.imageProcessor?.imagick?'Imagick ':'')+(h.imageProcessor?.gd?'GD':'')||'ندارد'}`;
+      }catch(error){$('serverEngineStatus').textContent=`دریافت وضعیت سرور ناموفق بود: ${error.message}`}
+    }
+    function applySettings(){const s=settings();state.rotation=Number(s.rotation||0)%360;setTheme(storedValue('titan_theme')||'ocean');const savedWallpaper=storedValue('titan_wallpaper')||'stadium';setWallpaper(['stadium','cinema','film','aurora'].includes(savedWallpaper)?savedWallpaper:'cinema');$('motionToggle').checked=storedValue('titan_motion')!=='off';document.body.classList.toggle('motion-off',!$('motionToggle').checked);$('effectsToggle').checked=storedValue('titan_effects')==='on';document.body.classList.toggle('soft-effects',$('effectsToggle').checked);$('themeSelect').value=document.body.dataset.theme;$('wallpaperSelect').value=document.body.dataset.wallpaper;$('defaultMode').value=s.mode||'standard';setMode(s.mode||'standard',false);$('autoplayToggle').checked=s.autoplay!==false;$('restoreVolumeToggle').checked=s.restoreVolume!==false;$('defaultVolume').value=s.volume??.8;$('brightnessDefault').value=s.brightness??1;$('fitSelect').value=s.fit||'contain';$('fitSelectQuick').value=s.fit||'contain';video.style.objectFit=s.fit||'contain';$('columnsSelect').value=s.columns||'auto';$('densitySelect').value=s.density||'normal';$('channelPositionSelect').value=s.channelPosition||'bottom';$('channelWidthRange').value=s.channelWidth||340;$('channelWidthValue').textContent=faNum(s.channelWidth||340)+'px';$('logoFitSelect').value=s.logoFit||'contain';$('logoScaleRange').value=s.logoScale||100;$('logoScaleValue').textContent=faNum(s.logoScale||100)+'٪';$('logoBoxSelect').value=s.logoBox||'normal';$('independentScrollToggle').checked=s.independentScroll!==false;$('autoTranscodeToggle').checked=s.autoTranscode!==false;$('autoReconnectToggle').checked=s.autoReconnect!==false;$('bufferProfileSelect').value=s.bufferProfile||'auto';$('transcodeQualitySelect').value=s.transcodeQuality||'auto';$('playbackRateSelect').value=String(s.playbackRate||1);video.playbackRate=Number(s.playbackRate||1);document.body.dataset.channelPosition=s.channelPosition||'bottom';document.body.dataset.logoFit=s.logoFit||'contain';document.body.dataset.logoBox=s.logoBox||'normal';document.body.style.setProperty('--channel-column-width',(s.channelWidth||340)+'px');document.body.style.setProperty('--logo-scale',String((s.logoScale||100)/100));document.body.classList.toggle('no-independent-scroll',s.independentScroll===false);document.body.classList.toggle('compact',s.density==='compact');document.body.classList.remove('columns-2','columns-3','columns-4','columns-6','columns-8');if(['2','3','4','6','8'].includes(String(s.columns)))document.body.classList.add('columns-'+s.columns);document.body.classList.add('hide-groups');$('favoritesOnlyToggle').checked=false;setVolume(s.restoreVolume===false?.8:(s.volume??.8));setBrightness(s.brightness??1);applyPlayerOrientation();renderChannels()}
+    function openSettings(tab='appearance'){$('settingsBackdrop').classList.add('open');document.querySelectorAll('.settings-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.settings-content').forEach(c=>c.classList.toggle('active',c.dataset.content===tab))}
+    function closeSettings(){$('settingsBackdrop').classList.remove('open')}
+
+    let installPrompt=null;
+    window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;$('installBtn').hidden=false});
+    window.addEventListener('appinstalled',()=>{installPrompt=null;$('installBtn').hidden=true;toast('TITAN روی دستگاه نصب شد.')});
+    $('installBtn').addEventListener('click',async()=>{if(!installPrompt){toast('از منوی Chrome گزینه «نصب برنامه» یا «Add to Home screen» را انتخاب کنید.');return}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').hidden=true});
+
+    $('categoryBar').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(b)setCategory(b.dataset.category)});
+    $('refreshBtn').addEventListener('click',()=>refreshAll(true));$('refreshTopBtn').addEventListener('click',()=>refreshAll(true));$('searchInput').addEventListener('input',renderChannels);$('clearSearchBtn').addEventListener('click',()=>{$('searchInput').value='';renderChannels()});$('searchFocusBtn').addEventListener('click',()=>{$('searchInput').focus({preventScroll:true})});
+    $('prevBtn').addEventListener('click',()=>stepChannel(-1));$('nextBtn').addEventListener('click',()=>stepChannel(1));
+    $('playPauseBtn').addEventListener('click',()=>{if(!state.current){toast('ابتدا یک شبکه انتخاب کنید.');return}if(video.paused)video.play().catch(()=>toast('شروع پخش ممکن نشد.'));else video.pause()});video.addEventListener('play',()=>{$('playPauseBtn').textContent='Ⅱ';$('liveMark').textContent='در حال پخش'});video.addEventListener('playing',()=>{state.playbackStarted=true;state.mediaReady=true});video.addEventListener('pause',()=>{$('playPauseBtn').textContent='▶';if(state.current)$('liveMark').textContent='متوقف شده'});video.addEventListener('timeupdate',()=>{if(Number.isFinite(video.duration)&&video.duration>0){$('seekRange').value=(video.currentTime/video.duration)*100;$('timeLabel').textContent=formatTime(video.currentTime)}});$('seekRange').addEventListener('input',()=>{if(Number.isFinite(video.duration)&&video.duration>0)video.currentTime=(Number($('seekRange').value)/100)*video.duration});
+    $('muteBtn').addEventListener('click',()=>{video.muted=!video.muted;$('muteBtn').textContent=video.muted?'🔇':'🔊';$('volumeValue').textContent=video.muted?'بی‌صدا':faNum(Math.round(video.volume*100))+'٪'});$('volumeRange').addEventListener('input',e=>{video.muted=false;setVolume(e.target.value)});$('brightnessRange').addEventListener('input',e=>setBrightness(e.target.value));$('modeSelect').addEventListener('change',e=>setMode(e.target.value));$('playerSettingsBtn').addEventListener('click',()=>$('playerSettings').classList.toggle('open'));$('favCurrentBtn').addEventListener('click',toggleFavorite);
+    $('fullBtn').addEventListener('click',()=>{const target=document.querySelector('.player-card');if(document.fullscreenElement||document.webkitFullscreenElement){(document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen)?.call(document)}else enterFullscreen(target)});$('pipBtn').addEventListener('click',async()=>{try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await video.requestPictureInPicture();else toast('تصویر در تصویر پشتیبانی نمی‌شود.')}catch(_){toast('تصویر در تصویر در دسترس نیست.')}});
+    $('qualitySelect').addEventListener('change',()=>applyQualityTarget($('qualitySelect').value));video.addEventListener('loadedmetadata',()=>{updateQuality();refreshTrackMenus()});
+    $('openSettingsBtn').addEventListener('click',()=>openSettings());$('playerSettingsBtn').addEventListener('dblclick',()=>openSettings('player'));$('closeSettingsBtn').addEventListener('click',closeSettings);$('settingsBackdrop').addEventListener('click',e=>{if(e.target===$('settingsBackdrop'))closeSettings()});document.querySelectorAll('.settings-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.settings-tab').forEach(t=>t.classList.toggle('active',t===b));document.querySelectorAll('.settings-content').forEach(c=>c.classList.toggle('active',c.dataset.content===b.dataset.tab))}));
+    $('themeSelect').addEventListener('change',e=>{setTheme(e.target.value);toast('تم تغییر کرد.')});$('wallpaperSelect').addEventListener('change',e=>{setWallpaper(e.target.value);toast('تصویر زمینه تغییر کرد.')});$('motionToggle').addEventListener('change',e=>{document.body.classList.toggle('motion-off',!e.target.checked);localStorage.setItem('titan_motion',e.target.checked?'on':'off')});$('effectsToggle').addEventListener('change',e=>{document.body.classList.toggle('soft-effects',e.target.checked);localStorage.setItem('titan_effects',e.target.checked?'on':'off')});$('defaultMode').addEventListener('change',e=>setMode(e.target.value));$('fitSelect').addEventListener('change',e=>{video.style.objectFit=e.target.value;$('fitSelectQuick').value=e.target.value;saveSetting('fit',e.target.value)});$('fitSelectQuick').addEventListener('change',e=>{$('fitSelect').value=e.target.value;video.style.objectFit=e.target.value;saveSetting('fit',e.target.value)});$('orientationBtn').addEventListener('click',()=>{localStorage.setItem('titan_orientation',storedValue('titan_orientation')==='portrait'?'landscape':'portrait');applyPlayerOrientation()});$('flipBtn').addEventListener('click',()=>{localStorage.setItem('titan_mirror',storedValue('titan_mirror')==='on'?'off':'on');applyPlayerOrientation()});$('autoplayToggle').addEventListener('change',e=>saveSetting('autoplay',e.target.checked));$('restoreVolumeToggle').addEventListener('change',e=>saveSetting('restoreVolume',e.target.checked));$('defaultVolume').addEventListener('input',e=>setVolume(e.target.value));$('brightnessDefault').addEventListener('input',e=>setBrightness(e.target.value));$('columnsSelect').addEventListener('change',e=>{saveSetting('columns',e.target.value);document.body.classList.remove('columns-2','columns-3','columns-4','columns-6','columns-8');if(['2','3','4','6','8'].includes(e.target.value))document.body.classList.add('columns-'+e.target.value)});$('densitySelect').addEventListener('change',e=>{saveSetting('density',e.target.value);document.body.classList.toggle('compact',e.target.value==='compact')});$('favoritesOnlyToggle').addEventListener('change',e=>{state.view=e.target.checked?'favorites':'category';renderChannels()});
+    $('playbackRateSelect').addEventListener('change',e=>{const rate=Math.max(.5,Math.min(2,Number(e.target.value)||1));video.playbackRate=rate;saveSetting('playbackRate',rate)});
+    $('audioTrackSelect').addEventListener('change',e=>setAudioTrack(e.target.value));$('subtitleSelect').addEventListener('change',e=>setSubtitleTrack(e.target.value));
+    $('channelPositionSelect').addEventListener('change',e=>{const v=['left','right','bottom'].includes(e.target.value)?e.target.value:'bottom';document.body.dataset.channelPosition=v;saveSetting('channelPosition',v)});
+    $('channelWidthRange').addEventListener('input',e=>{const v=Number(e.target.value);document.body.style.setProperty('--channel-column-width',v+'px');$('channelWidthValue').textContent=faNum(v)+'px';saveSetting('channelWidth',v)});
+    $('logoFitSelect').addEventListener('change',e=>{document.body.dataset.logoFit=e.target.value;saveSetting('logoFit',e.target.value)});
+    $('logoScaleRange').addEventListener('input',e=>{const v=Number(e.target.value);document.body.style.setProperty('--logo-scale',v/100);$('logoScaleValue').textContent=faNum(v)+'٪';saveSetting('logoScale',v)});
+    $('logoBoxSelect').addEventListener('change',e=>{document.body.dataset.logoBox=e.target.value;saveSetting('logoBox',e.target.value)});
+    $('independentScrollToggle').addEventListener('change',e=>{document.body.classList.toggle('no-independent-scroll',!e.target.checked);saveSetting('independentScroll',e.target.checked)});
+    $('autoTranscodeToggle').addEventListener('change',e=>saveSetting('autoTranscode',e.target.checked));$('autoReconnectToggle').addEventListener('change',e=>saveSetting('autoReconnect',e.target.checked));$('bufferProfileSelect').addEventListener('change',e=>saveSetting('bufferProfile',e.target.value));$('transcodeQualitySelect').addEventListener('change',e=>saveSetting('transcodeQuality',e.target.value));
+    $('rotateBtn').addEventListener('click',()=>{state.rotation=(state.rotation+90)%360;video.style.transform=`rotate(${state.rotation}deg) ${storedValue('titan_mirror')==='on'?'scaleX(-1)':''}`;saveSetting('rotation',state.rotation);});
+    $('theaterBtn').addEventListener('click',()=>{document.body.classList.toggle('theater-mode');$('theaterBtn').classList.toggle('primary',document.body.classList.contains('theater-mode'))});
+    async function enterFullscreen(element){try{if(element.requestFullscreen)await element.requestFullscreen();else if(element.webkitRequestFullscreen)element.webkitRequestFullscreen();else if(element.msRequestFullscreen)element.msRequestFullscreen();else if(video.webkitEnterFullscreen)video.webkitEnterFullscreen();else throw new Error('Fullscreen API is unavailable');if(element===document.documentElement&&screen.orientation?.lock){screen.orientation.lock('landscape').catch(()=>{})}}catch(error){toast(`فول‌اسکرین در این مرورگر در دسترس نیست: ${error.message}`)}}
+    $('appFullBtn').addEventListener('click',()=>{if(document.fullscreenElement||document.webkitFullscreenElement){(document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen)?.call(document);try{screen.orientation?.unlock?.()}catch(_){}}else enterFullscreen(document.documentElement)});
+    $('retryPlaybackBtn').addEventListener('click',()=>{if(state.current)loadChannel(state.current,false)});
+    $('runCompatTestBtn').addEventListener('click',runCompatibilityTest);$('refreshServerStatusBtn').addEventListener('click',refreshServerStatus);
+    video.addEventListener('loadedmetadata',refreshTrackMenus);video.addEventListener('durationchange',()=>{$('seekRange').disabled=!Number.isFinite(video.duration)||video.duration<=0});video.addEventListener('loadeddata',refreshTrackMenus);
+    document.querySelectorAll('[data-nav]').forEach(btn=>btn.addEventListener('click',()=>{
+      document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b===btn));
+      const nav=btn.dataset.nav;
+      if(nav==='settings'){openSettings();return;}
+      if(nav==='favorites'){state.view='favorites';$('favoritesOnlyToggle').checked=true;renderChannels();$('channelsSection').scrollIntoView({behavior:'smooth'});return;}
+      if(nav==='history'){state.view='history';$('favoritesOnlyToggle').checked=false;renderChannels();$('channelsSection').scrollIntoView({behavior:'smooth'});return;}
+      if(nav==='channels'){state.view='category';state.category='all';$('favoritesOnlyToggle').checked=false;renderChannels();$('channelsSection').scrollIntoView({behavior:'smooth'});return;}
+      state.view='category';$('favoritesOnlyToggle').checked=false;renderChannels();window.scrollTo({top:0,behavior:'smooth'});
+    }));
+    document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='Escape')closeSettings();if(e.key.toLowerCase()==='m')$('muteBtn').click();if(e.key.toLowerCase()==='f')$('fullBtn').click();if(e.key==='ArrowRight')stepChannel(1);if(e.key==='ArrowLeft')stepChannel(-1)});
+    applySettings();
+    runCompatibilityTest().catch(()=>{});
+    if(window.Telegram?.WebApp){try{Telegram.WebApp.ready();Telegram.WebApp.expand();Telegram.WebApp.setHeaderColor?.('bg_color');Telegram.WebApp.setBackgroundColor?.('#080b10');Telegram.WebApp.onEvent?.('viewportChanged',()=>document.documentElement.style.setProperty('--telegram-viewport-height',`${Telegram.WebApp.viewportHeight||window.innerHeight}px`));}catch(_){}}
+    refreshAll(false);
+    checkPlaybackProxy();
+    refreshServerStatus();
+    if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js', {scope: './'}).catch(()=>{}))}
+  })();
+  </script>
+</body>
+</html>

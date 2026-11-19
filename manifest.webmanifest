@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "TITAN IPTV Player",
+  "short_name": "TITAN",
+  "description": "پخش‌کننده و مدیریت فهرست شبکه‌های TITAN",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071722",
+  "theme_color": "#071722",
+  "icons": [
+    {"src": "assets/icons/titan-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "assets/icons/titan-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "assets/icons/titan-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
