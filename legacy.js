@@ -1,5 +1,6 @@
 /* TITAN Legacy Player. ES5 syntax and XMLHttpRequest for Android 4.x WebKit. */
 (function () {
+  var IS_STATIC_PAGES = /(^|\.)github\.io$/i.test(window.location.hostname) || /[?&]titanStatic=1(?:&|$)/.test(window.location.search || '');
   var CATEGORIES = [
     { id: 'live', title: 'پخش زنده' },
     { id: 'list1', title: 'لیست پخش 1' },
@@ -129,7 +130,18 @@
     return result;
   }
   function loadOne(category, callback) {
-    request('api.php?list=' + encodeURIComponent(category) + '&v=' + new Date().getTime(), function (error, body) {
+    var endpoint = IS_STATIC_PAGES
+      ? 'playlists/' + encodeURIComponent(category) + '.m3u?v=' + new Date().getTime()
+      : 'api.php?list=' + encodeURIComponent(category) + '&v=' + new Date().getTime();
+    request(endpoint, function (error, body) {
+      if (!error && (!body || !/^\s*#EXTM3U(?:\s|$)/i.test(body))) error = new Error('فایل دریافت‌شده M3U معتبر نیست.');
+      if (error && !IS_STATIC_PAGES) {
+        request('playlists/' + encodeURIComponent(category) + '.m3u?v=' + new Date().getTime(), function (fallbackError, fallbackBody) {
+          if (!fallbackError && fallbackBody && /^\s*#EXTM3U(?:\s|$)/i.test(fallbackBody)) { lists[category] = parsePlaylist(fallbackBody, category); callback(null); }
+          else { lists[category] = []; callback(error || fallbackError || new Error('فهرست دریافت نشد.')); }
+        });
+        return;
+      }
       if (error) { lists[category] = []; callback(error); return; }
       lists[category] = parsePlaylist(body, category);
       callback(null);
@@ -143,6 +155,13 @@
     var errors = 0;
     function next() {
       if (position >= CATEGORIES.length) {
+        function finishLoading() {
+          rebuildAll();
+          refreshInProgress = false;
+          if (errors) setMessage('بعضی فهرست‌ها دریافت نشدند. مسیر playlists و فایل‌های M3U را بررسی کنید.', true);
+          else setMessage(IS_STATIC_PAGES ? 'فهرست‌ها مستقیماً از GitHub دریافت شدند. یک شبکه را انتخاب کنید.' : 'فهرست‌ها به‌روزرسانی شدند. یک شبکه را انتخاب کنید.', false);
+        }
+        if (IS_STATIC_PAGES) { logoMap = {}; finishLoading(); return; }
         request('api.php?logos=1&v=' + new Date().getTime(), function (logoError, body) {
           if (!logoError) {
             try {
@@ -156,10 +175,7 @@
               }
             } catch (e) { logoMap = {}; }
           }
-          rebuildAll();
-          refreshInProgress = false;
-          if (errors) setMessage('بعضی فهرست‌ها دریافت نشدند. وجود پوشه playlists و فایل‌های M3U را بررسی کنید.', true);
-          else setMessage('فهرست‌ها به‌روزرسانی شدند. یک شبکه را انتخاب کنید.', false);
+          finishLoading();
         });
         return;
       }
@@ -182,6 +198,7 @@
   function normalizeLegacyLogo(value) {
     var s = String(value || '');
     if (/^assets\/logos\//i.test(s) && /\.(svg|webp|avif|tiff?|heic|heif|apng)$/i.test(s)) {
+      if (IS_STATIC_PAGES) return /\.(svg|webp)$/i.test(s) ? s : '';
       return 'image.php?file=' + encodeURIComponent(s.replace(/^assets\/logos\//i, ''));
     }
     return s;
@@ -241,7 +258,7 @@
           img.alt = '';
           img.src = logo;
           img.onerror = function () {
-            if (!img.getAttribute('data-proxy-tried') && /^https?:\/\//i.test(logo)) {
+            if (!IS_STATIC_PAGES && !img.getAttribute('data-proxy-tried') && /^https?:\/\//i.test(logo)) {
               img.setAttribute('data-proxy-tried', '1');
               request('api.php?logoTicket=' + encodeURIComponent(toBase64Url(logo)) + '&v=' + new Date().getTime(), function (proxyError, body) {
                 var data = null;
@@ -299,6 +316,7 @@
   }
   function requestProxy(channel, reason, generation) {
     if (generation !== playbackGeneration) return;
+    if (IS_STATIC_PAGES) { setMessage('این لینک از نوع HTTP یا دارای محدودیت CORS است. GitHub Pages پراکسی PHP ندارد؛ لینک HTTPS با اجازه CORS لازم است.', true); return; }
     if (proxyTried) {
       setMessage('پخش در این مرورگر ناموفق بود. ممکن است فرمت یا کدک شبکه پشتیبانی نشود.', true);
       return;
@@ -324,6 +342,7 @@
   }
   function requestTranscode(channel, generation, reason) {
     if (generation !== playbackGeneration || !channel) return;
+    if (IS_STATIC_PAGES) { setMessage('این قالب یا پروتکل به تبدیل FFmpeg نیاز دارد؛ GitHub Pages امکان اجرای PHP/FFmpeg ندارد. لینک HTTPS از نوع HLS یا MP4 سازگار لازم است.', true); return; }
     setMessage(reason || 'این منبع به تبدیل کدک نیاز دارد؛ در حال آماده‌سازی خروجی H.264/AAC با FFmpeg...', false);
     var endpoint = 'api.php?transcodeTicket=' + encodeURIComponent(toBase64Url(channel.url)) + '&v=' + new Date().getTime();
     request(endpoint, function (error, body) {

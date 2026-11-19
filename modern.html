@@ -420,10 +420,10 @@
           <div class="setting-card"><b>وضعیت موتور سرور</b><p id="serverEngineStatus">در حال بررسی FFmpeg، FFprobe و cURL...</p><button type="button" class="refresh-btn" id="refreshServerStatusBtn">بررسی دوباره سرور</button></div>
           <div class="setting-card"><b>اطلاعات رسانه انتخاب‌شده</b><pre id="mediaDetails" class="compat-results">هنوز رسانه‌ای انتخاب نشده است.</pre></div>
         </div>
-        <div class="help-note">پشتیبانی نهایی به مرورگر، سیستم‌عامل، سخت‌افزار رمزگشایی، کدک واقعی، CORS، مجوز استریم و قابلیت‌های FFmpeg سرور بستگی دارد. این آزمایش تضمین پخش همه منابع نیست؛ فقط قابلیت‌های قابل تشخیص دستگاه را گزارش می‌کند.</div>
+        <div class="help-note">در GitHub Pages فهرست‌های M3U مستقیماً از پوشه playlists خوانده می‌شوند؛ اما PHP، FFmpeg، FFprobe و پراکسی سرور اجرا نمی‌شوند. در این حالت لینک‌های HTTP از صفحه HTTPS، استریم‌های فاقد CORS و پروتکل‌های RTSP/RTMP/UDP ممکن است پخش نشوند. پشتیبانی نهایی به مرورگر، سیستم‌عامل، سخت‌افزار رمزگشایی، کدک واقعی، CORS، مجوز استریم و قابلیت‌های FFmpeg سرور بستگی دارد. این آزمایش تضمین پخش همه منابع نیست؛ فقط قابلیت‌های قابل تشخیص دستگاه را گزارش می‌کند.</div>
       </div>
       <div class="settings-content" data-content="about">
-        <div class="setting-card"><b>TITAN IPTV Player</b><span>نسخه ۴٫۰٫۰ — موتور چندگانه، تشخیص کدک و چیدمان منعطف با شروع سریع و تشخیص هم‌زمان قالب برای مرورگرهای دسکتاپ، موبایل و تلگرام</span><span>سازنده و برنامه نویس : <b style="color:var(--accent)">امیر محمدی</b></span><small>برای نصب در Chrome موبایل یا Windows، سایت باید با HTTPS باز شود؛ در Chrome گزینه «نصب برنامه» یا منوی ⋮ ← Install app را انتخاب کنید. این برنامه فقط لینک‌هایی را پخش می‌کند که مدیر سایت مجاز به استفاده از آن‌هاست. پخش هر منبع به فرمت، کدک و اجازه CORS سرور بستگی دارد.</small></div>
+        <div class="setting-card"><b>TITAN IPTV Player</b><span>نسخه ۴٫۰٫۱ — موتور چندگانه، تشخیص کدک و چیدمان منعطف با شروع سریع و تشخیص هم‌زمان قالب برای مرورگرهای دسکتاپ، موبایل و تلگرام</span><span>سازنده و برنامه نویس : <b style="color:var(--accent)">امیر محمدی</b></span><small>برای نصب در Chrome موبایل یا Windows، سایت باید با HTTPS باز شود؛ در Chrome گزینه «نصب برنامه» یا منوی ⋮ ← Install app را انتخاب کنید. این برنامه فقط لینک‌هایی را پخش می‌کند که مدیر سایت مجاز به استفاده از آن‌هاست. پخش هر منبع به فرمت، کدک و اجازه CORS سرور بستگی دارد.</small></div>
       </div>
     </section>
   </div>
@@ -440,6 +440,8 @@
       {id:'list3', name:'لیست پخش 3', files:['list3']}
     ];
     const ALL_CATEGORY = {id:'all', name:'همه'};
+    // GitHub Pages serves static files only; PHP endpoints are used only on PHP hosting.
+    const IS_STATIC_PAGES = /(^|\.)github\.io$/i.test(location.hostname) || new URL(location.href).searchParams.get('titanStatic') === '1';
     const $ = id => document.getElementById(id);
     function storedValue(key){let value=localStorage.getItem(key);if(value===null&&key.startsWith('titan_')){const legacy=localStorage.getItem(key.replace(/^titan_/,'fandog_'));if(legacy!==null){value=legacy;localStorage.setItem(key,legacy)}}return value}
     function readStoredArray(key){try{const value=JSON.parse(storedValue(key)||'[]');return Array.isArray(value)?value:[]}catch(_){return []}}
@@ -451,7 +453,7 @@
     function normalize(value){return String(value||'').trim().toLocaleLowerCase('fa').replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u0640\u200c]/g,' ').replace(/\s+/g,' ')}
     function logoKey(value){return normalize(value).normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,'')}
     function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-    function safeLogoUrl(url){const s=String(url||'').trim();if(!s)return '';if(/^https?:\/\//i.test(s))return s;if(/^assets\/logos\/[a-z0-9_./-]+\.(?:svg|png|jpe?g|gif|webp|avif|bmp|ico|tiff?|heic|heif|apng)$/i.test(s)){if(/\.(?:svg|tiff?|heic|heif|avif|bmp|ico|apng)$/i.test(s))return 'image.php?file='+encodeURIComponent(s.replace(/^assets\/logos\//,''));return s}return ''}
+    function safeLogoUrl(url){const s=String(url||'').trim();if(!s)return '';if(/^https?:\/\//i.test(s))return s;if(/^assets\/logos\/[a-z0-9_./-]+\.(?:svg|png|jpe?g|gif|webp|avif|bmp|ico|tiff?|heic|heif|apng)$/i.test(s)){const unsupported=/\.(?:tiff?|heic|heif|bmp|ico|apng)$/i.test(s);if(IS_STATIC_PAGES&&unsupported)return '';if(unsupported||/\.(?:avif)$/i.test(s)&&!IS_STATIC_PAGES)return 'image.php?file='+encodeURIComponent(s.replace(/^assets\/logos\//,''));return s}return ''}
     function parseAttributes(text){const out={};const re=/([\w-]+)="([^"]*)"/g;let m;while((m=re.exec(text))!==null)out[m[1].toLowerCase()]=m[2];return out}
     function splitExtinf(line){let quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"')quoted=!quoted;else if(line[i]===','&&!quoted)return [line.slice(0,i),line.slice(i+1).trim()]}return [line,'']}
     function parseM3U(raw, category){
@@ -464,6 +466,27 @@
       return result;
     }
     async function fetchText(url){const response=await fetch(url,{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);return response.text()}
+    async function fetchPlaylistText(file){
+      const stamp=Date.now();
+      if(!IS_STATIC_PAGES){
+        try{
+          const apiText=await fetchText(`api.php?list=${encodeURIComponent(file)}&v=${stamp}`);
+          if(!/^\s*#EXTM3U(?:\s|$)/i.test(apiText))throw new Error('پاسخ API یک فهرست M3U معتبر نبود.');
+          return apiText;
+        }catch(apiError){console.warn(`TITAN: API list ${file} failed; trying static playlist`,apiError.message)}
+      }
+      const path=`playlists/${encodeURIComponent(file)}.m3u?v=${stamp}`;
+      const raw=await fetchText(path);
+      if(!/^\s*#EXTM3U(?:\s|$)/i.test(raw))throw new Error(`فایل playlists/${file}.m3u پیدا شد اما هدر M3U معتبر ندارد.`);
+      return raw;
+    }
+    async function fetchLogoMap(){
+      if(IS_STATIC_PAGES){
+        for(const path of ['logos.json','playlists/logos.json']){try{const value=JSON.parse(await fetchText(`${path}?v=${Date.now()}`));if(value&&typeof value==='object'&&!Array.isArray(value))return value}catch(_){}}
+        return {};
+      }
+      try{return JSON.parse(await fetchText(`api.php?logos=1&v=${Date.now()}`))||{}}catch(_){return {}}
+    }
     function base64UrlUtf8(value){const bytes=new TextEncoder().encode(value);let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
     function streamFingerprint(value){let hash=2166136261;for(let i=0;i<value.length;i++){hash^=value.charCodeAt(i);hash=Math.imul(hash,16777619)}return (hash>>>0).toString(36)}
     function cachedStreamType(channel){try{const all=JSON.parse(localStorage.getItem('titan_stream_type_cache')||'{}');const key=streamFingerprint(`${channel.key||''}|${channel.url||''}`);const item=all[key];if(item&&item.expires>Date.now()&&['hls','dash','mpegts','flv','native'].includes(item.type))return item.type}catch(_){}return ''}
@@ -478,12 +501,14 @@
       return data.url;
     }
     async function getTranscodeUrl(originalUrl,quality='auto'){
+      if(IS_STATIC_PAGES)throw new Error('GitHub Pages امکان اجرای PHP یا FFmpeg ندارد؛ برای تبدیل کدک باید لینک HLS/MP4 سازگار یا سرویس پخش روی سرور داشته باشید.');
       const endpoint=`api.php?transcodeTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
       const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
       if(!response.ok||!data.ok||!data.url)throw new Error(data.error||`صدور بلیت تبدیل ناموفق بود (HTTP ${response.status})`);
       return data.url+`&q=${encodeURIComponent(quality)}`;
     }
     async function getMediaInfo(originalUrl){
+      if(IS_STATIC_PAGES)throw new Error('تشخیص دقیق FFprobe در نسخه GitHub Pages در دسترس نیست.');
       const endpoint=`api.php?mediaInfoTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
       const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
       if(!response.ok||!data.ok||!data.url)throw new Error(data.error||'FFprobe در دسترس نیست.');
@@ -492,6 +517,7 @@
       return info;
     }
     async function probeStreamType(originalUrl){
+      if(IS_STATIC_PAGES)throw new Error('تشخیص نوع استریم از سمت سرور در GitHub Pages وجود ندارد.');
       const endpoint=`api.php?probeTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&v=${Date.now()}`;
       const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),4500);
       try{
@@ -540,6 +566,7 @@
       try{return location.protocol==='https:'&&new URL(url,location.href).protocol==='http:'}catch(_){return false}
     }
     async function getProxyOrThrow(url,format){
+      if(IS_STATIC_PAGES){if(isMixedContentSource(url))throw new Error('این لینک HTTP است و در سایت HTTPS گیت‌هاب به‌عنوان Mixed Content مسدود می‌شود؛ نسخه HTTPS لینک لازم است.');return url;}
       try{return await getPlaybackUrl(url,format)}
       catch(error){
         const hint=String(error?.message||'');
@@ -585,7 +612,7 @@
           const channels=[];const errors=[];
           for(const file of c.files){
             try{
-              const raw=await fetchText(`api.php?list=${encodeURIComponent(file)}&v=${Date.now()}`);
+              const raw=await fetchPlaylistText(file);
               const parsed=parseM3U(raw,c.id);
               for(const channel of parsed){
                 if(c.files.length>1)channel.key += `::${file}`;
@@ -596,8 +623,7 @@
           }
           return {id:c.id,channels:channels.length?channels:(state.lists[c.id]||[]),error:errors.length?errors[0]:null};
         }));
-        let rawLogos={};
-        try{rawLogos=JSON.parse(await fetchText(`api.php?logos=1&v=${Date.now()}`))||{}}catch(_){rawLogos={}}
+        const rawLogos=await fetchLogoMap();
         const normalizedLogos={};
         if(rawLogos && typeof rawLogos==='object' && !Array.isArray(rawLogos)){
           for(const [key,value] of Object.entries(rawLogos)){
@@ -615,7 +641,7 @@
           const count=state.allChannels.length;
           toast(failed.length
             ? `بروزرسانی انجام شد؛ ${faNum(count)} شبکه دریافت شد و ${faNum(failed.length)} فهرست خطا داشت.`
-            : `فهرست‌ها و لوگوها بروزرسانی شدند؛ ${faNum(count)} شبکه دریافت شد.`);
+            : IS_STATIC_PAGES ? `چهار فهرست مستقیم از GitHub دریافت شدند؛ ${faNum(count)} شبکه بارگذاری شد.` : `فهرست‌ها و لوگوها بروزرسانی شدند؛ ${faNum(count)} شبکه دریافت شد.`);
         }
         if(state.current){
           const refreshed=state.allChannels.find(c=>c.key===state.current.key)||state.allChannels.find(c=>normalize(c.name)===normalize(state.current.name));
@@ -632,7 +658,7 @@
         }
       }catch(error){
         $('channelCount').textContent='دریافت فهرست‌ها ناموفق بود';
-        toast(`خطا در دریافت فهرست‌ها: ${error.message}. تنظیمات هاست و فایل‌ها را بررسی کنید.`);
+        toast(`خطا در دریافت فهرست‌ها: ${error.message}. مسیر playlists و نام فایل‌های M3U را بررسی کنید.`);
       }finally{
         state.refreshing=false;
         [$('refreshBtn'),$('refreshTopBtn')].forEach(btn=>{btn.disabled=false;btn.classList.remove('loading')});
@@ -649,6 +675,7 @@
       return safeLogoUrl(channel.attrs?.['tvg-image']||channel.poster||channel.attrs?.poster||channel.attrs?.cover||channel.attrs?.thumbnail||'');
     }
     async function getLogoProxyUrl(original){
+      if(IS_STATIC_PAGES)throw new Error('پراکسی لوگو روی GitHub Pages وجود ندارد؛ لوگوی HTTPS یا فایل تصویری محلی لازم است.');
       const endpoint=`api.php?logoTicket=${encodeURIComponent(base64UrlUtf8(original))}&v=${Date.now()}`;
       const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
       if(!response.ok||!data.ok||!data.url)throw new Error(data.error||'تبدیل تصویر در دسترس نیست');return data.url;
@@ -695,7 +722,7 @@
         const logoImg=card.querySelector('.channel-logo img');
         if(logoImg){
           logoImg.addEventListener('error',async()=>{
-            if(logoImg.dataset.proxyTried!=='1'&&/^https?:\/\//i.test(logo)){
+            if(!IS_STATIC_PAGES&&logoImg.dataset.proxyTried!=='1'&&/^https?:\/\//i.test(logo)){
               logoImg.dataset.proxyTried='1';
               try{const proxy=await getLogoProxyUrl(logo);if(logoImg.isConnected){logoImg.src=proxy;return}}catch(error){console.warn('TITAN logo proxy failed',error)}
             }
@@ -825,6 +852,7 @@
     function mediaFail(message){
       const detail=String(message||'خطای نامشخص');
       const codecProblem=/(codec|decode|رمزگشایی|کدک|ناسازگار|unsupported|media_format|format_not_supported|قالب.*پشتیبانی|MSE.*پشتیبانی)/i.test(detail);
+      if(IS_STATIC_PAGES&&state.current&&codecProblem){showMediaFailure(detail+' | نسخه GitHub Pages سرور FFmpeg ندارد؛ لینک HLS یا MP4 با کدک سازگار لازم است.');return;}
       if(state.current&&codecProblem&&!state.transcodeAttempted&&settings().autoTranscode!==false){
         state.transcodeAttempted=true;$('liveMark').textContent='تبدیل کدک';$('placeholder').classList.remove('hidden');$('placeholder').querySelector('strong').textContent='در حال سازگار کردن کدک';$('placeholder').querySelector('small').textContent='در صورت فعال بودن FFmpeg، خروجی H.264/AAC ساخته می‌شود…';
         startTranscodedPlayback(state.current.url,state.playbackGeneration).catch(error=>showMediaFailure(`${detail} | تبدیل خودکار نیز انجام نشد: ${error.message}`));return;
@@ -838,6 +866,7 @@
     }
     async function startTranscodedPlayback(originalUrl,generation){
       if(generation!==state.playbackGeneration) return;
+      if(IS_STATIC_PAGES)throw new Error('RTSP/RTMP/UDP و تبدیل کدک به PHP/FFmpeg نیاز دارند و در GitHub Pages قابل اجرا نیستند.');
       const channel=state.current;state.transcodeActive=true;
       try{
         destroyHls();generation=state.playbackGeneration;state.current=channel;state.transcodeActive=true;
@@ -946,6 +975,7 @@
       const startProxy=async(reason)=>{
         if(proxyAttempted||generation!==state.playbackGeneration)return;
         proxyAttempted=true;clearTimeout(watchdog);
+        if(IS_STATIC_PAGES){try{await startShakaFallback(originalUrl,'HLS مستقیم با Shaka')}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش مستقیم HLS ناموفق شد؛ احتمالاً سرور CORS را اجازه نمی‌دهد. GitHub Pages پراکسی PHP ندارد: ${error.message}`)}return;}
         $('liveMark').textContent='تغییر مسیر امن پخش';$('placeholder').querySelector('small').textContent=reason||'دریافت مستقیم مجاز نبود؛ پراکسی هم‌مبدأ فعال می‌شود…';
         try{const proxyUrl=await getProxyOrThrow(originalUrl,'hls');if(generation!==state.playbackGeneration)return;startEngine(proxyUrl,true)}
         catch(error){if(generation!==state.playbackGeneration)return;if(preferProxy){mediaFail(`پراکسی HLS آماده نشد: ${error.message}`);return}try{await startShakaFallback(originalUrl,'HLS جایگزین')}catch(shakaError){if(generation===state.playbackGeneration)mediaFail(`HLS مستقیم و پراکسی ناموفق شدند. پراکسی: ${error.message}؛ موتور جایگزین: ${shakaError.message}`)}}
@@ -1010,7 +1040,7 @@
       try{return await startShakaPlayback(originalUrl,generation,type.toUpperCase())}
       catch(directError){
         if(generation!==state.playbackGeneration)throw directError;
-        if(type!=='hls')throw directError;
+        if(IS_STATIC_PAGES||type!=='hls')throw directError;
         $('liveMark').textContent='تغییر مسیر پخش';$('placeholder').querySelector('small').textContent='اتصال مستقیم مجاز نبود؛ مسیر پراکسی HLS بررسی می‌شود…';
         const proxyUrl=await getPlaybackUrl(originalUrl,'hls');
         try{return await startShakaPlayback(proxyUrl,generation,'HLS از پراکسی')}
@@ -1096,6 +1126,7 @@
       try{await startEngine(originalUrl,false)}
       catch(directError){
         if(generation!==state.playbackGeneration)return;
+        if(IS_STATIC_PAGES){mediaFail(`پخش مستقیم ${type.toUpperCase()} ناموفق شد: ${directError.message}. برای این فرمت به CORS سازگار و پشتیبانی MSE نیاز است؛ GitHub Pages پراکسی PHP ندارد.`);return;}
         $('liveMark').textContent='تلاش برای مسیر جایگزین';$('placeholder').querySelector('small').textContent='اتصال مستقیم ناموفق بود؛ مسیر هم‌مبدأ بررسی می‌شود…';
         try{const proxyUrl=await getProxyOrThrow(originalUrl,type);if(generation!==state.playbackGeneration)return;await startEngine(proxyUrl,true)}
         catch(proxyError){if(generation!==state.playbackGeneration)return;mediaFail(`پخش ${type.toUpperCase()} ناموفق شد. مستقیم: ${directError.message}؛ پراکسی: ${proxyError.message||latestError||'نامشخص'}`)}
@@ -1112,11 +1143,15 @@
       const originalUrl=String(channel.url||'').trim();
       let type=channel.detectedType||cachedStreamType(channel)||detectStreamType(originalUrl);
       prepareMediaOrigin(originalUrl);
-      if(/^https?:\/\//i.test(originalUrl)){getMediaInfo(originalUrl).then(info=>{if(generation!==state.playbackGeneration)return;state.mediaInfo=info;renderMediaInfo(info)}).catch(error=>{if(generation===state.playbackGeneration){$('mediaInfoBar').textContent=`اطلاعات دقیق کدک در دسترس نیست: ${error.message}`;$('mediaDetails').textContent=error.message}})}
-      if(type==='transcode-required'||/^(?:rtsp|rtmp|rtmps|udp|srt|rtp):\/\//i.test(originalUrl)){state.transcodeAttempted=true;try{await startTranscodedPlayback(originalUrl,generation)}catch(error){showMediaFailure(`این پروتکل در مرورگر مستقیم پخش نمی‌شود و تبدیل FFmpeg ناموفق بود: ${error.message}`)}return}
+      if(/^https?:\/\//i.test(originalUrl)){
+        if(IS_STATIC_PAGES){$('mediaInfoBar').textContent='نسخه مستقل مرورگری: اطلاعات دقیق FFprobe در دسترس نیست.';$('mediaDetails').textContent='نوع رسانه از پسوند لینک و توانایی مرورگر تشخیص داده می‌شود.';}
+        else getMediaInfo(originalUrl).then(info=>{if(generation!==state.playbackGeneration)return;state.mediaInfo=info;renderMediaInfo(info)}).catch(error=>{if(generation===state.playbackGeneration){$('mediaInfoBar').textContent=`اطلاعات دقیق کدک در دسترس نیست: ${error.message}`;$('mediaDetails').textContent=error.message}})
+      }
+      if(type==='transcode-required'||/^(?:rtsp|rtmp|rtmps|udp|srt|rtp):\/\//i.test(originalUrl)){state.transcodeAttempted=true;if(IS_STATIC_PAGES){mediaFail('این پروتکل در مرورگر وب مستقیم قابل پخش نیست؛ GitHub Pages امکان تبدیل با FFmpeg ندارد. لینک HTTPS از نوع HLS یا MP4 لازم است.')}else try{await startTranscodedPlayback(originalUrl,generation)}catch(error){showMediaFailure(`این پروتکل در مرورگر مستقیم پخش نمی‌شود و تبدیل FFmpeg ناموفق بود: ${error.message}`)}return}
       if(!/^https?:\/\//i.test(originalUrl)){mediaFail('آدرس پخش معتبر نیست؛ باید لینک HTTP/HTTPS یا یک پروتکل قابل تبدیل و ثبت‌شده در فهرست باشد.');return}
       if(type==='webpage'){mediaFail('این مورد آدرس صفحه است، نه لینک مستقیم رسانه. برای پخش باید لینک مستقیم مجاز HLS یا فایل ویدئویی وارد شود.');return}
       if(type==='unknown'){
+        if(IS_STATIC_PAGES){$('placeholder').querySelector('small').textContent='نوع لینک از پسوند قابل تشخیص نیست؛ پخش بومی مرورگر امتحان می‌شود…';attachNative(originalUrl,generation,()=>mediaFail('نوع رسانه از روی لینک قابل تشخیص نیست و GitHub Pages امکان Probe با FFprobe ندارد. لینک مستقیم دارای پسوند .m3u8، .mpd یا .mp4 وارد کنید.'),5000);return;}
         $('placeholder').querySelector('small').textContent='پخش مستقیم آغاز شد؛ نوع واقعی منبع هم‌زمان بررسی می‌شود…';
         let detectedResult=null,switched=false,probeSettled=false;
         const switchToDetected=probe=>{
@@ -1175,7 +1210,7 @@
             if(generation!==state.playbackGeneration||fallbackStarted)return;
             fallbackStarted=true;const code=event?.error?.code||event?.event?.response?.status||0;const details=code?`خطای DASH (کد ${code}).`:'خطای DASH/CORS.';
             try{dash.reset?.()}catch(_){}if(state.dash===dash)state.dash=null;
-            if(!isProxy&&!proxyTried){
+            if(!IS_STATIC_PAGES&&!isProxy&&!proxyTried){
               proxyTried=true;
               try{const proxyUrl=await getProxyOrThrow(originalUrl,'dash');if(generation===state.playbackGeneration){await startDashEngine(proxyUrl,true);return}}
               catch(proxyError){if(generation===state.playbackGeneration){try{await startShakaPlayback(originalUrl,generation,'DASH جایگزین')}catch(shakaError){mediaFail(`${details} پراکسی: ${proxyError.message}؛ Shaka: ${shakaError.message}`)}}return}
@@ -1218,7 +1253,7 @@
     function toggleFavorite(){if(!state.current){toast('ابتدا یک شبکه انتخاب کنید.');return}const key=state.current.key;if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key);saveFavorites();$('favCurrentBtn').textContent=state.favorites.has(key)?'★':'☆';renderChannels();toast(state.favorites.has(key)?'به علاقه‌مندی‌ها اضافه شد.':'از علاقه‌مندی‌ها حذف شد.')}
     function stepChannel(direction){const list=state.category==='all'?state.allChannels:(state.lists[state.category]||[]);if(!list.length)return;let index=state.current?list.findIndex(c=>c.key===state.current.key):-1;index=(index+direction+list.length)%list.length;loadChannel(list[index],true)}
     function formatTime(seconds){if(!Number.isFinite(seconds))return '۰۰:۰۰';const min=Math.floor(seconds/60),sec=Math.floor(seconds%60);return faNum(`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`)}
-    async function checkPlaybackProxy(){try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const health=await response.json();state.hostHealth=health;if(!health.curl)toast('برای پراکسی پخش، افزونه PHP cURL باید روی هاست فعال باشد.');else if(!health.ffmpeg?.available)console.info('TITAN: FFmpeg روی هاست شناسایی نشد؛ پخش مستقیم فعال است اما تبدیل خودکار کدک‌های ناسازگار نیازمند FFmpeg/VPS است.');}catch(_){console.warn('وضعیت سرویس پخش هاست بررسی نشد.')}}
+    async function checkPlaybackProxy(){if(IS_STATIC_PAGES){state.hostHealth=null;return;}try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const health=await response.json();state.hostHealth=health;if(!health.curl)toast('برای پراکسی پخش، افزونه PHP cURL باید روی هاست فعال باشد.');else if(!health.ffmpeg?.available)console.info('TITAN: FFmpeg روی هاست شناسایی نشد؛ پخش مستقیم فعال است اما تبدیل خودکار کدک‌های ناسازگار نیازمند FFmpeg/VPS است.');}catch(_){console.warn('وضعیت سرویس پخش هاست بررسی نشد.')}}
     function renderMediaInfo(info){
       const fmt=info.format||{};const streams=Array.isArray(info.streams)?info.streams:[];const v=streams.find(x=>x.codec_type==='video')||{};const a=streams.find(x=>x.codec_type==='audio')||{};
       const bits=Number(v.bit_rate||fmt.bit_rate||0);const mb=bits?`${(bits/1000000).toFixed(2)} Mbps`:'';const fps=String(v.avg_frame_rate||v.r_frame_rate||'').replace('/0','');
@@ -1258,6 +1293,7 @@
       $('compatResults').textContent=output;return output;
     }
     async function refreshServerStatus(){
+      if(IS_STATIC_PAGES){state.hostHealth=null;$('serverEngineStatus').textContent='GitHub Pages فقط فایل‌های استاتیک را میزبانی می‌کند؛ PHP، FFmpeg، FFprobe و پراکسی سرور در این نسخه اجرا نمی‌شوند. پخش مستقیم لینک‌های HTTPS سازگار فعال است.';return;}
       try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const h=await response.json();state.hostHealth=h;$('serverEngineStatus').textContent=`PHP ${h.php||'?'} | cURL: ${h.curl?'فعال':'غیرفعال'} | FFmpeg: ${h.ffmpeg?.available?'فعال':'پیدا نشد'} | FFprobe: ${h.ffprobe?.available?'فعال':'پیدا نشد'} | اجرای تبدیل: ${h.transcode?.available?'مجاز':'محدود/غیرفعال'} | پردازش تصویر: ${(h.imageProcessor?.imagick?'Imagick ':'')+(h.imageProcessor?.gd?'GD':'')||'ندارد'}`;
       }catch(error){$('serverEngineStatus').textContent=`دریافت وضعیت سرور ناموفق بود: ${error.message}`}
     }
