@@ -1,6 +1,7 @@
 /* TITAN Legacy Player. ES5 syntax and XMLHttpRequest for Android 4.x WebKit. */
 (function () {
   var IS_STATIC_PAGES = /(^|\.)github\.io$/i.test(window.location.hostname) || /[?&]titanStatic=1(?:&|$)/.test(window.location.search || '');
+  function workerProxyUrl(source, kind) { var base = String(window.TITAN_WORKER_URL || '').replace(/\/+$/, ''); if (!/^https:\/\//i.test(base)) throw new Error('آدرس Cloudflare Worker در فایل worker-config.js ثبت نشده است.'); if (!/^https?:\/\//i.test(source)) throw new Error('فقط لینک HTTP/HTTPS پشتیبانی می‌شود.'); return base + '/proxy?url=' + encodeURIComponent(source) + '&kind=' + encodeURIComponent(kind || 'media'); }
   var CATEGORIES = [
     { id: 'live', title: 'پخش زنده' },
     { id: 'list1', title: 'لیست پخش 1' },
@@ -205,6 +206,7 @@
   }
   function getLogo(channel) {
     var logo = channel.logo || '';
+    if (IS_STATIC_PAGES && /^http:\/\//i.test(logo)) { try { return workerProxyUrl(logo, 'image'); } catch (e) { return ''; } }
     var candidates = [channel.id, channel.name, channel.attrs ? channel.attrs['tvg-name'] : ''];
     var i;
     if (logo && (/^https?:\/\//i.test(logo) || /^assets\/logos\/[a-z0-9_./-]+\.(png|jpe?g|gif|bmp|ico|svg|webp|avif|tiff?|heic|heif|apng)$/i.test(logo))) return normalizeLegacyLogo(logo);
@@ -212,6 +214,7 @@
       var key = normalize(candidates[i]);
       if (key && logoMap[key] && typeof logoMap[key] === 'string') {
         var mapped = logoMap[key];
+        if (IS_STATIC_PAGES && /^http:\/\//i.test(mapped)) { try { return workerProxyUrl(mapped, 'image'); } catch (e) { return ''; } }
         if (/^https?:\/\//i.test(mapped) || /^assets\/logos\/[a-z0-9_./-]+\.(png|jpe?g|gif|bmp|ico|svg|webp|avif|tiff?|heic|heif|apng)$/i.test(mapped)) return normalizeLegacyLogo(mapped);
       }
     }
@@ -316,7 +319,14 @@
   }
   function requestProxy(channel, reason, generation) {
     if (generation !== playbackGeneration) return;
-    if (IS_STATIC_PAGES) { setMessage('این لینک از نوع HTTP یا دارای محدودیت CORS است. GitHub Pages پراکسی PHP ندارد؛ لینک HTTPS با اجازه CORS لازم است.', true); return; }
+    if (IS_STATIC_PAGES) {
+      if (proxyTried) { setMessage('مسیر Cloudflare قبلاً امتحان شد و پاسخ قابل پخش دریافت نشد.', true); return; }
+      proxyTried = true;
+      setMessage(reason || 'در حال اتصال از مسیر HTTPS Cloudflare...', false);
+      try { attachVideo(workerProxyUrl(channel.url, 'media'), true, generation); }
+      catch (e) { setMessage(e.message || 'آدرس Cloudflare Worker تنظیم نشده است.', true); }
+      return;
+    }
     if (proxyTried) {
       setMessage('پخش در این مرورگر ناموفق بود. ممکن است فرمت یا کدک شبکه پشتیبانی نشود.', true);
       return;
@@ -393,8 +403,8 @@
     if (type === 'mpegts') {
       setMessage('پشتیبانی مستقیم MPEG-TS به مدل دستگاه وابسته است؛ در صورت خطا، نسخه MP4/HLS لازم است.', false);
     }
-    if (window.location.protocol === 'https:' && /^http:\/\//i.test(channel.url)) {
-      requestProxy(channel, 'به‌دلیل HTTP بودن لینک در صفحه HTTPS، مسیر امن پخش در حال آماده‌سازی است...', generation);
+    if ((IS_STATIC_PAGES && /^https?:\/\//i.test(channel.url)) || (window.location.protocol === 'https:' && /^http:\/\//i.test(channel.url))) {
+      requestProxy(channel, IS_STATIC_PAGES ? 'اتصال امن از Cloudflare Worker در حال آماده‌سازی است...' : 'به‌دلیل HTTP بودن لینک در صفحه HTTPS، مسیر امن پخش در حال آماده‌سازی است...', generation);
     } else {
       attachVideo(channel.url, false, generation);
     }

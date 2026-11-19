@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <script type="text/javascript" src="compat-check.js"></script>
+  <script type="text/javascript" src="worker-config.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#041923">
@@ -442,6 +443,8 @@
     const ALL_CATEGORY = {id:'all', name:'همه'};
     // GitHub Pages serves static files only; PHP endpoints are used only on PHP hosting.
     const IS_STATIC_PAGES = /(^|\.)github\.io$/i.test(location.hostname) || new URL(location.href).searchParams.get('titanStatic') === '1';
+    function getWorkerBase(){const raw=String(window.TITAN_WORKER_URL||'').trim().replace(/\/+$/,'');if(!raw)return '';try{const u=new URL(raw);if(u.protocol!=='https:'||!u.hostname.endsWith('.workers.dev')&&!u.hostname.includes('.'))return '';return u.origin}catch(_){return ''}}
+    function workerProxyUrl(original,kind='media'){const base=getWorkerBase();if(!base)throw new Error('آدرس Cloudflare Worker هنوز در فایل worker-config.js ثبت نشده است.');const u=new URL(String(original||''));if(!/^https?:$/.test(u.protocol))throw new Error('Cloudflare Worker فقط منابع HTTP/HTTPS را پروکسی می‌کند.');const endpoint=new URL('/proxy',base);endpoint.searchParams.set('url',u.href);endpoint.searchParams.set('kind',kind);return endpoint.href}
     const $ = id => document.getElementById(id);
     function storedValue(key){let value=localStorage.getItem(key);if(value===null&&key.startsWith('titan_')){const legacy=localStorage.getItem(key.replace(/^titan_/,'fandog_'));if(legacy!==null){value=legacy;localStorage.setItem(key,legacy)}}return value}
     function readStoredArray(key){try{const value=JSON.parse(storedValue(key)||'[]');return Array.isArray(value)?value:[]}catch(_){return []}}
@@ -453,7 +456,7 @@
     function normalize(value){return String(value||'').trim().toLocaleLowerCase('fa').replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u0640\u200c]/g,' ').replace(/\s+/g,' ')}
     function logoKey(value){return normalize(value).normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,'')}
     function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-    function safeLogoUrl(url){const s=String(url||'').trim();if(!s)return '';if(/^https?:\/\//i.test(s))return s;if(/^assets\/logos\/[a-z0-9_./-]+\.(?:svg|png|jpe?g|gif|webp|avif|bmp|ico|tiff?|heic|heif|apng)$/i.test(s)){const unsupported=/\.(?:tiff?|heic|heif|bmp|ico|apng)$/i.test(s);if(IS_STATIC_PAGES&&unsupported)return '';if(unsupported||/\.(?:avif)$/i.test(s)&&!IS_STATIC_PAGES)return 'image.php?file='+encodeURIComponent(s.replace(/^assets\/logos\//,''));return s}return ''}
+    function safeLogoUrl(url){const s=String(url||'').trim();if(!s)return '';if(/^https?:\/\//i.test(s)){if(IS_STATIC_PAGES&&/^http:\/\//i.test(s)){try{return workerProxyUrl(s,'image')}catch(_){return ''}}return s;}if(/^assets\/logos\/[a-z0-9_./-]+\.(?:svg|png|jpe?g|gif|webp|avif|bmp|ico|tiff?|heic|heif|apng)$/i.test(s)){const unsupported=/\.(?:tiff?|heic|heif|bmp|ico|apng)$/i.test(s);if(IS_STATIC_PAGES&&unsupported)return '';if(unsupported||/\.(?:avif)$/i.test(s)&&!IS_STATIC_PAGES)return 'image.php?file='+encodeURIComponent(s.replace(/^assets\/logos\//,''));return s}return ''}
     function parseAttributes(text){const out={};const re=/([\w-]+)="([^"]*)"/g;let m;while((m=re.exec(text))!==null)out[m[1].toLowerCase()]=m[2];return out}
     function splitExtinf(line){let quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"')quoted=!quoted;else if(line[i]===','&&!quoted)return [line.slice(0,i),line.slice(i+1).trim()]}return [line,'']}
     function parseM3U(raw, category){
@@ -492,6 +495,7 @@
     function cachedStreamType(channel){try{const all=JSON.parse(localStorage.getItem('titan_stream_type_cache')||'{}');const key=streamFingerprint(`${channel.key||''}|${channel.url||''}`);const item=all[key];if(item&&item.expires>Date.now()&&['hls','dash','mpegts','flv','native'].includes(item.type))return item.type}catch(_){}return ''}
     function rememberStreamType(channel,type){if(!['hls','dash','mpegts','flv','native'].includes(type))return;try{const all=JSON.parse(localStorage.getItem('titan_stream_type_cache')||'{}');const key=streamFingerprint(`${channel.key||''}|${channel.url||''}`);all[key]={type,expires:Date.now()+7*24*60*60*1000};const entries=Object.entries(all).filter(([,v])=>v&&v.expires>Date.now()).slice(-120);localStorage.setItem('titan_stream_type_cache',JSON.stringify(Object.fromEntries(entries)))}catch(_){}}
     async function getPlaybackUrl(originalUrl,format=''){
+      if(IS_STATIC_PAGES)return workerProxyUrl(originalUrl,format==='image'?'image':'media');
       // Ticket issuance is local and does not need a separate health request.
       // The actual proxy endpoint reports a clear cURL error if the host lacks it.
       const endpoint=`api.php?streamTicket=${encodeURIComponent(base64UrlUtf8(originalUrl))}&format=${encodeURIComponent(format)}&v=${Date.now()}`;
@@ -566,7 +570,7 @@
       try{return location.protocol==='https:'&&new URL(url,location.href).protocol==='http:'}catch(_){return false}
     }
     async function getProxyOrThrow(url,format){
-      if(IS_STATIC_PAGES){if(isMixedContentSource(url))throw new Error('این لینک HTTP است و در سایت HTTPS گیت‌هاب به‌عنوان Mixed Content مسدود می‌شود؛ نسخه HTTPS لینک لازم است.');return url;}
+      if(IS_STATIC_PAGES)return getPlaybackUrl(url,format);
       try{return await getPlaybackUrl(url,format)}
       catch(error){
         const hint=String(error?.message||'');
@@ -675,7 +679,7 @@
       return safeLogoUrl(channel.attrs?.['tvg-image']||channel.poster||channel.attrs?.poster||channel.attrs?.cover||channel.attrs?.thumbnail||'');
     }
     async function getLogoProxyUrl(original){
-      if(IS_STATIC_PAGES)throw new Error('پراکسی لوگو روی GitHub Pages وجود ندارد؛ لوگوی HTTPS یا فایل تصویری محلی لازم است.');
+      if(IS_STATIC_PAGES)return workerProxyUrl(original,'image');
       const endpoint=`api.php?logoTicket=${encodeURIComponent(base64UrlUtf8(original))}&v=${Date.now()}`;
       const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});let data={};try{data=await response.json()}catch(_){}
       if(!response.ok||!data.ok||!data.url)throw new Error(data.error||'تبدیل تصویر در دسترس نیست');return data.url;
@@ -975,7 +979,11 @@
       const startProxy=async(reason)=>{
         if(proxyAttempted||generation!==state.playbackGeneration)return;
         proxyAttempted=true;clearTimeout(watchdog);
-        if(IS_STATIC_PAGES){try{await startShakaFallback(originalUrl,'HLS مستقیم با Shaka')}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش مستقیم HLS ناموفق شد؛ احتمالاً سرور CORS را اجازه نمی‌دهد. GitHub Pages پراکسی PHP ندارد: ${error.message}`)}return;}
+        if(IS_STATIC_PAGES){
+          try{const proxyUrl=await getProxyOrThrow(originalUrl,'hls');if(generation!==state.playbackGeneration)return;startEngine(proxyUrl,true)}
+          catch(error){if(generation===state.playbackGeneration)mediaFail(`پراکسی Cloudflare برای HLS آماده نشد: ${error.message}`)}
+          return;
+        }
         $('liveMark').textContent='تغییر مسیر امن پخش';$('placeholder').querySelector('small').textContent=reason||'دریافت مستقیم مجاز نبود؛ پراکسی هم‌مبدأ فعال می‌شود…';
         try{const proxyUrl=await getProxyOrThrow(originalUrl,'hls');if(generation!==state.playbackGeneration)return;startEngine(proxyUrl,true)}
         catch(error){if(generation!==state.playbackGeneration)return;if(preferProxy){mediaFail(`پراکسی HLS آماده نشد: ${error.message}`);return}try{await startShakaFallback(originalUrl,'HLS جایگزین')}catch(shakaError){if(generation===state.playbackGeneration)mediaFail(`HLS مستقیم و پراکسی ناموفق شدند. پراکسی: ${error.message}؛ موتور جایگزین: ${shakaError.message}`)}}
@@ -999,7 +1007,7 @@
         hls.attachMedia(video);
         if(!isProxy){watchdog=setTimeout(()=>{if(generation===state.playbackGeneration&&!manifestSeen&&!proxyAttempted)startProxy('فهرست HLS در زمان مناسب دریافت نشد؛ مسیر هم‌مبدأ امتحان می‌شود…')},2200)}
       };
-      if(preferProxy){await startProxy('به‌دلیل Mixed Content، پخش مستقیم HTTP مسدود می‌شود؛ پراکسی هم‌مبدأ آغاز شد…');return;}
+      if(preferProxy||IS_STATIC_PAGES){await startProxy(IS_STATIC_PAGES?'پخش امن از مسیر Cloudflare Worker…':'به‌دلیل Mixed Content، مسیر امن پخش آغاز می‌شود…');return;}
       startEngine(originalUrl,false);
     }
 
@@ -1151,7 +1159,7 @@
       if(!/^https?:\/\//i.test(originalUrl)){mediaFail('آدرس پخش معتبر نیست؛ باید لینک HTTP/HTTPS یا یک پروتکل قابل تبدیل و ثبت‌شده در فهرست باشد.');return}
       if(type==='webpage'){mediaFail('این مورد آدرس صفحه است، نه لینک مستقیم رسانه. برای پخش باید لینک مستقیم مجاز HLS یا فایل ویدئویی وارد شود.');return}
       if(type==='unknown'){
-        if(IS_STATIC_PAGES){$('placeholder').querySelector('small').textContent='نوع لینک از پسوند قابل تشخیص نیست؛ پخش بومی مرورگر امتحان می‌شود…';attachNative(originalUrl,generation,()=>mediaFail('نوع رسانه از روی لینک قابل تشخیص نیست و GitHub Pages امکان Probe با FFprobe ندارد. لینک مستقیم دارای پسوند .m3u8، .mpd یا .mp4 وارد کنید.'),5000);return;}
+        if(IS_STATIC_PAGES){$('placeholder').querySelector('small').textContent='نوع لینک نامشخص است؛ مسیر HTTPS امن Cloudflare امتحان می‌شود…';try{attachNative(await getProxyOrThrow(originalUrl,'native'),generation,()=>mediaFail('پخش منبع نامشخص شکست خورد؛ لینک مستقیم HLS، DASH یا فایل ویدئویی لازم است.'),5000)}catch(error){mediaFail(`پراکسی Cloudflare آماده نشد: ${error.message}`)}return;}
         $('placeholder').querySelector('small').textContent='پخش مستقیم آغاز شد؛ نوع واقعی منبع هم‌زمان بررسی می‌شود…';
         let detectedResult=null,switched=false,probeSettled=false;
         const switchToDetected=probe=>{
@@ -1191,15 +1199,15 @@
         const nativeHls=Boolean(video.canPlayType('application/vnd.apple.mpegurl')||video.canPlayType('application/x-mpegURL'));
         const mixed=isMixedContentSource(originalUrl);
         if(nativeHls){
-          if(mixed){try{attachNative(await getProxyOrThrow(originalUrl,'hls'),generation)}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش HLS از مسیر امن ناموفق شد: ${error.message}`)}}
+          if(mixed||IS_STATIC_PAGES){try{attachNative(await getProxyOrThrow(originalUrl,'hls'),generation)}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش HLS از مسیر امن ناموفق شد: ${error.message}`)}}
           else attachNative(originalUrl,generation,async()=>attachNative(await getProxyOrThrow(originalUrl,'hls'),generation),2200);
-        }else await startHlsThroughProxy(originalUrl,generation,mixed);
+        }else await startHlsThroughProxy(originalUrl,generation,mixed||IS_STATIC_PAGES);
         return;
       }
       if(type==='dash'){
         const mixed=isMixedContentSource(originalUrl);
         let dashLib=null;try{dashLib=await ensureDash()}catch(error){console.warn('TITAN dash.js unavailable',error)}if(generation!==state.playbackGeneration)return;
-        let proxyTried=mixed;
+        let proxyTried=mixed||IS_STATIC_PAGES;
         const startDashEngine=async(sourceUrl,isProxy)=>{
           if(generation!==state.playbackGeneration)return;
           if(!dashLib?.MediaPlayer){try{await startShakaPlayback(sourceUrl,generation,'DASH');return}catch(error){throw error}}
@@ -1221,15 +1229,15 @@
           dash.initialize(video,sourceUrl,settings().autoplay!==false);
         };
         try{
-          if(mixed){const proxyUrl=await getProxyOrThrow(originalUrl,'dash');if(generation===state.playbackGeneration)await startDashEngine(proxyUrl,true)}
+          if(mixed||IS_STATIC_PAGES){const proxyUrl=await getProxyOrThrow(originalUrl,'dash');if(generation===state.playbackGeneration)await startDashEngine(proxyUrl,true)}
           else await startDashEngine(originalUrl,false);
         }catch(error){if(generation===state.playbackGeneration)mediaFail(`راه‌اندازی DASH ناموفق شد: ${error.message}`)}
         return;
       }
-      if((type==='mpegts'||type==='flv')){await startMpegTsPlayback(originalUrl,type,generation,isMixedContentSource(originalUrl));return;}
+      if((type==='mpegts'||type==='flv')){await startMpegTsPlayback(originalUrl,type,generation,isMixedContentSource(originalUrl)||IS_STATIC_PAGES);return;}
       // Direct files are native-first; HTTP on an HTTPS app is sent to the same-origin proxy immediately.
       if(type==='native'){
-        if(isMixedContentSource(originalUrl)){
+        if(isMixedContentSource(originalUrl)||IS_STATIC_PAGES){
           try{attachNative(await getProxyOrThrow(originalUrl,'native'),generation)}catch(error){if(generation===state.playbackGeneration)mediaFail(`پخش مستقیم HTTP در صفحه HTTPS مسدود است و مسیر پراکسی آماده نشد: ${error.message}`)}
         }else attachNative(originalUrl,generation,async()=>attachNative(await getProxyOrThrow(originalUrl,'native'),generation),2400);
         return;
@@ -1253,7 +1261,7 @@
     function toggleFavorite(){if(!state.current){toast('ابتدا یک شبکه انتخاب کنید.');return}const key=state.current.key;if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key);saveFavorites();$('favCurrentBtn').textContent=state.favorites.has(key)?'★':'☆';renderChannels();toast(state.favorites.has(key)?'به علاقه‌مندی‌ها اضافه شد.':'از علاقه‌مندی‌ها حذف شد.')}
     function stepChannel(direction){const list=state.category==='all'?state.allChannels:(state.lists[state.category]||[]);if(!list.length)return;let index=state.current?list.findIndex(c=>c.key===state.current.key):-1;index=(index+direction+list.length)%list.length;loadChannel(list[index],true)}
     function formatTime(seconds){if(!Number.isFinite(seconds))return '۰۰:۰۰';const min=Math.floor(seconds/60),sec=Math.floor(seconds%60);return faNum(`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`)}
-    async function checkPlaybackProxy(){if(IS_STATIC_PAGES){state.hostHealth=null;return;}try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const health=await response.json();state.hostHealth=health;if(!health.curl)toast('برای پراکسی پخش، افزونه PHP cURL باید روی هاست فعال باشد.');else if(!health.ffmpeg?.available)console.info('TITAN: FFmpeg روی هاست شناسایی نشد؛ پخش مستقیم فعال است اما تبدیل خودکار کدک‌های ناسازگار نیازمند FFmpeg/VPS است.');}catch(_){console.warn('وضعیت سرویس پخش هاست بررسی نشد.')}}
+    async function checkPlaybackProxy(){if(IS_STATIC_PAGES){state.hostHealth=null;const base=getWorkerBase();if(!base){console.warn('TITAN: Worker URL is not configured in worker-config.js');return;}try{const r=await fetch(`${base}/health?v=${Date.now()}`,{cache:'no-store'});const h=await r.json();state.hostHealth=h;if(!r.ok||!h.ok)toast('Cloudflare Worker پاسخ معتبر نداد.');}catch(error){console.warn('TITAN Worker health check failed:',error.message)}return;}try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const health=await response.json();state.hostHealth=health;if(!health.curl)toast('برای پراکسی پخش، افزونه PHP cURL باید روی هاست فعال باشد.');else if(!health.ffmpeg?.available)console.info('TITAN: FFmpeg روی هاست شناسایی نشد؛ پخش مستقیم فعال است اما تبدیل خودکار کدک‌های ناسازگار نیازمند FFmpeg/VPS است.');}catch(_){console.warn('وضعیت سرویس پخش هاست بررسی نشد.')}}
     function renderMediaInfo(info){
       const fmt=info.format||{};const streams=Array.isArray(info.streams)?info.streams:[];const v=streams.find(x=>x.codec_type==='video')||{};const a=streams.find(x=>x.codec_type==='audio')||{};
       const bits=Number(v.bit_rate||fmt.bit_rate||0);const mb=bits?`${(bits/1000000).toFixed(2)} Mbps`:'';const fps=String(v.avg_frame_rate||v.r_frame_rate||'').replace('/0','');
@@ -1293,7 +1301,15 @@
       $('compatResults').textContent=output;return output;
     }
     async function refreshServerStatus(){
-      if(IS_STATIC_PAGES){state.hostHealth=null;$('serverEngineStatus').textContent='GitHub Pages فقط فایل‌های استاتیک را میزبانی می‌کند؛ PHP، FFmpeg، FFprobe و پراکسی سرور در این نسخه اجرا نمی‌شوند. پخش مستقیم لینک‌های HTTPS سازگار فعال است.';return;}
+      if(IS_STATIC_PAGES){
+        state.hostHealth=null;
+        const base=getWorkerBase();
+        if(!base){$('serverEngineStatus').textContent='GitHub Pages فعال است؛ برای عبور HTTPS از لینک‌های HTTP/CORS، آدرس Worker را در worker-config.js ثبت کنید. PHP و FFmpeg در Pages اجرا نمی‌شوند.';return;}
+        $('serverEngineStatus').textContent='در حال بررسی Cloudflare Worker…';
+        try{const response=await fetch(`${base}/health?v=${Date.now()}`,{cache:'no-store'});const h=await response.json();if(!response.ok||!h.ok)throw new Error(h.error||`HTTP ${response.status}`);state.hostHealth=h;$('serverEngineStatus').textContent=`Cloudflare Worker فعال | میزبان دامنه‌ای: ${h.allowedDomainHosts} | IP عمومی مجاز: ${h.allowedPublicIpHosts} | HLS: بازنویسی فعال | DASH: مسیر پایه فعال. تبدیل FFmpeg همچنان روی Pages وجود ندارد.`}
+        catch(error){$('serverEngineStatus').textContent=`Cloudflare Worker متصل نشد: ${error.message}. آدرس worker-config.js و انتشار Worker را بررسی کنید.`}
+        return;
+      }
       try{const response=await fetch(`api.php?health=1&v=${Date.now()}`,{cache:'no-store'});const h=await response.json();state.hostHealth=h;$('serverEngineStatus').textContent=`PHP ${h.php||'?'} | cURL: ${h.curl?'فعال':'غیرفعال'} | FFmpeg: ${h.ffmpeg?.available?'فعال':'پیدا نشد'} | FFprobe: ${h.ffprobe?.available?'فعال':'پیدا نشد'} | اجرای تبدیل: ${h.transcode?.available?'مجاز':'محدود/غیرفعال'} | پردازش تصویر: ${(h.imageProcessor?.imagick?'Imagick ':'')+(h.imageProcessor?.gd?'GD':'')||'ندارد'}`;
       }catch(error){$('serverEngineStatus').textContent=`دریافت وضعیت سرور ناموفق بود: ${error.message}`}
     }

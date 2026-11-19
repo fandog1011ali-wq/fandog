@@ -1,0 +1,1 @@
+برای راهنمای کامل و به‌روز نصب رایگان، فایل INSTALL_FREE_FA.txt یا cloudflare-worker/README_FA.txt را مطالعه کنید.

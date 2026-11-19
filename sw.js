@@ -1,6 +1,6 @@
-const CACHE_NAME='titan-shell-v401';
-const PLAYER_CACHE='titan-player-libs-v401';
-const SHELL=['./','./index.html','./modern.html','./legacy.html','./legacy.js','./compat-check.js','./manifest.webmanifest','./assets/titan.svg','./assets/icons/titan-192.png','./assets/icons/titan-512.png','./assets/icons/titan-maskable-512.png','./assets/wallpapers/stadium.svg','./assets/wallpapers/cinema.svg','./assets/wallpapers/film.svg','./assets/wallpapers/animation.svg','./assets/wallpapers/aurora.svg'];
+const CACHE_NAME='titan-shell-v410';
+const PLAYER_CACHE='titan-player-libs-v410';
+const SHELL=['./','./index.html','./modern.html','./legacy.html','./legacy.js','./compat-check.js','./worker-config.js','./manifest.webmanifest','./assets/titan.svg','./assets/icons/titan-192.png','./assets/icons/titan-512.png','./assets/icons/titan-maskable-512.png','./assets/wallpapers/stadium.svg','./assets/wallpapers/cinema.svg','./assets/wallpapers/film.svg','./assets/wallpapers/animation.svg','./assets/wallpapers/aurora.svg'];
 const PLAYER_HOSTS=new Set(['cdn.jsdelivr.net','unpkg.com']);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>![CACHE_NAME,PLAYER_CACHE].includes(k)).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
